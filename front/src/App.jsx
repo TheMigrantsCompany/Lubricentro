@@ -2,6 +2,7 @@ import "./App.css";
 import "flowbite";
 import 'flowbite/dist/flowbite.css';
 import { Datepicker } from 'flowbite-react';
+import ProductCard from "./components/ProductCard";
 
 function App() {
   return (
@@ -10,6 +11,9 @@ function App() {
      <Datepicker placeholder="Select date" />
      <h3 className="text-3xl font-bold ">Categoria:</h3>
      <h3 className="text-3xl font-bold ">Productos escogidos:</h3>
+     <ProductCard />
+     <ProductCard />
+     <ProductCard />
      <h3 className="text-3xl font-bold ">Observaciones</h3>
            
     </>
