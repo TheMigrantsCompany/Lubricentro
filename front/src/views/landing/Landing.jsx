@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, TextInput, Label, Card } from 'flowbite-react';
 
 const Landing = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Aquí puedes manejar el envío del formulario, por ejemplo, realizar una petición de inicio de sesión
-    console.log('Email:', email);
-    console.log('Password:', password);
+    // Lógica de autenticación hardcodeada
+    if (email === 'empleado@example.com' && password === 'empleado123') {
+      navigate('/employee/services');
+    } else if (email === 'admin@example.com' && password === 'admin123') {
+      navigate('/admin/manage_employees');
+    } else {
+      console.log('Credenciales incorrectas');
+    }
   };
 
   return (
@@ -28,7 +35,7 @@ const Landing = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-black"
             />
           </div>
           <div className="mb-6">
@@ -42,7 +49,7 @@ const Landing = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-black"
             />
           </div>
           <div className="flex items-center justify-center">
@@ -56,7 +63,7 @@ const Landing = () => {
         </form>
         <p className="mt-4 text-center text-sm text-gray-600">
           ¿No tienes una cuenta?{' '}
-          <button onClick={() => setIsRegistering(true)} className="text-indigo-500 hover:underline">
+          <button className="text-indigo-500 hover:underline">
             Regístrate
           </button>
         </p>
