@@ -1,5 +1,5 @@
 const express = require("express");
-const router = require("./routes/index");
+//const router = require("./routes/index");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
@@ -26,7 +26,7 @@ server.use(
 	})
 );
 
-server.use("/", router);
+//server.use("/", router);
 
 server.use((err, req, res, next) => {
 	const status = err.status || 500;
