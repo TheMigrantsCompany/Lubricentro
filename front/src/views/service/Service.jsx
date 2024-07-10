@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Home = () => {
+const Service = () => {
   return (
     <div className="Accordion w-[640px] h-[386px] flex-col justify-start items-start gap-4 inline-flex">
       <div className="AccordionItem self-stretch h-[106px] p-4 bg-white rounded-lg border border-zinc-300 flex-col justify-start items-start gap-2 flex">
