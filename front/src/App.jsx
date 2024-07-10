@@ -5,6 +5,7 @@ import FormOrdenServicio from "./components/form_orden_de_servicio/FormOrdenServ
 import 'flowbite/dist/flowbite.css';
 import {Route, Routes} from "react-router-dom";
 import Landing from "./views/landing/Landing";
+import FormNuevoCliente from "./components/form_nuevo_client/FormNuevoCliente";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Route path="/employee/services" element={<h1>services</h1>} />
         <Route path="/employee/create_order" element={<FormOrdenServicio />} />
         <Route path="/employee/inventary" element={<h1>inventary</h1>} />
-        <Route path="/employee/create_user" element={<h1>create_user</h1>} />
+        <Route path="/employee/create_user" element={<FormNuevoCliente></FormNuevoCliente>} />
       </Routes>
     </>
   );
