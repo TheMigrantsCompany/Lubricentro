@@ -12,7 +12,8 @@ import FooterComponent from "./components/footercomponent/FooterComponent";
 import Services from "./views/services/Services";
 import NavBar from "./components/navbar/NavBar";
 import ManageProducts from "./views/manage_products/ManageProducts";
-import Signup from "./firebase/manua-login";
+import CreateOrderEmp from "./views/create-order-emp/Create-Order-Emp";
+
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
         <Route path="/admin/manage_orders" element={<h1>manage_orders</h1>} />
         <Route path="/admin/manage_clients" element={<h1>manage_clients</h1>} />
         <Route path="/employee/services" element={<Services />} />
-        <Route path="/employee/create_order" element={<FormOrdenServicio />} />
+        <Route path="/employee/create_order" element={<CreateOrderEmp />} />
         <Route path="/employee/inventary" element={<Inventario />} />
         <Route path="/employee/create_user" element={<FormNuevoCliente />} />
       </Routes>
