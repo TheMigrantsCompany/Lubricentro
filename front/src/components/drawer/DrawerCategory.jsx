@@ -16,7 +16,8 @@ const DrawerCategory = () => {
 
   return (
     <>
-      <div className="flex m-4  items-center justify-center">
+      <div className="flex m-4  items-center justify-center space-x-8">
+        
         <Button onClick={() => setIsOpen(true)}>Mostrar Categorias</Button>
       </div>
       <Drawer
