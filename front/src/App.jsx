@@ -1,6 +1,7 @@
 import "./App.css";
 import "flowbite";
 import "flowbite/dist/flowbite.css";
+import { useLocation } from "react-router-dom";
 import FormOrdenServicio from "./components/form_orden_de_servicio/FormOrdenServicio";
 import 'flowbite/dist/flowbite.css';
 import {Route, Routes} from "react-router-dom";
@@ -10,13 +11,19 @@ import Inventario from "./views/inventario/Inventario";
 import FooterComponent from "./components/footercomponent/FooterComponent";
 import Services from "./views/services/Services";
 import NavBar from "./components/navbar/NavBar";
+import Signup from "./firebase/manua-login";
 
 function App() {
+
+  const location = useLocation();
+  const showNavBar = !["/"].includes(location.pathname);
+
   return (
     <>
-      <NavBar />
+      {showNavBar && <NavBar />}
       <Routes>
         <Route path="/" element={<Landing />} />
+        
         <Route path="/admin/manage_employees" element={ <h1>manage_employees</h1>} />
         <Route path="/admin/manage_products" element={<h1>manage_products</h1>} />
         <Route path="/admin/manage_orders" element={<h1>manage_orders</h1>} />
