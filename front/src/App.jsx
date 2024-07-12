@@ -1,6 +1,7 @@
 import "./App.css";
 import "flowbite";
 import "flowbite/dist/flowbite.css";
+import { useLocation } from "react-router-dom";
 import FormOrdenServicio from "./components/form_orden_de_servicio/FormOrdenServicio";
 import 'flowbite/dist/flowbite.css';
 import {Route, Routes} from "react-router-dom";
@@ -11,12 +12,18 @@ import FooterComponent from "./components/footercomponent/FooterComponent";
 import Services from "./views/services/Services";
 import NavBar from "./components/navbar/NavBar";
 import ManageProducts from "./views/manage_products/ManageProducts";
+import CreateOrderEmp from "./views/create-order-emp/Create-Order-Emp";
+
 import GestionEmpleados from "./views/manage_employees/Manage_employees";
 
 function App() {
+
+  const location = useLocation();
+  const showNavBar = !["/"].includes(location.pathname);
+
   return (
     <>
-      <NavBar />
+      {showNavBar && <NavBar />}
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/admin/manage_employees" element={ <GestionEmpleados/>} />
@@ -24,7 +31,7 @@ function App() {
         <Route path="/admin/manage_orders" element={<h1>manage_orders</h1>} />
         <Route path="/admin/manage_clients" element={<h1>manage_clients</h1>} />
         <Route path="/employee/services" element={<Services />} />
-        <Route path="/employee/create_order" element={<FormOrdenServicio />} />
+        <Route path="/employee/create_order" element={<CreateOrderEmp />} />
         <Route path="/employee/inventary" element={<Inventario />} />
         <Route path="/employee/create_user" element={<FormNuevoCliente />} />
       </Routes>
