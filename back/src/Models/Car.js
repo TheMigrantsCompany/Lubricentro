@@ -19,6 +19,10 @@ module.exports = (sequelize) => {
                 allowNull: false, // Establece que este campo es obligatorio
                 defaultValue: false, // Configura el valor por defecto como falso
             },
+            LicensePlate: {
+                type: DataTypes.STRING, // Define el tipo de dato como cadena de texto
+                allowNull: true, // Establece que este campo es opcional
+            },
             CC_NIT: {
                 type: DataTypes.STRING, // Define el tipo de dato como cadena de texto
                 allowNull: false, // Establece que este campo es obligatorio
