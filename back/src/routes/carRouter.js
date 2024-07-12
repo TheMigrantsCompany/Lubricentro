@@ -6,7 +6,7 @@ const getCarByLicensePlateHandler = require('../handlers/car/getCarByLicensePlat
 const getCarByIdHandler = require('../handlers/car/getCarByIdHandler');
 const getCarByCCNITHandler = require('../handlers/car/getCarByCCNITHandler');
 const updateCarHandler = require('../handlers/car/updateCarHandler');
-const deactivateCarHandler = require('../handlers/car/deactivateCarHandler');
+const toggleCarActiveStateHandler = require('../handlers/car/toggleCarActiveStateHandler');
 const deleteCarByLicensePlateHandler = require('../handlers/car/deleteCarByLicensePlateHandler');
 const deleteCarByCCNITHandler = require('../handlers/car/deleteCarByCCNITHandler'); 
 
@@ -15,7 +15,7 @@ const carRouter = express.Router();
 // Manejador para la creación de un carro
 carRouter.post('/', createCarHandler);
 
-/*// Manejador para obtener todos los carros
+// Manejador para obtener todos los carros
 carRouter.get('/', getAllCarsHandler);
 
 // Manejador para obtener un carro por placa
@@ -31,12 +31,12 @@ carRouter.get('/cc-nit/:CC_NIT', getCarByCCNITHandler);
 carRouter.put('/:id', updateCarHandler);
 
 // Manejador para desactivar un carro por ID
-carRouter.patch('/deactivate/:id', deactivateCarHandler);
+carRouter.patch('/:id/deactivate', toggleCarActiveStateHandler);
 
 // Manejador para eliminar un carro por placa
 carRouter.delete('/license-plate/:licensePlate', deleteCarByLicensePlateHandler);
 
 // Manejador para eliminar un carro por CC/NIT
-carRouter.delete('/cc-nit/:CC_NIT', deleteCarByCCNITHandler); */
+carRouter.delete('/cc-nit/:CC_NIT', deleteCarByCCNITHandler); 
 
 module.exports = carRouter;
