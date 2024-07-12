@@ -27,7 +27,7 @@ module.exports = (sequelize) => {
             type: DataTypes.FLOAT, // Define el tipo de dato como número de punto flotante
             allowNull: false, // Establece que este campo es obligatorio
         },
-        Price_Cl: {
+        Price_Tl: {
             type: DataTypes.FLOAT, // Define el tipo de dato como número de punto flotante
             allowNull: true, // Establece que este campo es opcional
         },
