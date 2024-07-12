@@ -9,16 +9,16 @@ const SideBarEmployee = () => {
         <div className="flex flex-col h-full justify-between pt-24"> 
           <Sidebar.Items>
             <Sidebar.ItemGroup className="flex flex-col gap-4">
-              <Sidebar.Item href="/employee/create_user" icon={HiUser}>
+              <Sidebar.Item href="/admin/manage_employees" icon={HiUser}>
                Gestion de Empleados
               </Sidebar.Item>
-              <Sidebar.Item href="/employee/create_order" icon={HiShoppingBag}>
+              <Sidebar.Item href="/admin/manage_clients" icon={HiShoppingBag}>
                 Gestion de Clientes
               </Sidebar.Item>
-              <Sidebar.Item href="/employee/inventary" icon={HiInbox}>
+              <Sidebar.Item href="/admin/manage_products" icon={HiInbox}>
                 Gestion de Productos/Servicios
               </Sidebar.Item>
-              <Sidebar.Item href="/employee/inventary" icon={HiInbox}>
+              <Sidebar.Item href="/admin/manage_orders" icon={HiInbox}>
                 Gestion de Ordenes de Servicio
               </Sidebar.Item>
             </Sidebar.ItemGroup>
