@@ -2,7 +2,7 @@ import React from 'react';
 import { Sidebar } from 'flowbite-react';
 import { HiUser, HiShoppingBag, HiInbox } from 'react-icons/hi';
 
-const SideBarEmployee = () => {
+const SideBarAdmin = () => {
   return (
     <div className="h-screen">
       <Sidebar aria-label="Sidebar with logo branding example" className="h-full bg-gray-400">
@@ -29,4 +29,4 @@ const SideBarEmployee = () => {
   );
 };
 
-export default SideBarEmployee;
+export default SideBarAdmin;
