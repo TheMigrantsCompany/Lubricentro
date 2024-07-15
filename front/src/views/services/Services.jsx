@@ -1,12 +1,11 @@
 import React from 'react';
-import SideBarEmployee from '../../components/sidebar/SideBarEmployee';
+//import SideBarEmployee from '../../components/sidebar/SideBarEmployee';
 import { Accordion } from "flowbite-react";
 
 
 const Services = () => {
   return (
     <div className="flex">
-      <SideBarEmployee />
       <div className="flex-grow flex flex-col items-center justify-between min-h-screen">
         <div className="mt-12 max-w-4xl w-full p-6 bg-white rounded-lg shadow-lg">
           <Accordion collapseAll>
@@ -78,13 +77,7 @@ const Services = () => {
             </Accordion.Panel>
           </Accordion>
         </div>
-        <footer className="bg-gray-800 text-white text-center p-4 w-full">
-          <div className="flex justify-center">
-            <a href="tel:+1234567890" className="text-white mx-4 text-xl"><i className="fas fa-phone"></i></a>
-            <a href="mailto:email@example.com" className="text-white mx-4 text-xl"><i className="fas fa-envelope"></i></a>
-            <a href="https://tu-marca.com" target="_blank" rel="noopener noreferrer" className="text-white mx-4 text-xl"><i className="fas fa-tag"></i></a>
-          </div>
-        </footer>
+        
       </div>
     </div>
   );

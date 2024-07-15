@@ -9,6 +9,9 @@ const SideBarEmployee = () => {
         <div className="flex flex-col h-full justify-between pt-24"> 
           <Sidebar.Items>
             <Sidebar.ItemGroup className="flex flex-col gap-4">
+            <Sidebar.Item href="/employee/sevices" icon={HiShoppingBag}>
+                Mis Servicios
+              </Sidebar.Item>
               <Sidebar.Item href="/employee/create_user" icon={HiUser}>
                 Nuevo Cliente
               </Sidebar.Item>

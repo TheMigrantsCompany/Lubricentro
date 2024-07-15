@@ -2,39 +2,61 @@ import "./App.css";
 import "flowbite";
 import "flowbite/dist/flowbite.css";
 import { useLocation } from "react-router-dom";
-import FormOrdenServicio from "./components/form_orden_de_servicio/FormOrdenServicio";
 import 'flowbite/dist/flowbite.css';
 import {Route, Routes} from "react-router-dom";
-import Landing from "./views/landing/Landing";
-import FormNuevoCliente from "./components/form_nuevo_client/FormNuevoCliente";
-import Inventario from "./views/inventario/Inventario";
-import FooterComponent from "./components/footercomponent/FooterComponent";
-import Services from "./views/services/Services";
-import NavBar from "./components/navbar/NavBar";
-import ManageProducts from "./views/manage_products/ManageProducts";
+//rutas employee//
+import SideBarEmployee from "./components/sidebar/SideBarEmployee";
+import NewClientEmp from "./views/new-client-emp/NewClientEmp";
 import CreateOrderEmp from "./views/create-order-emp/Create-Order-Emp";
+import Services from "./views/services/Services";
+
+//rutas admin //
+import ManageProducts from "./views/manage_products/ManageProducts";
 import GestionClientes from "./views/manage_clients/Manage_Clients";
 import GestionEmpleados from "./views/manage_employees/Manage_employees";
+
+//rutas en comun//
+import Landing from "./views/landing/Landing";
+import Inventario from "./views/inventario/Inventario";
+import FooterComponent from "./components/footercomponent/FooterComponent";
+import NavBar from "./components/navbar/NavBar";
 
 function App() {
 
   const location = useLocation();
   const showNavBar = !["/"].includes(location.pathname);
+  const employeeRoutes = [
+    "/employee/services",
+    "/employee/create_order",
+    "/employee/inventary",
+    "/employee/create_user",
+    "/employee/sevices" 
+  ];
+
+  const isEmployeeRoute = employeeRoutes.includes(location.pathname);
 
   return (
     <>
       {showNavBar && <NavBar />}
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/admin/manage_employees" element={ <GestionEmpleados/>} />
-        <Route path="/admin/manage_products" element={<ManageProducts></ManageProducts>} />
-        <Route path="/admin/manage_orders" element={<h1>manage_orders</h1>} />
-        <Route path="/admin/manage_clients" element={<GestionClientes/>} />
-        <Route path="/employee/services" element={<Services />} />
-        <Route path="/employee/create_order" element={<CreateOrderEmp />} />
-        <Route path="/employee/inventary" element={<Inventario />} />
-        <Route path="/employee/create_user" element={<FormNuevoCliente />} />
-      </Routes>
+      <div className="flex">
+        {isEmployeeRoute && <SideBarEmployee />}
+        <div className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            {/* Rutas de admin */}
+            <Route path="/admin/manage_employees" element={<GestionEmpleados />} />
+            <Route path="/admin/manage_products" element={<ManageProducts />} />
+            <Route path="/admin/manage_orders" element={<h1>manage_orders</h1>} />
+            <Route path="/admin/manage_clients" element={<GestionClientes />} />
+            {/* Rutas de employee */}
+            <Route path="/employee/services" element={<Services />} />
+            <Route path="/employee/create_order" element={<CreateOrderEmp />} />
+            <Route path="/employee/inventary" element={<Inventario />} />
+            <Route path="/employee/create_user" element={<NewClientEmp />} />
+            <Route path="/employee/sevices" element={<Services />} /> 
+          </Routes>
+        </div>
+      </div>
       <FooterComponent />
     </>
   );
