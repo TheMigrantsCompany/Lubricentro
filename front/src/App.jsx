@@ -14,6 +14,7 @@ import NavBar from "./components/navbar/NavBar";
 import ManageProducts from "./views/manage_products/ManageProducts";
 import CreateOrderEmp from "./views/create-order-emp/Create-Order-Emp";
 
+import GestionEmpleados from "./views/manage_employees/Manage_employees";
 
 function App() {
 
@@ -25,8 +26,7 @@ function App() {
       {showNavBar && <NavBar />}
       <Routes>
         <Route path="/" element={<Landing />} />
-        
-        <Route path="/admin/manage_employees" element={ <h1>manage_employees</h1>} />
+        <Route path="/admin/manage_employees" element={ <GestionEmpleados/>} />
         <Route path="/admin/manage_products" element={<ManageProducts></ManageProducts>} />
         <Route path="/admin/manage_orders" element={<h1>manage_orders</h1>} />
         <Route path="/admin/manage_clients" element={<h1>manage_clients</h1>} />
