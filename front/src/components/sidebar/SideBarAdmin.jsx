@@ -5,12 +5,16 @@ import { HiUser, HiShoppingBag, HiInbox } from 'react-icons/hi';
 const SideBarAdmin = () => {
   return (
     <div className="h-screen">
-      <Sidebar aria-label="Sidebar with logo branding example" className="h-full bg-gray-400">
-        <div className="flex flex-col h-full justify-between pt-24"> 
+      <Sidebar
+        aria-label="Sidebar with logo branding example"
+        className="h-full"
+        style={{ backgroundColor: '#D9D9D9 !important' }}
+      >
+        <div className="flex flex-col h-full justify-between pt-24">
           <Sidebar.Items>
             <Sidebar.ItemGroup className="flex flex-col gap-4">
               <Sidebar.Item href="/admin/manage_employees" icon={HiUser}>
-               Gestion de Empleados
+                Gestion de Empleados
               </Sidebar.Item>
               <Sidebar.Item href="/admin/manage_clients" icon={HiShoppingBag}>
                 Gestion de Clientes
