@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FormOrdenServicio from "../../components/form_orden_de_servicio/FormOrdenServicio";
 import OrderSummary from "../../components/order-summary/OrderSummary";
+import sideBarAdmin from "../../components/sidebar/SideBarAdmin";
 
 
 const CreateOrderEmp = () => {
@@ -50,36 +51,36 @@ const CreateOrderEmp = () => {
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      
       // Lógica para enviar los datos del formulario
     };
   
     return (
-        <div className="flex justify-center items-start min-h-screen bg-gray-100 p-5">
-          <div className="w-full max-w-md">
-            <h1 className="text-slate-400 m-5 text-base font-bold tracking-wider">Crear Orden de Servicio</h1>
-            <FormOrdenServicio
-              formData={formData}
-              handleInputChange={handleInputChange}
-              handleAddProduct={handleAddProduct}
-              handleAddService={handleAddService}
-              handleSubmit={handleSubmit}
-            />
-          </div>
-          <div className="w-full max-w-md ml-5">
-            <OrderSummary
-              date={formData.date}
-              paymentMethod={formData.paymentMethod}
-              selectedProducts={selectedProducts}
-              selectedServices={selectedServices}
-              warnings={formData.warnings}
-              onRemoveItem={handleRemoveItem}
-              onQuantityChange={handleQuantityChange}
-              calculateTotal={calculateTotal}
-            />
-          </div>
+      
+      <div className="flex justify-center items-start min-h-screen bg-gray-100 p-5">
+        <div className="w-full max-w-md">
+          <h1 className="text-slate-400 m-5 text-base font-bold tracking-wider">Crear Orden de Servicio</h1>
+          <FormOrdenServicio
+            formData={formData}
+            handleInputChange={handleInputChange}
+            handleAddProduct={handleAddProduct}
+            handleAddService={handleAddService}
+            handleSubmit={handleSubmit}
+          />
         </div>
-      );
-    };
-    
-    export default CreateOrderEmp;
+        <div className="w-full max-w-md ml-5">
+          <OrderSummary
+            date={formData.date}
+            paymentMethod={formData.paymentMethod}
+            selectedProducts={selectedProducts}
+            selectedServices={selectedServices}
+            warnings={formData.warnings}
+            onRemoveItem={handleRemoveItem}
+            onQuantityChange={handleQuantityChange}
+            calculateTotal={calculateTotal}
+          />
+        </div>
+      </div>
+    );
+  };
+  
+  export default CreateOrderEmp;

@@ -3,6 +3,9 @@ import { Sidebar } from 'flowbite-react';
 import { HiUser, HiShoppingBag, HiInbox } from 'react-icons/hi';
 
 const SideBarAdmin = () => {
+
+
+  
   return (
     <div className="h-screen">
       <Sidebar
@@ -31,6 +34,5 @@ const SideBarAdmin = () => {
       </Sidebar>
     </div>
   );
-};
-
+}
 export default SideBarAdmin;
