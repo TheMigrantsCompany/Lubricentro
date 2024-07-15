@@ -5,7 +5,7 @@ import { HiUser, HiShoppingBag, HiInbox } from 'react-icons/hi';
 const SideBarEmployee = () => {
   return (
     <div className="h-screen">
-      <Sidebar aria-label="Sidebar with logo branding example" className="h-full bg-gray-400">
+      <Sidebar aria-label="Sidebar with logo branding example" className="h-full bg-custom-grey">
         <div className="flex flex-col h-full justify-between pt-24"> 
           <Sidebar.Items>
             <Sidebar.ItemGroup className="flex flex-col gap-4">

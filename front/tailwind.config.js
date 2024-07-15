@@ -10,7 +10,11 @@ module.exports = {
     flowbite.content(),
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'custom-gray': '#BF0811',
+      }
+    },
   },
   plugins: [
     flowbite.plugin('flowbite/plugin')
