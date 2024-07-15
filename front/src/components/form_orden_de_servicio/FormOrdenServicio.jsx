@@ -11,7 +11,11 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
       <h1 className="text-slate-400 m-5 text-base font-bold tracking-wider">ORDEN DE SERVICIO</h1>
       <form className="flex max-w-md flex-col gap-4 bg-white p-5 rounded-lg text-gray-800" onSubmit={handleSubmit}>
         <Label htmlFor="date" value="Fecha" />
-        <Datepicker id="date" placeholder="Selecciona la fecha" onChange={(value) => handleInputChange({ target: { id: 'date', value } })} />
+        <Datepicker
+          id="date"
+          placeholder="Selecciona la fecha"
+          onChange={(value) => handleInputChange({ target: { id: 'date', value: value.toISOString().split('T')[0] } })}
+        />
 
         <Label htmlFor="paymentMethod" value="Método de Pago" />
         <Select id="paymentMethod" required onChange={handleInputChange}>
