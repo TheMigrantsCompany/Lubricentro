@@ -24,8 +24,8 @@ export function ClientesPlacasTable() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="w-full max-w-4xl mx-auto mt-8 md:ml-16">
+    <div className="flex justify-center items-center">
+      <div className="w-full max-w-4xl mx-auto md:ml-16">
         <Card>
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-gray-800">
@@ -59,22 +59,22 @@ export function ClientesPlacasTable() {
               </tbody>
             </table>
           </div>
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-center mt-4">
             <button
               onClick={() => handleModificar(clientesPlacas[0].id)}
-              className="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mr-2"
+              className="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mx-2"
             >
               Modificar
             </button>
             <button
               onClick={() => handleDetalle(clientesPlacas[0].id)}
-              className="py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 mr-2"
+              className="py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 mx-2"
             >
               Detalle
             </button>
             <button
               onClick={() => handleEliminar(clientesPlacas[0].id)}
-              className="py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              className="py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mx-2"
             >
               Eliminar
             </button>
@@ -84,4 +84,5 @@ export function ClientesPlacasTable() {
     </div>
   );
 }
+
 
