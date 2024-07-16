@@ -1,65 +1,73 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import { Card, Title, Badge, Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell, Button } from '@tremor/react';
 import { FaPrint, FaQrcode } from 'react-icons/fa';
+import SearchBar from '../searchbar/SearchBar';
 
-const orders = [
-  { name: 'orden servicio 1', status: 'TERMINADA' },
-  { name: 'orden servicio 1', status: 'TERMINADA' },
-  { name: 'orden servicio 1', status: 'TERMINADA' },
-  { name: 'orden servicio 1', status: 'TERMINADA' },
+const initialOrders = [
+  { name: 'orden servicio 1', status: 'PENDIENTE' },
+  { name: 'orden servicio 2', status: 'PENDIENTE' },
+  { name: 'orden servicio 3', status: 'PENDIENTE' },
+  { name: 'orden servicio 4', status: 'PENDIENTE' },
 ];
 
 const OrderList = () => {
+  const [orders, setOrders] = useState(initialOrders);
   const printRefs = useRef([]);
 
   const handlePrint = (index) => {
     const printContents = printRefs.current[index].innerHTML;
     const newWindow = window.open('', '', 'height=600,width=800');
     newWindow.document.write('<html><head><title>Imprimir Orden de Servicio</title>');
-    newWindow.document.write('</head><body >');
+    newWindow.document.write('</head><body>');
     newWindow.document.write(printContents);
     newWindow.document.write('</body></html>');
     newWindow.document.close();
     newWindow.print();
   };
 
+  const handleStatusChange = (index) => {
+    const updatedOrders = orders.map((order, i) =>
+      i === index ? { ...order, status: 'TERMINADA' } : order
+    );
+    setOrders(updatedOrders);
+  };
+
   return (
-    <div className="max-w-md mx-auto p-4 bg-gray-200 rounded-lg">
-      <h1 className="text-center text-gray-700 font-semibold mb-2">
-        ORDENES DE SERVICIO PENDIENTES
-      </h1>
-      <h2 className="text-center text-gray-700 mb-4">
-        CLIENTE / LUBRICADOR
-      </h2>
-      <div className="flex justify-center mb-4">
-        <input
-          type="text"
-          placeholder="Placa / Lubricador"
-          className="p-2 border rounded"
-        />
-      </div>
-      <div className="bg-white p-4 rounded-lg shadow">
-        {orders.map((order, index) => (
-          <div
-            key={index}
-            className="flex justify-between items-center mb-2"
-            ref={(el) => (printRefs.current[index] = el)}
-          >
-            <span className="text-gray-700">{order.name}</span>
-            <div className="flex space-x-2">
-              <FaPrint
-                className="text-gray-700 cursor-pointer"
-                onClick={() => handlePrint(index)}
-              />
-              <FaQrcode className="text-gray-700" />
-            </div>
-            <span className="px-2 py-1 bg-red-600 text-white rounded-full text-sm">
-              {order.status}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
+    <Card>
+      <Title>ORDENES DE SERVICIO PENDIENTES</Title>
+      <SearchBar />
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeaderCell>Order Name</TableHeaderCell>
+            <TableHeaderCell>Status</TableHeaderCell>
+            <TableHeaderCell>Actions</TableHeaderCell>
+            <TableHeaderCell>Change Status</TableHeaderCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {orders.map((order, index) => (
+            <TableRow key={index} ref={(el) => (printRefs.current[index] = el)}>
+              <TableCell>{order.name}</TableCell>
+              <TableCell><Badge color={order.status === 'PENDIENTE' ? 'red' : 'green'}>{order.status}</Badge></TableCell>
+              <TableCell>
+                <div className="flex space-x-2">
+                  <FaPrint className="cursor-pointer" onClick={() => handlePrint(index)} />
+                  <FaQrcode />
+                </div>
+              </TableCell>
+              <TableCell>
+                {order.status === 'PENDIENTE' && (
+                  <Button onClick={() => handleStatusChange(index)}>Terminada</Button>
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Card>
   );
 };
 
 export default OrderList;
+
