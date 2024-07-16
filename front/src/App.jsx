@@ -14,6 +14,7 @@ import Services from "./views/services/Services";
 import ManageProducts from "./views/manage_products/ManageProducts";
 import GestionClientes from "./views/manage_clients/Manage_Clients";
 import GestionEmpleados from "./views/manage_employees/Manage_employees";
+import SideBarAdmin from "./components/sidebar/SideBarAdmin";
 
 //rutas en comun//
 import Landing from "./views/landing/Landing";
@@ -25,6 +26,8 @@ function App() {
 
   const location = useLocation();
   const showNavBar = !["/"].includes(location.pathname);
+
+  //separa las rutas para poder aplicar las sideBar segun corresponda//
   const employeeRoutes = [
     "/employee/services",
     "/employee/create_order",
@@ -33,13 +36,23 @@ function App() {
     "/employee/sevices" 
   ];
 
+  const adminRoutes = [
+    "/admin/manage_employees",
+    "/admin/manage_products",
+    "/admin/manage_orders",
+    "/admin/manage_clients",
+  ];
+
+  //determina si la ruta actual es una ruta de empleado o una ruta de administrador//
   const isEmployeeRoute = employeeRoutes.includes(location.pathname);
+  const isAdminRoute = adminRoutes.includes(location.pathname);
 
   return (
     <>
       {showNavBar && <NavBar />}
       <div className="flex">
         {isEmployeeRoute && <SideBarEmployee />}
+        {isAdminRoute && <SideBarAdmin />}
         <div className="flex-grow">
           <Routes>
             <Route path="/" element={<Landing />} />
