@@ -4,6 +4,7 @@ import { ClientesPlacasTable } from '../../components/table_clients/TableClients
 import BestCliente from '../../components/cardstat/CardStat2';
 import { ClientesChart } from '../../components/charts/ClientChart';
 
+
 const GestionClientes = () => {
     return (
       <div className="flex">
