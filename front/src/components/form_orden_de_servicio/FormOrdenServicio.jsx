@@ -5,43 +5,59 @@ import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import AcordeonServicios from "../acordeon_servicios/AcordeonServicios";
 import AcordeonProductos from "../acordeon_productos/AcordeonProductos";
 
+
 const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, handleAddService, handleSubmit }) => {
+  const handleDateChange = (date) => {
+    handleInputChange({ target: { id: "date", value: date.toISOString().split('T')[0] } });
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 flex-col">
-      <h1 className="text-slate-400 m-5 text-base font-bold tracking-wider">ORDEN DE SERVICIO</h1>
-      <form className="flex max-w-md flex-col gap-4 bg-white p-5 rounded-lg text-gray-800" onSubmit={handleSubmit}>
-        <Label htmlFor="date" value="Fecha" />
-        <Datepicker
-          id="date"
-          placeholder="Selecciona la fecha"
-          onChange={(value) => handleInputChange({ target: { id: 'date', value: value.toISOString().split('T')[0] } })}
-        />
-
-        <Label htmlFor="paymentMethod" value="Método de Pago" />
-        <Select id="paymentMethod" required onChange={handleInputChange}>
-          <option value="">Selecciona un método de pago</option>
-          <option value="efectivo">Efectivo</option>
-          <option value="tarjeta">Tarjeta</option>
-          <option value="transferencia">Transferencia</option>
-        </Select>
-
-        <AcordeonServicios onAddService={handleAddService} />
-        <AcordeonProductos onAddProduct={handleAddProduct} />
-
-        <div className="max-w-md">
-          <Label htmlFor="warnings" value="Sugerencias" />
-          <Textarea
-            id="warnings"
-            placeholder="Ingrese las sugerencias..."
-            rows={4}
-            onChange={handleInputChange}
-            className="text-gray-800"
-          />
+    <form className="max-w-4xl flex flex-col gap-4 bg-white p-5 rounded-lg text-gray-800" onSubmit={handleSubmit}>
+      <div className="flex flex-wrap">
+        <div className="w-full md:w-1/2 px-2">
+          <div className="mb-4">
+            <Label htmlFor="date" value="Fecha" />
+            <Datepicker
+              id="date"
+              placeholderText="Selecciona la fecha"
+              onChange={handleDateChange}
+              className="w-full border rounded-md p-2"
+            />
+          </div>
+          <div className="mb-4">
+            <Label htmlFor="paymentMethod" value="Método de Pago" />
+            <Select
+              id="paymentMethod"
+              required
+              name="paymentMethod"
+              onChange={handleInputChange}
+              className="w-full border rounded-md p-2"
+            >
+              <option value="">Selecciona un método de pago</option>
+              <option value="efectivo">Efectivo</option>
+              <option value="tarjeta">Tarjeta</option>
+              <option value="transferencia">Transferencia</option>
+            </Select>
+          </div>
         </div>
+        <div className="w-full md:w-1/2 px-2">
+          <AcordeonServicios onAddService={handleAddService} />
+          <AcordeonProductos onAddProduct={handleAddProduct} />
+        </div>
+      </div>
+      <div className="w-full px-2">
+        <Label htmlFor="warnings" value="Sugerencias" />
+        <Textarea
+          id="warnings"
+          name="warnings"
+          placeholder="Ingrese las sugerencias..."
+          rows={4}
+          onChange={handleInputChange}
+          className="w-full border rounded-md p-2 text-gray-800"
+        />
+      </div>
 
-        <Button type="submit">Submit</Button>
-      </form>
-    </div>
+    </form>
   );
 };
 
