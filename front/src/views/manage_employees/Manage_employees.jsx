@@ -1,5 +1,4 @@
 import React from 'react';
-//import SideBarAdmin from '../../components/sidebar/SideBarAdmin';
 import { TableLubricadores } from '../../components/table_lubricadores/Table_Lubricadores';
 import BestLubricador from '../../components/cardstat/CardStat1';
 import { EmployeeChart } from '../../components/charts/EmployeeChart'; 
@@ -8,7 +7,6 @@ import { EmployeeChart } from '../../components/charts/EmployeeChart';
 const GestionEmpleados = () => {
   return (
     <div className="flex">
-      
 
       <div className="flex-1 p-4">
         <div className="flex justify-between mb-4">

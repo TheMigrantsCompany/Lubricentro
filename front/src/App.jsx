@@ -15,6 +15,7 @@ import ManageProducts from "./views/manage_products/ManageProducts";
 import GestionClientes from "./views/manage_clients/Manage_Clients";
 import GestionEmpleados from "./views/manage_employees/Manage_employees";
 import SideBarAdmin from "./components/sidebar/SideBarAdmin";
+import MangeOrders from "./views/manage_orders/ManageOrders";
 
 //rutas en comun//
 import Landing from "./views/landing/Landing";
@@ -59,7 +60,7 @@ function App() {
             {/* Rutas de admin */}
             <Route path="/admin/manage_employees" element={<GestionEmpleados />} />
             <Route path="/admin/manage_products" element={<ManageProducts />} />
-            <Route path="/admin/manage_orders" element={<h1>manage_orders</h1>} />
+            <Route path="/admin/manage_orders" element={<MangeOrders/>} />
             <Route path="/admin/manage_clients" element={<GestionClientes />} />
             {/* Rutas de employee */}
             <Route path="/employee/services" element={<Services />} />
