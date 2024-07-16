@@ -28,6 +28,9 @@ const SideBarAdmin = () => {
               <Sidebar.Item href="/admin/manage_orders" icon={HiInbox}>
                 Gestion de Ordenes de Servicio
               </Sidebar.Item>
+              <Sidebar.Item href="/admin/new_products_service" icon={HiInbox}>
+                Agregar Nuevo Producto/Servicio
+              </Sidebar.Item>
             </Sidebar.ItemGroup>
           </Sidebar.Items>
         </div>
