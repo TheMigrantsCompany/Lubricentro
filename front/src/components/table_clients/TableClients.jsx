@@ -1,25 +1,27 @@
-import React from 'react';
-import { Card } from '@tremor/react';
+import React, { useState } from 'react';
+import { Card, Button } from '@tremor/react';
+import ModalModifyClient from '../modal_modify_client/ModalModifyClient';
+import ModalServiceDetail from '../modal_service_detail/ModalServiceDetail';
 
 export function ClientesPlacasTable() {
   const clientesPlacas = [
-    { id: 1, cliente: 'Juan Pérez', placa: 'ABC-123', status: 'activo' },
-    { id: 2, cliente: 'Ana Gómez', placa: 'DEF-456', status: 'inactivo' },
-    { id: 3, cliente: 'Carlos López', placa: 'GHI-789', status: 'activo' },
+    { id: 1, cliente: 'Juan Pérez', placa: 'ABC-123', status: 'activo', fecha: '2023-01-01', servicio: 'Mantenimiento', producto: 'Aceite', observacion: 'Ninguna' },
+    { id: 2, cliente: 'Ana Gómez', placa: 'DEF-456', status: 'inactivo', fecha: '2023-02-01', servicio: 'Reparación', producto: 'Filtro', observacion: 'Cambio necesario' },
+    { id: 3, cliente: 'Carlos López', placa: 'GHI-789', status: 'activo', fecha: '2023-03-01', servicio: 'Limpieza', producto: 'Agua', observacion: 'Ninguna' },
   ];
 
-  const handleModificar = (id) => {
-    // Lógica para modificar el cliente con el ID proporcionado
-    console.log(`Modificar cliente con ID ${id}`);
+  const [selectedClient, setSelectedClient] = useState(null);
+  const [selectedService, setSelectedService] = useState(null);
+
+  const handleModificar = (client) => {
+    setSelectedClient(client);
   };
 
-  const handleDetalle = (id) => {
-    // Lógica para ver detalles del cliente con el ID proporcionado
-    console.log(`Ver detalles del cliente con ID ${id}`);
+  const handleDetalle = (service) => {
+    setSelectedService(service);
   };
 
   const handleEliminar = (id) => {
-    // Lógica para eliminar al cliente con el ID proporcionado
     console.log(`Eliminar cliente con ID ${id}`);
   };
 
@@ -45,44 +47,49 @@ export function ClientesPlacasTable() {
               <tbody>
                 {clientesPlacas.map((cliente) => (
                   <tr key={cliente.id} className="bg-gray-100 border-b">
-                    <td className="px-6 py-4">
-                      {cliente.cliente}
-                    </td>
-                    <td className="px-6 py-4">
-                      {cliente.placa}
-                    </td>
-                    <td className="px-6 py-4">
-                      {cliente.status}
-                    </td>
+                    <td className="px-6 py-4">{cliente.cliente}</td>
+                    <td className="px-6 py-4">{cliente.placa}</td>
+                    <td className="px-6 py-4">{cliente.status}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div className="flex justify-center mt-4">
-            <button
-              onClick={() => handleModificar(clientesPlacas[0].id)}
-              className="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mx-2"
+          <div className="flex justify-center mt-4 space-x-2">
+            <Button
+              onClick={() => handleModificar(clientesPlacas[0])}
+              className="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               Modificar
-            </button>
-            <button
-              onClick={() => handleDetalle(clientesPlacas[0].id)}
-              className="py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 mx-2"
+            </Button>
+            <Button
+              onClick={() => handleDetalle(clientesPlacas[0])}
+              className="py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
               Detalle
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => handleEliminar(clientesPlacas[0].id)}
-              className="py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mx-2"
+              className="py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
             >
               Eliminar
-            </button>
+            </Button>
           </div>
         </Card>
       </div>
+      {selectedClient && (
+        <ModalModifyClient
+          client={selectedClient}
+          closeModal={() => setSelectedClient(null)}
+        />
+      )}
+      {selectedService && (
+        <ModalServiceDetail
+          service={selectedService}
+          closeModal={() => setSelectedService(null)}
+        />
+      )}
     </div>
   );
 }
-
 
