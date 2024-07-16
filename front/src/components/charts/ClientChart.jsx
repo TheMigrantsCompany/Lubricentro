@@ -1,6 +1,6 @@
-'use client';
+'use Client'
 
-import { FunnelChart } from '@tremor/react';
+import { BarChart } from '@tremor/react';
 
 const chartdataClientes = [
   { name: 'Cliente A', value: 120 },
@@ -8,28 +8,33 @@ const chartdataClientes = [
   { name: 'Cliente C', value: 30 },
 ];
 
+const dataFormatter = (number) => Intl.NumberFormat('us').format(number).toString();
+
 export function ClientesChart() {
   return (
     <div className="border border-black rounded-lg p-4 bg-white">
-      <h3 className="text-black text-tremor-default text-tremor-content dark:text-dark-tremor-content text-sm">
+      <h3 className="text-black text-tremor-default dark:text-dark-tremor-content">
         Clientes con Más y Menos Compras
       </h3>
-      <p className="text-black text-tremor-metric font-semibold text-tremor-content-strong dark:text-dark-tremor-content text-sm">
+      <p className="text-black text-tremor-metric font-semibold dark:text-dark-tremor-content ">
         8.3%
       </p>
-      <p className="mt-4 text-black text-tremor-label text-tremor-content dark:text-dark-tremor-content text-sm">
+      <p className="mt-4 text-black text-tremor-label dark:text-dark-tremor-content ">
         Clientes únicos que realizaron compras en los últimos 30 días.
       </p>
       <div className="flex justify-center">
-        <FunnelChart
+        <BarChart
           className="mt-4 w-full max-w-md"
           data={chartdataClientes}
-          style={{
-            label: { fill: 'black', fontSize: 12, fontWeight: 'bold' },
-            tooltip: { background: 'white', border: '1px solid #ccc', color: 'black', fontSize: 12, fontWeight: 'normal' }
-          }}
+          index="name"
+          categories={['value']}
+          colors={['blue']}
+          valueFormatter={dataFormatter}
+          yAxisWidth={48}
         />
       </div>
     </div>
   );
 }
+
+
