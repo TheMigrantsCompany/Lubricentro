@@ -1,25 +1,25 @@
 "use client";
 import React from "react";
-import { Datepicker } from "flowbite-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import AcordeonServicios from "../acordeon_servicios/AcordeonServicios";
 import AcordeonProductos from "../acordeon_productos/AcordeonProductos";
-
-
-const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, handleAddService, handleSubmit }) => {
+const FormOrdenServicio = ({ formData, handleInputChange, handleSubmit }) => {
   const handleDateChange = (date) => {
-    handleInputChange({ target: { id: "date", value: date.toISOString().split('T')[0] } });
+    console.log("Fecha seleccionada en DatePicker: ", date);
+    handleInputChange({ target: { id: "date", value: date } });
   };
 
-  return (
-    <form className="max-w-4xl flex flex-col gap-4 bg-white p-5 rounded-lg text-gray-800" onSubmit={handleSubmit}>
+   return (
+    <form className="max-w-4xl mx-auto flex flex-col gap-4 bg-tremor-background-default p-5 rounded-lg text-tremor-content-strong">
       <div className="flex flex-wrap">
         <div className="w-full md:w-1/2 px-2">
           <div className="mb-4">
             <Label htmlFor="date" value="Fecha" />
-            <Datepicker
+            <DatePicker
               id="date"
-              placeholderText="Selecciona la fecha"
+              selected={formData.date.toString()}
               onChange={handleDateChange}
               className="w-full border rounded-md p-2"
             />
@@ -41,8 +41,8 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
           </div>
         </div>
         <div className="w-full md:w-1/2 px-2">
-          <AcordeonServicios onAddService={handleAddService} />
-          <AcordeonProductos onAddProduct={handleAddProduct} />
+          <AcordeonServicios />
+          <AcordeonProductos />
         </div>
       </div>
       <div className="w-full px-2">
@@ -53,10 +53,9 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
           placeholder="Ingrese las sugerencias..."
           rows={4}
           onChange={handleInputChange}
-          className="w-full border rounded-md p-2 text-gray-800"
+          className="w-full border rounded-md p-2 text-tremor-content-strong"
         />
       </div>
-
     </form>
   );
 };
