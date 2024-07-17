@@ -9,6 +9,6 @@ router.use("/cars", carRouter);
 //Agrega las rutas de cateforia a la ruta principal
 router.use("/categories", categoriesRouter);
 // Agrega las rutas de producto a la ruta principal
-/*router.use("/products", productServiceRouter);*/
+router.use("/products", productServiceRouter);
 
 module.exports = router;
