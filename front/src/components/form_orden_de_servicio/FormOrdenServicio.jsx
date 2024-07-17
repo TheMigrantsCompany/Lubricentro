@@ -5,27 +5,28 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import AcordeonServicios from "../acordeon_servicios/AcordeonServicios";
 import AcordeonProductos from "../acordeon_productos/AcordeonProductos";
-const FormOrdenServicio = ({ formData, handleInputChange, handleSubmit }) => {
+const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, handleAddService }) => {
   const handleDateChange = (date) => {
-    console.log("Fecha seleccionada en DatePicker: ", date);
     handleInputChange({ target: { id: "date", value: date } });
   };
 
-   return (
+  return (
     <form className="max-w-4xl mx-auto flex flex-col gap-4 bg-tremor-background-default p-5 rounded-lg text-tremor-content-strong">
-      <div className="flex flex-wrap">
-        <div className="w-full md:w-1/2 px-2">
+      <div className="flex flex-wrap justify-center">
+        <div className="w-full md:w-1/2 px-2 mb-4">
           <div className="mb-4">
-            <Label htmlFor="date" value="Fecha" />
+            <div className="mb-2">
+              <Label htmlFor="date" value="Fecha" />
+            </div>
             <DatePicker
               id="date"
-              selected={formData.date.toString()}
+              selected={formData.date ? new Date(formData.date) : null}
               onChange={handleDateChange}
               className="w-full border rounded-md p-2"
             />
           </div>
           <div className="mb-4">
-            <Label htmlFor="paymentMethod" value="Método de Pago" />
+            <Label htmlFor="paymentMethod" value="Método de Pago" className="mb-2" />
             <Select
               id="paymentMethod"
               required
@@ -41,8 +42,8 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleSubmit }) => {
           </div>
         </div>
         <div className="w-full md:w-1/2 px-2">
-          <AcordeonServicios />
-          <AcordeonProductos />
+          <AcordeonServicios onAddService={handleAddService} />
+          <AcordeonProductos onAddProduct={handleAddProduct} />
         </div>
       </div>
       <div className="w-full px-2">
