@@ -4,8 +4,8 @@ import { Accordion,Checkbox,Label, Select } from "flowbite-react"
 
 const AcordeonServicios = ({ onAddService }) => {
   const services = [
-    { id: 1, name: "Cambio de Aceite" },
-    { id: 2, name: "Cambio de Filtros" },
+    { id: 1, name: "Cambio de Aceite", price: 100 },
+    { id: 2, name: "Cambio de Filtros", price: 200 },
   ];
 
   const handleServiceSelect = (e) => {

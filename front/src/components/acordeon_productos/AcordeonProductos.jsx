@@ -58,7 +58,7 @@ const AcordeonProductos = ({ onAddProduct }) => {
     if (event.target.checked) {
       onAddProduct({ ...product, quantity: 1 });
     } else {
-      onAddProduct(product, "remove");
+      onAddProduct(product, "remove"); // Aquí pasamos la acción "remove"
     }
   };
 

@@ -1,31 +1,32 @@
 "use client";
 import React from "react";
-import { Datepicker } from "flowbite-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import AcordeonServicios from "../acordeon_servicios/AcordeonServicios";
 import AcordeonProductos from "../acordeon_productos/AcordeonProductos";
-
-
-const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, handleAddService, handleSubmit }) => {
+const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, handleAddService }) => {
   const handleDateChange = (date) => {
-    handleInputChange({ target: { id: "date", value: date.toISOString().split('T')[0] } });
+    handleInputChange({ target: { id: "date", value: date } });
   };
 
   return (
-    <form className="max-w-4xl flex flex-col gap-4 bg-white p-5 rounded-lg text-gray-800" onSubmit={handleSubmit}>
-      <div className="flex flex-wrap">
-        <div className="w-full md:w-1/2 px-2">
+    <form className="max-w-4xl mx-auto flex flex-col gap-4 bg-tremor-background-default p-5 rounded-lg text-tremor-content-strong">
+      <div className="flex flex-wrap justify-center">
+        <div className="w-full md:w-1/2 px-2 mb-4">
           <div className="mb-4">
-            <Label htmlFor="date" value="Fecha" />
-            <Datepicker
+            <div className="mb-2">
+              <Label htmlFor="date" value="Fecha" />
+            </div>
+            <DatePicker
               id="date"
-              placeholderText="Selecciona la fecha"
+              selected={formData.date ? new Date(formData.date) : null}
               onChange={handleDateChange}
               className="w-full border rounded-md p-2"
             />
           </div>
           <div className="mb-4">
-            <Label htmlFor="paymentMethod" value="Método de Pago" />
+            <Label htmlFor="paymentMethod" value="Método de Pago" className="mb-2" />
             <Select
               id="paymentMethod"
               required
@@ -53,10 +54,9 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
           placeholder="Ingrese las sugerencias..."
           rows={4}
           onChange={handleInputChange}
-          className="w-full border rounded-md p-2 text-gray-800"
+          className="w-full border rounded-md p-2 text-tremor-content-strong"
         />
       </div>
-
     </form>
   );
 };
