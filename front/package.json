@@ -10,8 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@headlessui/react": "^2.1.2",
-    "@headlessui/tailwindcss": "^0.2.1",
     "@tremor/react": "^3.17.4",
     "firebase": "^10.12.3",
     "flowbite": "^2.4.1",
