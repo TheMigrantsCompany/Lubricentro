@@ -1,49 +1,31 @@
-import { Accordion,Checkbox,Label, } from "flowbite-react"
+import React from "react";
+import { Accordion,Checkbox,Label, Select } from "flowbite-react"
 
 
-const AcordeonServicios = () => {
+const AcordeonServicios = ({ onAddService }) => {
+  const services = [
+    { id: 1, name: "Cambio de Aceite", price: 100 },
+    { id: 2, name: "Cambio de Filtros", price: 200 },
+  ];
+
+  const handleServiceSelect = (e) => {
+    const selectedService = services.find(service => service.id === parseInt(e.target.value));
+    if (selectedService) {
+      onAddService(selectedService);
+    }
+  };
+
   return (
-    <Accordion collapseAll className="mt-5 block">
-          <Accordion.Panel>
-            <Accordion.Title>Servicio</Accordion.Title>
-            <Accordion.Content>
-              <div className="flex max-w-md flex-col gap-4" id="checkbox">
-                <div className="flex items-center gap-2">
-                  <Checkbox id="accept"  />
-                  <Label htmlFor="accept" className="flex">
-                    Servicio 1
-                  </Label>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Checkbox id="accept"  />
-                  <Label htmlFor="accept" className="flex">
-                    Servicio 2
-                  </Label>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Checkbox id="accept"  />
-                  <Label htmlFor="accept" className="flex">
-                    Servicio 3
-                  </Label>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Checkbox id="accept" />
-                  <Label htmlFor="accept" className="flex">
-                    Servicio 4
-                  </Label>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Checkbox id="accept"  />
-                  <Label htmlFor="accept" className="flex">
-                    Servicio 5
-                  </Label>
-                </div>
-               
-              </div>
-            </Accordion.Content>
-          </Accordion.Panel>
-        </Accordion>
-  )
-}
+    <div className="mb-4">
+      <Label htmlFor="service" value="Servicios" />
+      <Select id="service" name="service" onChange={handleServiceSelect} className="w-full border rounded-md p-2">
+        <option value="">Selecciona un servicio</option>
+        {services.map(service => (
+          <option key={service.id} value={service.id}>{service.name}</option>
+        ))}
+      </Select>
+    </div>
+  );
+};
 
-export default AcordeonServicios
+export default AcordeonServicios;
