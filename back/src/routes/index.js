@@ -2,6 +2,7 @@ const { Router } = require("express");
 const carRouter = require("./carRouter");
 const productServiceRouter = require("./productServiceRouter");
 const userRouter = require("./userRoutes");
+const orderRouter = require("./orderRoutes")
 const router = Router();
 
 // Agrega las rutas de carro a la ruta principal
@@ -10,11 +11,7 @@ router.use("/cars", carRouter);
 router.use("/products", productServiceRouter);
 // Agrega las rutas de usuario a la ruta principal
 router.use("/users", userRouter);
-
-module.exports = router;
-
-
-
-
+// Agrega las rutas de orden de servicio a la ruta principal
+router.use("/orders", orderRouter);
 
 module.exports = router;
