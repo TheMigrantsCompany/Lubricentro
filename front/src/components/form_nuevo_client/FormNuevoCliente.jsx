@@ -112,7 +112,7 @@ const FormNuevoCliente = () => {
         </form>
         <AcordeonServicios />
         <div className="flex justify-center mt-2">
-          <Button type="submit"  className="w-full md:w-auto">Submit</Button>
+          <Button type="submit"  className="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white">Submit</Button>
         </div>
       </Card>
     </div>
