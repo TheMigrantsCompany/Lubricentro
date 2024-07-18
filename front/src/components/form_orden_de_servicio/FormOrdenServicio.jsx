@@ -1,46 +1,63 @@
 "use client";
-import { Datepicker } from "flowbite-react";
-import { Button, Label, TextInput, Textarea } from "flowbite-react";
+import React from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import AcordeonServicios from "../acordeon_servicios/AcordeonServicios";
 import AcordeonProductos from "../acordeon_productos/AcordeonProductos";
+const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, handleAddService }) => {
+  const handleDateChange = (date) => {
+    handleInputChange({ target: { id: "date", value: date } });
+  };
 
-const FormOrdenServicio = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 flex-col">
-      <h1 className="text-slate-400 m-5 text-base font-bold tracking-wider">ORDEN DE SERVICIO</h1>
-      <form className="flex max-w-md flex-col gap-4 bg-white p-5 rounded-lg">
-        <div>
-          <div className="mb-2 block">
-            <Label htmlFor="placa" value="Placa" />
+    <form className="max-w-4xl mx-auto flex flex-col gap-4 bg-tremor-background-default p-5 rounded-lg text-tremor-content-strong">
+      <div className="flex flex-wrap justify-center">
+        <div className="w-full md:w-1/2 px-2 mb-4">
+          <div className="mb-4">
+            <div className="mb-2">
+              <Label htmlFor="date" value="Fecha" />
+            </div>
+            <DatePicker
+              id="date"
+              selected={formData.date ? new Date(formData.date) : null}
+              onChange={handleDateChange}
+              className="w-full border rounded-md p-2"
+            />
           </div>
-          <TextInput
-            id="placa"
-            type="text"
-            placeholder="Ingrese placa"
-            required
-          />
-        </div>
-
-        <Label htmlFor="Fecha" value="Fecha" />
-        <Datepicker placeholder="Selecciona la fecha" />
-        <AcordeonServicios></AcordeonServicios>
-        <AcordeonProductos></AcordeonProductos>
-
-        <div className="max-w-md">
-          <div className="mb-2 block">
-            <Label htmlFor="comment" value="Observaciones" />
+          <div className="mb-4">
+            <Label htmlFor="paymentMethod" value="Método de Pago" className="mb-2" />
+            <Select
+              id="paymentMethod"
+              required
+              name="paymentMethod"
+              onChange={handleInputChange}
+              className="w-full border rounded-md p-2"
+            >
+              <option value="">Selecciona un método de pago</option>
+              <option value="efectivo">Efectivo</option>
+              <option value="tarjeta">Tarjeta</option>
+              <option value="transferencia">Transferencia</option>
+            </Select>
           </div>
-          <Textarea
-            id="comment"
-            placeholder="Ingrese sus observaciones..."
-            required
-            rows={4}
-          />
         </div>
-
-        <Button type="submit">Submit</Button>
-      </form>
-    </div>
+        <div className="w-full md:w-1/2 px-2">
+          <AcordeonServicios onAddService={handleAddService} />
+          <AcordeonProductos onAddProduct={handleAddProduct} />
+        </div>
+      </div>
+      <div className="w-full px-2">
+        <Label htmlFor="warnings" value="Sugerencias" />
+        <Textarea
+          id="warnings"
+          name="warnings"
+          placeholder="Ingrese las sugerencias..."
+          rows={4}
+          onChange={handleInputChange}
+          className="w-full border rounded-md p-2 text-tremor-content-strong"
+        />
+      </div>
+    </form>
   );
 };
 
