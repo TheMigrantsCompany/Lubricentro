@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize'); // Importa DataTypes de Sequelize para definir los tipos de datos de los modelos
+const { Sequelize,DataTypes } = require('sequelize'); // Importa DataTypes de Sequelize para definir los tipos de datos de los modelos
 
 module.exports = (sequelize) => {
   // Define el modelo 'ProductService' en Sequelize
@@ -30,6 +30,11 @@ module.exports = (sequelize) => {
         Price_Tl: {
             type: DataTypes.FLOAT, // Define el tipo de dato como número de punto flotante
             allowNull: true, // Establece que este campo es opcional
+        },
+        Active: {
+            type: DataTypes.BOOLEAN, // Define el tipo de dato como booleano
+            allowNull: false, // Establece que este campo es obligatorio
+            defaultValue: true, // Configura el valor por defecto como verdadero
         },
     },
     {timestamps: false,}// Desactiva los campos createdAt y updatedAt
