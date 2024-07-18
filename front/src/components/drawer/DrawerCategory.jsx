@@ -16,17 +16,21 @@ const DrawerCategory = () => {
 
   return (
     <>
-      <div className="flex m-4  items-center justify-center space-x-8">
-        
-        <Button onClick={() => setIsOpen(true)}>Mostrar Categorias</Button>
-      </div>
+      <div className="flex flex-col items-center justify-center m-4 space-y-4">
+      <h2 className="text-slate-600 text-2xl md:text-3xl font-bold tracking-wider text-center mb-4">Inventario de Productos</h2>
+      
+      <Button onClick={() => setIsOpen(true)} className="bg-red-600 hover:bg-red-700 text-white">
+        Mostrar Categorías
+      </Button>
+    </div>
       <Drawer
-        edge
-        open={isOpen}
-        onClose={handleClose}
-        position="bottom"
-        className="p-0"
-      >
+  edge
+  open={isOpen}
+  onClose={handleClose}
+  position="bottom" // Posiciona el Drawer en la parte inferior
+  anchor="right" // Ancla el Drawer al borde derecho
+  style={{ width: '100%', maxWidth: '1472px', maxHeight: '80vh', margin: 'auto', right: -256 }}
+>
         <Drawer.Header
           closeIcon={HiBars2}
           title="Mostrar categorias"

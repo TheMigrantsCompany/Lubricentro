@@ -80,7 +80,7 @@ const CreateOrderEmp = () => {
   return (
     <div className="flex justify-center items-start min-h-screen bg-gray-100 p-5">
       <div className="w-full max-w-6x1">
-        <h1 className="text-2xl font-bold text-center text-slate-400 mb-5">
+        <h1 className="text-slate-600 m-5 text-2xl md:text-3xl font-bold tracking-wider text-center ">
           Crear Orden de Servicio
         </h1>
         <div className="flex justify-center gap-10">
