@@ -33,3 +33,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+.swal2-container {
+  z-index: 1050 !important; 
+}
