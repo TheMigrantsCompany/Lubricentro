@@ -5,10 +5,10 @@ const TableManageProducts = () => {
     <div className="overflow-x-auto">
       <Table hoverable>
         <Table.Head>
-          <Table.HeadCell>Product name</Table.HeadCell>
+          <Table.HeadCell>Nombre del Producto</Table.HeadCell>
           <Table.HeadCell>Stock</Table.HeadCell>
-          <Table.HeadCell>Category</Table.HeadCell>
-          <Table.HeadCell>Price</Table.HeadCell>
+          <Table.HeadCell>Categoria</Table.HeadCell>
+          <Table.HeadCell>Precio</Table.HeadCell>
           <Table.HeadCell>Referencia</Table.HeadCell> 
           <Table.HeadCell>
             <span className="sr-only">Edit</span>
