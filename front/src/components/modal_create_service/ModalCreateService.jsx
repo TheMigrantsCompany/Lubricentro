@@ -31,6 +31,10 @@ const ModalCreateService = () => {
                 <Label htmlFor="servicio" value="Servicio" className="text-black mb-2 block" />
                 <TextInput id="servicio" placeholder="Ingrese servicio" required className="w-full" />
               </div>
+              <div>
+                <Label htmlFor="precio" value="Precio" className="text-black mb-2 block" />
+                <TextInput id="precio" placeholder="Ingrese precio" required className="w-full" />
+              </div>
               <div className="w-full">
               <Button>Crear producto</Button>
             </div>
