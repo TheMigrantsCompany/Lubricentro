@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Card, Button } from '@tremor/react';
 import ModalModifyClient from '../modal_modify_client/ModalModifyClient';
 import ModalServiceDetail from '../modal_service_detail/ModalServiceDetail';
+import { FaQrcode } from 'react-icons/fa'; // Importar el ícono QR de react-icons
 
 export function ClientesPlacasTable() {
   const clientesPlacas = [
-    { id: 1, cliente: 'Juan Pérez', placa: 'ABC-123', status: 'activo', fecha: '2023-01-01', servicio: 'Mantenimiento', producto: 'Aceite', observacion: 'Ninguna' },
-    { id: 2, cliente: 'Ana Gómez', placa: 'DEF-456', status: 'inactivo', fecha: '2023-02-01', servicio: 'Reparación', producto: 'Filtro', observacion: 'Cambio necesario' },
-    { id: 3, cliente: 'Carlos López', placa: 'GHI-789', status: 'activo', fecha: '2023-03-01', servicio: 'Limpieza', producto: 'Agua', observacion: 'Ninguna' },
+    { id: 1, cliente: 'Juan Pérez', placa: 'ABC-123', status: 'activo', fecha: '2023-01-01', servicio: 'Mantenimiento', producto: 'Aceite', observacion: 'Ninguna', cedulaNit: '123456789' },
+    { id: 2, cliente: 'Ana Gómez', placa: 'DEF-456', status: 'inactivo', fecha: '2023-02-01', servicio: 'Reparación', producto: 'Filtro', observacion: 'Cambio necesario', cedulaNit: '987654321' },
+    { id: 3, cliente: 'Carlos López', placa: 'GHI-789', status: 'activo', fecha: '2023-03-01', servicio: 'Limpieza', producto: 'Agua', observacion: 'Ninguna', cedulaNit: '123123123' },
   ];
 
   const [selectedClient, setSelectedClient] = useState(null);
@@ -25,6 +26,10 @@ export function ClientesPlacasTable() {
     console.log(`Eliminar cliente con ID ${id}`);
   };
 
+  const handleVerQRCode = (client) => {
+    console.log(`Mostrar código QR para el cliente con Cedula/NIT: ${client.cedulaNit}`);
+  };
+
   return (
     <div className="flex justify-center items-center">
       <div className="w-full max-w-4xl mx-auto md:ml-16">
@@ -40,7 +45,13 @@ export function ClientesPlacasTable() {
                     Placa
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    Cedula/NIT
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Status
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    QR
                   </th>
                 </tr>
               </thead>
@@ -49,7 +60,11 @@ export function ClientesPlacasTable() {
                   <tr key={cliente.id} className="bg-gray-100 border-b">
                     <td className="px-6 py-4">{cliente.cliente}</td>
                     <td className="px-6 py-4">{cliente.placa}</td>
+                    <td className="px-6 py-4">{cliente.cedulaNit}</td>
                     <td className="px-6 py-4">{cliente.status}</td>
+                    <td className="px-6 py-4">
+                      <FaQrcode className="text-xl text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => handleVerQRCode(cliente)} />
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -92,4 +107,5 @@ export function ClientesPlacasTable() {
     </div>
   );
 }
+
 
