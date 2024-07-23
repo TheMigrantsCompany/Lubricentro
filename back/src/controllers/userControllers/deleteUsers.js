@@ -1,18 +1,16 @@
 const { User } = require("../../config/db");
 const admin = require('firebase-admin');
 
-const deleteUserController = async (id) => {
-    const user = await User.findByPk(id);
+const deleteUser = async (id_User) => {
+    // Eliminar la orden de la base de datos
+    const deletedUser = await User.destroy({
+        where: {
+            id_User: id_User
+        }
+        });
+        
 
-    if (!user) throw new Error("User not found");
-
-    user.active = false;
-    await user.save();
-
-    // Deshabilitar al usuario en Firebase
-    await admin.auth().updateUser(user.id_User, { disabled: true });
-
-    return "User successfully marked as inactive!";
+    return deletedUser ? true : false;
 };
 
-module.exports = deleteUserController;
+module.exports = deleteUser;
