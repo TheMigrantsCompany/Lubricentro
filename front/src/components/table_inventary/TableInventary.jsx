@@ -8,7 +8,7 @@ const TableInventary = () => {
           <Table.HeadCell>Product name</Table.HeadCell>
           <Table.HeadCell>Category</Table.HeadCell>
           <Table.HeadCell>Price</Table.HeadCell>
-          <Table.HeadCell>Stock</Table.HeadCell> {/* Añadir encabezado de stock */}
+          <Table.HeadCell>Stock</Table.HeadCell> 
         </Table.Head>
         <Table.Body className="divide-y">
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -17,7 +17,7 @@ const TableInventary = () => {
             </Table.Cell>
             <Table.Cell>Laptop</Table.Cell>
             <Table.Cell>$2999</Table.Cell>
-            <Table.Cell>300 u.</Table.Cell> {/* Añadir dato de stock */}
+            <Table.Cell>300 u.</Table.Cell> 
           </Table.Row>
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
@@ -25,7 +25,7 @@ const TableInventary = () => {
             </Table.Cell>
             <Table.Cell>Laptop PC</Table.Cell>
             <Table.Cell>$1999</Table.Cell>
-            <Table.Cell>250 u.</Table.Cell> {/* Añadir dato de stock */}
+            <Table.Cell>250 u.</Table.Cell> 
           </Table.Row>
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
@@ -33,7 +33,7 @@ const TableInventary = () => {
             </Table.Cell>
             <Table.Cell>Accessories</Table.Cell>
             <Table.Cell>$99</Table.Cell>
-            <Table.Cell>160 u.</Table.Cell> {/* Añadir dato de stock */}
+            <Table.Cell>160 u.</Table.Cell> 
           </Table.Row>
         </Table.Body>
       </Table>
