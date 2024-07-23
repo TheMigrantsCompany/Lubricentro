@@ -1,13 +1,36 @@
 "use client";
 import React from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import AcordeonServicios from "../acordeon_servicios/AcordeonServicios";
 import AcordeonProductos from "../acordeon_productos/AcordeonProductos";
+import SearchBar from "../searchbar/SearchBar";
 const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, handleAddService }) => {
+  const [searchResults, setSearchResults] = useState([]); // Estado para resultados de búsqueda
+
   const handleDateChange = (date) => {
     handleInputChange({ target: { id: "date", value: date } });
+  };
+
+  const handleSearch = (query) => {
+    // Aquí debes implementar la lógica de búsqueda, por ejemplo, filtrando productos y servicios
+    // Simularemos la búsqueda con datos ficticios
+    const results = [
+      { id: 1, name: "Producto A", type: "product", price: 10 },
+      { id: 2, name: "Servicio B", type: "service", price: 20 },
+    ].filter(item => item.name.toLowerCase().includes(query.toLowerCase()) || item.id.toString().includes(query));
+    setSearchResults(results);
+  };
+
+  const handleSelectResult = (result) => {
+    if (result.type === "product") {
+      handleAddProduct(result, "add");
+    } else {
+      handleAddService(result);
+    }
+    setSearchResults([]); // Limpiar resultados de búsqueda después de seleccionar
   };
 
   return (
@@ -15,9 +38,7 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
       <div className="flex flex-wrap justify-center">
         <div className="w-full md:w-1/2 px-2 mb-4">
           <div className="mb-4">
-            <div className="mb-2">
-              <Label htmlFor="date" value="Fecha" />
-            </div>
+            <Label htmlFor="date" value="Fecha" />
             <DatePicker
               id="date"
               selected={formData.date ? new Date(formData.date) : null}
@@ -39,6 +60,22 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
               <option value="tarjeta">Tarjeta</option>
               <option value="transferencia">Transferencia</option>
             </Select>
+          </div>
+          <div className="mb-4">
+            <SearchBar onSearch={handleSearch} />
+            {searchResults.length > 0 && (
+              <div className="bg-white border rounded-md p-2 mt-2">
+                {searchResults.map(result => (
+                  <div
+                    key={result.id}
+                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                    onClick={() => handleSelectResult(result)}
+                  >
+                    {result.name} - ${result.price}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
         <div className="w-full md:w-1/2 px-2">
