@@ -3,9 +3,12 @@
 import { useState } from "react";
 import { Button, Label, TextInput, Select, Card, Radio } from "flowbite-react";
 
+// Componente principal para el formulario de nuevo cliente
 const FormNuevoCliente = () => {
+  // Estado local para determinar qué tipo de formulario mostrar
   const [formType, setFormType] = useState("cliente");
 
+  // Función para renderizar el formulario del cliente
   const renderClienteForm = () => (
     <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
@@ -127,6 +130,7 @@ const FormNuevoCliente = () => {
     </form>
   );
 
+  // Función para renderizar el formulario del taller
   const renderTallerForm = () => (
     <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
@@ -177,18 +181,22 @@ const FormNuevoCliente = () => {
     </form>
   );
 
+  // Renderizado del componente principal
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 flex-col">
       <h1 className="text-slate-600 m-5 text-2xl md:text-3xl font-bold tracking-wider">
         Nuevo Cliente
       </h1>
       <div className="flex space-x-4 mb-4">
+        {/* Botones para alternar entre formulario de cliente y taller */}
         <Button onClick={() => setFormType("cliente")} className="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white">Cliente</Button>
         <Button onClick={() => setFormType("taller")} className="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white">Taller</Button>
       </div>
       <Card className="w-full max-w-4xl p-5">
+        {/* Renderizado condicional del formulario según el estado formType */}
         {formType === "cliente" ? renderClienteForm() : renderTallerForm()}
         <div className="flex justify-center mt-2">
+          {/* Botón de submit */}
           <Button type="submit" className="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white">Submit</Button>
         </div>
       </Card>
