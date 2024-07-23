@@ -52,7 +52,7 @@ const ModalCreateProduct = () => {
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="precio publico" value="Precio Publico" />
+                <Label htmlFor="precio publico" value="Precio Taller" />
               </div>
               <TextInput id="referencia" type="text" required />
             </div>
@@ -62,6 +62,10 @@ const ModalCreateProduct = () => {
               </div>
               <TextInput id="referencia" type="text" required />
             </div>
+            <div className="mb-2 block">
+                <Label htmlFor="stock" value="Stock" />
+                <TextInput id="referencia" type="text" required />
+              </div>
             <div className="w-full">
               <Button>Crear producto</Button>
             </div>
