@@ -61,7 +61,7 @@
             selectedProducts={order.selectedProducts}
             selectedServices={order.selectedServices}
             warnings={order.warnings}
-            calculateTotal={() => 
+            calculateTotal={() =>
               order.selectedProducts.reduce((total, item) => total + item.price * item.quantity, 0) +
               order.selectedServices.reduce((total, item) => total + item.price * item.quantity, 0)
             }
@@ -69,6 +69,9 @@
           />
         ),
         showConfirmButton: false,
+        customClass: {
+          container: 'z-1050', // Añade una clase personalizada para el contenedor
+        },
       });
     };
   
@@ -92,9 +95,10 @@
                   <Table.Cell>{order.client}</Table.Cell>
                   <Table.Cell>{order.service}</Table.Cell>
                   <Table.Cell>
-                  <FlowbiteButton onClick={() => handleViewOrder(order)} className="bg-red-600 hover:bg-red-700 text-white">
-                    Ver Orden
-                  </FlowbiteButton>                  </Table.Cell>
+                    <FlowbiteButton onClick={() => handleViewOrder(order)} className="bg-red-600 hover:bg-red-700 text-white">
+                      Ver Orden
+                    </FlowbiteButton>
+                  </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>

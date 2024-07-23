@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, googleProvider } from '../../firebase/config';
+import { signInWithEmail, signInWithGoogle, signUpWithEmail } from '../../firebase/firebaseAuth';
 import Swal from 'sweetalert2';
-import { Button, TextInput, Label, Card } from 'flowbite-react';
 
 const Landing = () => {
   const [email, setEmail] = useState('');
@@ -12,34 +10,22 @@ const Landing = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      const user = auth.currentUser;
-      if (user.email === 'empleado@example.com') {
-        navigate('/employee/services');
-      } else if (user.email === 'admin@example.com') {
-        navigate('/admin/manage_employees');
-      } else {
-        console.log('No matching role for user');
-      }
-    } catch (error) {
-      console.error('Error during manual login:', error.message);
-    }
+    await signInWithEmail(email, password);
+    navigateBasedOnRole(email);
   };
 
   const handleGoogleLogin = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-      const user = auth.currentUser;
-      if (user.email === 'empleado@example.com') {
-        navigate('/employee/services');
-      } else if (user.email === 'admin@example.com') {
-        navigate('/admin/manage_employees');
-      } else {
-        console.log('No matching role for user');
-      }
-    } catch (error) {
-      console.error('Error during Google login:', error.message);
+    await signInWithGoogle();
+    navigateBasedOnRole(email);
+  };
+
+  const navigateBasedOnRole = (email) => {
+    if (email === 'empleado@example.com') {
+      navigate('/employee/services');
+    } else if (email === 'admin@example.com') {
+      navigate('/admin/manage_employees');
+    } else {
+      console.log('No matching role for user');
     }
   };
 
@@ -50,7 +36,7 @@ const Landing = () => {
         <input type="email" id="email" class="swal2-input" placeholder="Correo Electrónico">
         <input type="password" id="password" class="swal2-input" placeholder="Contraseña">
       `,
-       confirmButtonColor: '#bf0811',
+      confirmButtonColor: '#bf0811',
       confirmButtonText: 'Registrarse',
       focusConfirm: false,
       preConfirm: async () => {
@@ -60,25 +46,14 @@ const Landing = () => {
           Swal.showValidationMessage(`Por favor ingrese correo electrónico y contraseña`);
           return;
         }
-        try {
-          await createUserWithEmailAndPassword(auth, email, password);
-          Swal.fire({
-            icon: 'success',
-            title: 'Usuario creado con éxito',
-            showConfirmButton: true,
-            confirmButtonText: 'OK',
-            confirmButtonColor: '#bf0811' 
-          });
-        } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error.message,
-            showConfirmButton: true,
-            confirmButtonText: 'OK',
-            confirmButtonColor: '#bf0811' 
-          });
-        }
+        await signUpWithEmail(email, password, email.split('@')[0]);
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuario creado con éxito',
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#bf0811'
+        });
       }
     });
   };
@@ -89,9 +64,7 @@ const Landing = () => {
         <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">Inicio de Sesión</h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Correo Electrónico
-            </label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
             <input
               type="email"
               id="email"
@@ -103,9 +76,7 @@ const Landing = () => {
             />
           </div>
           <div className="mb-6">
-            <label html-for="password" className="block text-sm font-medium text-gray-700">
-              Contraseña
-            </label>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
             <input
               type="password"
               id="password"
@@ -133,9 +104,7 @@ const Landing = () => {
         </button>
         <p className="mt-4 text-center text-sm text-gray-600">
           ¿No tienes una cuenta?{' '}
-          <button className="text-indigo-500 hover:underline" onClick={handleSignup}>
-            Regístrate
-          </button>
+          <button className="text-indigo-500 hover:underline" onClick={handleSignup}>Regístrate</button>
         </p>
       </div>
     </div>
