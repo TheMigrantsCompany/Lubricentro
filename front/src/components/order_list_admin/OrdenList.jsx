@@ -35,7 +35,9 @@ const OrderList = () => {
   return (
     <Card>
       <Title>ORDENES DE SERVICIO PENDIENTES</Title>
-      <SearchBar />
+      <div className="flex justify-center mb-4">
+        <SearchBar className="w-1/2" />
+      </div>
       <Table>
         <TableHead>
           <TableRow>
@@ -70,5 +72,6 @@ const OrderList = () => {
 };
 
 export default OrderList;
+
 
 
