@@ -1,5 +1,6 @@
 const express = require('express');
 
+const createBulkProductsHandler = require('../handlers/productService/createBulkProductsHandler');
 const createProductHandler = require('../handlers/productService/createProductHandler');
 const getAllProductsHandler = require('../handlers/productService/getAllProductsHandler');
 const getProductByIdHandler = require('../handlers/productService/getProductByIdHandler');
@@ -11,10 +12,15 @@ const deleteProductByIdHandler = require('../handlers/productService/deleteProdu
 const deleteProductByReferenceHandler = require('../handlers/productService/deleteProductByReferenceHandler');
 
 
+
+
 const productRouter = express.Router();
 
 
 // Rutas para el modelo de productos
+
+// Endpoint para carga masiva de productos
+productRouter.post('/bulk', createBulkProductsHandler);
 
 // Endpoint para crear un nuevo producto
 productRouter.post('/', createProductHandler);
