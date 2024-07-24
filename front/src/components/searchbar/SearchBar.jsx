@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { TextInput, Button } from "flowbite-react";
+import { TextInput } from "flowbite-react";
+import { FiSearch } from "react-icons/fi";
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, className }) => {
   const [query, setQuery] = useState("");
 
   const handleInputChange = (e) => {
@@ -13,23 +14,28 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="flex">
+    <div className={`relative flex items-center ${className}`}>
       <TextInput
         type="text"
         placeholder="Buscar productos/servicios"
         value={query}
         onChange={handleInputChange}
-        className="flex-grow border rounded-md p-2"
+        className="flex-grow border rounded-md p-2 pr-10"
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            handleSearch();
+          }
+        }}
       />
-      <Button 
+      <div 
         onClick={handleSearch} 
-        className="ml-1 text-sm py-1 px-1  bg-red-600 hover:bg-red-700 text-white"
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        className="absolute right-2 cursor-pointer text-gray-400"
       >
-        Buscar
-      </Button>
+        <FiSearch size={20} />
+      </div>
     </div>
   );
 };
 
 export default SearchBar;
+
