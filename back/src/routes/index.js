@@ -3,8 +3,7 @@ const carRouter = require("./carRouter");
 const productServiceRouter = require("./productServiceRouter");
 const categoriesRouter = require("./categoryRouter");
 const userRouter = require("./userRoutes");
-
-
+const orderRouter = require("./orderRoutes")
 
 const router = Router();
 
@@ -16,11 +15,7 @@ router.use("/categories", categoriesRouter);
 router.use("/products", productServiceRouter);
 // Agrega las rutas de usuario a la ruta principal
 router.use("/users", userRouter);
-
-module.exports = router;
-
-
-
-
+// Agrega las rutas de orden de servicio a la ruta principal
+router.use("/orders", orderRouter);
 
 module.exports = router;

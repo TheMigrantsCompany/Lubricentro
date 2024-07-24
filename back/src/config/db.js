@@ -73,5 +73,5 @@ ProductService.belongsTo(Category, { foreignKey: 'id_Category' });
 // Exporta los modelos y la conexión a la base de datos para su uso en otras partes de la aplicación
 module.exports = {
   ...sequelize.models,
-  sequelize
+  sequelize
 };
