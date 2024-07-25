@@ -15,7 +15,9 @@ const OrderList2 = () => {
   return (
     <Card>
       <Title>ORDENES DE SERVICIO TERMINADAS</Title>
-      <SearchBar />
+      <div className="flex justify-center mb-4">
+        <SearchBar className="w-1/2" />
+      </div>
       <Table>
         <TableHead>
           <TableRow>
