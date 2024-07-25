@@ -16,7 +16,7 @@ const SearchBar = ({ onSearch }) => {
     <div className="flex">
       <TextInput
         type="text"
-        placeholder="Buscar productos/servicios"
+        placeholder="Ingrese su busqueda"
         value={query}
         onChange={handleInputChange}
         className="flex-grow border rounded-md p-2"
