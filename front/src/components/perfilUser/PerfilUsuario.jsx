@@ -100,10 +100,10 @@ const PerfilUser = ({ isOpen, onClose }) => {
                             </>
                         ) : (
                             <>
-                                <label>Nombre: {perfilInfo.displayName}</label>
-                                <label>Teléfono: {perfilInfo.phoneNumber}</label>
-                                <label>Correo: {perfilInfo.email}</label>
-                                <label>Foto: {perfilInfo.photoURL}</label>
+                                <label className="text-black">Nombre: {perfilInfo.displayName}</label>
+                                <label className="text-black">Teléfono: {perfilInfo.phoneNumber}</label>
+                                <label className="text-black">Correo: {perfilInfo.email}</label>
+                                
                             </>
                         )}
                     </div>

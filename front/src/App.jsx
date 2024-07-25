@@ -24,12 +24,15 @@ import Inventario from "./views/inventario/Inventario";
 import FooterComponent from "./components/footercomponent/FooterComponent";
 import NavBar from "./components/navbar/NavBar";
 
+//ruta Cliente//
+import ClientServiceOrder from "./views/client-service-order/ClientServiceOrder";
+
 function App() {
-
   const location = useLocation();
-  const showNavBar = !["/"].includes(location.pathname);
+  const showNavBar = !["/", "/client/service_order"].includes(location.pathname);
+  const showFooter = !["/client/service_order"].includes(location.pathname);
 
-  //separa las rutas para poder aplicar las sideBar segun corresponda//
+  // separa las rutas para poder aplicar las sideBar segun corresponda //
   const employeeRoutes = [
     "/employee/services",
     "/employee/create_order",
@@ -43,10 +46,9 @@ function App() {
     "/admin/manage_products",
     "/admin/manage_orders",
     "/admin/manage_clients",
-   
   ];
 
-  //determina si la ruta actual es una ruta de empleado o una ruta de administrador//
+  // determina si la ruta actual es una ruta de empleado o una ruta de administrador //
   const isEmployeeRoute = employeeRoutes.includes(location.pathname);
   const isAdminRoute = adminRoutes.includes(location.pathname);
 
@@ -62,18 +64,20 @@ function App() {
             {/* Rutas de admin */}
             <Route path="/admin/manage_employees" element={<GestionEmpleados />} />
             <Route path="/admin/manage_products" element={<ManageProducts />} />
-            <Route path="/admin/manage_orders" element={<MangeOrders/>} />
+            <Route path="/admin/manage_orders" element={<MangeOrders />} />
             <Route path="/admin/manage_clients" element={<GestionClientes />} />
             {/* Rutas de employee */}
             <Route path="/employee/services" element={<Services />} />
             <Route path="/employee/create_order" element={<CreateOrderEmp />} />
             <Route path="/employee/inventary" element={<Inventario />} />
             <Route path="/employee/create_user" element={<NewClientEmp />} />
-            <Route path="/employee/sevices" element={<Services />} /> 
+            <Route path="/employee/sevices" element={<Services />} />
+            {/* Rutas de client */}
+            <Route path="/client/service_order" element={<ClientServiceOrder />} />
           </Routes>
         </div>
       </div>
-      <FooterComponent />
+      {showFooter && <FooterComponent />}
     </>
   );
 }

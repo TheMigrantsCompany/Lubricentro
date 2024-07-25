@@ -17,7 +17,7 @@ const SearchBar = ({ onSearch, className }) => {
     <div className={`relative flex items-center ${className}`}>
       <TextInput
         type="text"
-        placeholder="Buscar productos/servicios"
+        placeholder="Ingrese su busqueda"
         value={query}
         onChange={handleInputChange}
         className="flex-grow border rounded-md p-2 pr-10"
