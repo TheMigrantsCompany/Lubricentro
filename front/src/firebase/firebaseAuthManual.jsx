@@ -17,7 +17,7 @@ export const signUpWithEmail = async (email, password, displayName) => {
         const token = await user.getIdToken();
         const userInfo = {
 			Mail: user.email,
-			Name: user.displayName,
+			Name: user.displayName, 
 			Rol: true
 		};
         await sendUserInfotoBackend(userInfo, token);
