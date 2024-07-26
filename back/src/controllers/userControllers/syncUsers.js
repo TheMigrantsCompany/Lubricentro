@@ -9,27 +9,25 @@ const syncUsersFromFirebase = async () => {
         const userPromises = users.map(async (firebaseUser) => {
         try {
             const [user, created] = await User.findOrCreate({
-            where: { mail: firebaseUser.email },
+            where: { Mail: firebaseUser.email },
             defaults: {
                 id_User: firebaseUser.uid,
-                name: firebaseUser.displayName || '',
-                mail: firebaseUser.email,
-                phone: firebaseUser.phoneNumber || '',
-                image: firebaseUser.photoURL || '',
-                address: '', // Si tienes una dirección en Firebase, cámbiala aquí
-                active: true,
-                rol: false, // Asigna el rol según tu lógica
-                shoppingCart: [],
-                recurringPayment: {}
+                Name: firebaseUser.displayName || '',
+                Mail: firebaseUser.email,
+                Password: firebaseUser.password,
+                Phone: firebaseUser.phoneNumber || '',
+                Image: firebaseUser.photoURL || '',
+                Active: true,
+                Rol: false // Asigna el rol según tu lógica
             }
         });
         
         if (!created) {
           // Actualizar datos si el usuario ya existía
             await user.update({
-                name: firebaseUser.displayName || '',
-                phone: firebaseUser.phoneNumber || '',
-                image: firebaseUser.photoURL || '',
+                Name: firebaseUser.displayName || '',
+                Phone: firebaseUser.phoneNumber || '',
+                Image: firebaseUser.photoURL || '',
             });
         }
         } catch (error) {

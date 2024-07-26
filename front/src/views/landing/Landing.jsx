@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithEmail, signInWithGoogle, signUpWithEmail } from '../../firebase/firebaseAuth';
+import { signInWithGoogle } from '../../firebase/firebaseAuthGoogle';
+import { signInWithEmail, signUpWithEmail } from '../../firebase/firebaseAuthManual';
 import Swal from 'sweetalert2';
 
 const Landing = () => {

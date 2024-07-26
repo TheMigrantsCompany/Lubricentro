@@ -7,7 +7,7 @@ const deleteOrderHandler= require('../handlers/orderHandlers/deleteOrderHandler'
 
 const orderRouter = Router();
 
-orderRouter.get("/",getAllOrdersHandler)
+orderRouter.get("/",getAllOrdersHandler);
 orderRouter.post("/service-order/:id", postOrderHandler);
 orderRouter.get('/:id_Service_Order', getOrderByIdHandler);
 orderRouter.get('/:id_User/orders', getUsersOrdersHandler);

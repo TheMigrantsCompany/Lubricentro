@@ -25,7 +25,6 @@ const postUserController = async (req, res) => {
 			Image: Image || null,
 			Rol: rolUser,
 			Password
-			// Aquí puedes añadir más campos si es necesario
 		});
 
 		res.status(201).json(newUser);
