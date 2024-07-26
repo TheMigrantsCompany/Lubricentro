@@ -19,6 +19,7 @@ export const getAllProducts = () => async dispatch => {
 };
 
 
+
 export const postCar = (clientData) => {
     return async (dispatch) => {
       try {
@@ -36,4 +37,3 @@ export const postCar = (clientData) => {
       }
     };
   };
-
