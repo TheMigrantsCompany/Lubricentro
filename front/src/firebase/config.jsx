@@ -28,4 +28,4 @@ export const FirebaseProvider = ({ children }) => {
         );
     };
 
-export { auth, googleProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword };
+export { signInWithEmailAndPassword, createUserWithEmailAndPassword };
