@@ -30,6 +30,14 @@ module.exports = (sequelize) => {
               type: DataTypes.STRING, // Define el tipo de dato como cadena de texto
               allowNull: true, // Establece que este campo es opcional
             },
+            id_User: {
+              type: DataTypes.UUID,
+              allowNull: false
+            },
+            id_Car: {
+              type: DataTypes.UUID,
+              allowNull: false
+            }
         }, 
     {timestamps: false }// Desactiva los campos createdAt y updatedAt
   );
