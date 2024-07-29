@@ -1,23 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getAllProducts, searchProducts } from "../../redux/actions/actions";
 import { TextInput } from "flowbite-react";
 import { FiSearch } from "react-icons/fi";
 
-const SearchBar = ({ onSearch, className }) => {
+const SearchBar = ({ className }) => {
+  const dispatch = useDispatch();
   const [query, setQuery] = useState("");
+  const [error, setError] = useState("");
+  const [inputDisabled, setInputDisabled] = useState(false);
+
+  const re = /^[0-9a-zA-ZÁ-ÿ.:-\s]{0,40}$/;
+
+  useEffect(() => {
+    if (query.trim() === "") {
+      dispatch(getAllProducts());
+    }
+  }, [dispatch, query]);
 
   const handleInputChange = (e) => {
-    setQuery(e.target.value);
+    const inputValue = e.target.value;
+    setQuery(inputValue);
+    if (!re.exec(inputValue)) {
+      inputValue.length > 40
+        ? setError("Invalid Length")
+        : setError("Invalid Characters");
+      setInputDisabled(true);
+    } else {
+      setError("");
+      setInputDisabled(false);
+    }
   };
 
   const handleSearch = () => {
-    onSearch(query);
+    if (query.trim()) {
+      dispatch(searchProducts(query));
+      setError("");
+    }
+    setInputDisabled(false);
   };
 
   return (
     <div className={`relative flex items-center ${className}`}>
       <TextInput
         type="text"
-        placeholder="Ingrese su busqueda"
+        placeholder="Ingrese su búsqueda"
         value={query}
         onChange={handleInputChange}
         className="flex-grow border rounded-md p-2 pr-10"
@@ -27,6 +54,7 @@ const SearchBar = ({ onSearch, className }) => {
           }
         }}
       />
+      {error && <p className="error">{error}</p>}
       <div 
         onClick={handleSearch} 
         className="absolute right-2 cursor-pointer text-gray-400"
