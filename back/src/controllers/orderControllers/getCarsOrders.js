@@ -1,13 +1,13 @@
-// getUsersOrders.js
+// getCarsOrders.js
 const { ServiceOrder, Sequelize } = require('../../config/db');
 
-const getUsersOrders = async (id_User) => {
+const getCarsOrders = async (id_Car) => {
     try {
-        console.log(`Buscando órdenes para el usuario con id: ${id_User}`);
+        console.log(`Buscando órdenes para el usuario con id: ${id_Car}`);
 
         const orders = await ServiceOrder.findAll({
         where: {
-            'id_User': id_User
+            'CarInformation.id_User': id_Car
         }
     });
 
@@ -19,4 +19,4 @@ const getUsersOrders = async (id_User) => {
     }
 };
 
-module.exports = getUsersOrders;
+module.exports = getCarsOrders;
