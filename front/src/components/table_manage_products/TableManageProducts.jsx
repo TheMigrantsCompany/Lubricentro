@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { getAllProducts } from '../../redux/actions/actions';
-import { Table, Button } from 'flowbite-react';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "../../redux/actions/actions";
+import { Table, Button } from "flowbite-react";
 
 const TableManageProducts = () => {
   const dispatch = useDispatch();
@@ -21,15 +21,15 @@ const TableManageProducts = () => {
 
   if (!products.length) return <div>No products available.</div>;
 
-  // Calculate the products to be displayed on the current page
+ 
   const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
   const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
-  // Calculate total pages
+  
   const totalPages = Math.ceil(products.length / itemsPerPage);
 
-  // Handle page change
+  
   const handlePreviousPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };

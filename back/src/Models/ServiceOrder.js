@@ -10,9 +10,21 @@ module.exports = (sequelize) => {
               primaryKey: true, // Establece que este campo es la clave primaria
               defaultValue: DataTypes.UUIDV4, // Configura el valor por defecto como UUID v4
             },
-            UserInformation: {
-              type: DataTypes.JSONB,
-              allowNull: false
+            id_User: {
+              type: DataTypes.UUID,
+              allowNull: false,
+              references: {
+                model: 'Users',
+                key: 'id_User',
+              },
+            },
+            id_Car: {
+              type: DataTypes.UUID,
+              allowNull: false,
+              references: {
+                model: 'Cars',
+                key: 'id_Car',
+              },
             },
             Date: {
               type: DataTypes.DATE, // Define el tipo de dato como fecha

@@ -20,19 +20,19 @@ const postOrder = async (id_User, id_Car, paymentMethod, items, warnings, res) =
         // Obtener información del usuario
         const user = await User.findByPk(id_User);
         if (!user) {
-            return res.status(404).json({ error: 'Usuario no encontrado' });
-        }
+        return res.status(404).json({ error: 'Usuario no encontrado' });
+        };
 
-        const userInformation = {
-            id_User: user.id_User,
-            nameLogin: user.Name,
-            emailLogin: user.Mail,
+        const car = await Car.findByPk(id_Car);
+        if(!car){
+            return res.status(404).json({ error: 'Carro no encontrado' });
         };
 
         const date = new Date(); // Fecha actual
 
         const newServiceOrder = await ServiceOrder.create({
-            UserInformation: userInformation,
+            id_User: user.id_User,
+            id_Car: car.id_Car,
             Date: date,
             PaymentMethod: paymentMethod,
             Items: items,
