@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
             },
             Password: {
                 type: DataTypes.STRING, // Define el tipo de dato como cadena de texto
-                allowNull: false, // Establece que este campo es obligatorio
+                allowNull: true, // Establece que este campo es obligatorio
             },
             Phone: {
                 type: DataTypes.STRING, // Define el tipo de dato como cadena de texto
