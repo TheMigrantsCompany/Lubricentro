@@ -13,7 +13,11 @@ const postUserController = async (req, res) => {
 		let rolUser = false;
 		if (
 			Mail === "lubricantesyaditivos.calle6@gmail.com" ||
-			Mail === "migrants.comapany@gmail.com"
+			Mail === "migrants.comapany@gmail.com" ||
+			Mail === "Servitecaliquimoly@gmail.com" ||
+			Mail === "Williampcalle6@gmail.com" ||
+			Mail === "Danielbcalle6@gmail.com" ||
+			Mail === "Duartewilliam914@gmail.com"
 		) {
 			rolUser = true;
 		}
