@@ -7,10 +7,16 @@ const createCarHandler = async (req, res) => {
     const carData = req.body; // Obtiene los datos del cuerpo de la solicitud
 
     const newCar = await createCarController(carData); // Llama al controlador para crear el carro
+     
+    // Define el ID del nuevo carro en una constante
+     const carId = newCar.id_Car;
+
+     // Generar la URL única para el carro utilizando el ID
+     const carUrl = `http://localhost:5173/client/service_order/${carId}`;
 
     // Genera el código QR para el nuevo carro si tiene LicensePlate
     if (newCar.LicensePlate) {
-      newCar.QR = await generateQRCode(`Car ID: ${newCar.id_Car}`);
+      newCar.QR = await generateQRCode(carUrl);
       await newCar.save(); // Guarda el nuevo carro con el QR
     }
 
