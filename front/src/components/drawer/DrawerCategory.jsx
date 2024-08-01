@@ -65,7 +65,7 @@ const DrawerCategory = () => {
                 <FaBottleDroplet size="1.5em" />
               </div>
               <div className="text-center font-medium text-gray-500 dark:text-gray-400">
-                Refrigerantes
+                Aceites
               </div>
             </div>
             <div className="cursor-pointer rounded-lg bg-gray-50 p-4 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600">
@@ -73,7 +73,7 @@ const DrawerCategory = () => {
                 <FaCarOn color="gray" size="1.5em" />
               </div>
               <div className="text-center font-medium text-gray-500 dark:text-gray-400">
-                Belleza automotriz
+                Bombillos
               </div>
             </div>
             <div className="cursor-pointer rounded-lg bg-gray-50 p-4 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600">
@@ -89,7 +89,7 @@ const DrawerCategory = () => {
                 <FaOilCan color="gray" size="1.5em" />
               </div>
               <div className="text-center font-medium text-gray-500 dark:text-gray-400">
-                Lubricantes
+                Filtro de Aire
               </div>
             </div>
             <div className="cursor-pointer rounded-lg bg-gray-50 p-4 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600">
@@ -97,7 +97,7 @@ const DrawerCategory = () => {
                 <MdCarCrash color="gray" size="1.5em" />
               </div>
               <div className="text-center font-medium text-gray-500 dark:text-gray-400">
-                Servicios
+                Filtro de Aceite
               </div>
             </div>
             <div className="cursor-pointer rounded-lg bg-gray-50 p-4 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600">
@@ -105,7 +105,7 @@ const DrawerCategory = () => {
                 <GiCarWheel color="gray" size="1.5em" />
               </div>
               <div className="text-center font-medium text-gray-500 dark:text-gray-400">
-                Sistema de frenos
+                Filtro de Cabina
               </div>
             </div>
             <div className="cursor-pointer rounded-lg bg-gray-50 p-4 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600">
@@ -113,10 +113,27 @@ const DrawerCategory = () => {
                 <IoFilterCircleOutline color="gray" size="1.5em" />
               </div>
               <div className="text-center font-medium text-gray-500 dark:text-gray-400">
-                Filtros
+                Filtro de Combustible
+              </div>
+            </div>
+            <div className="cursor-pointer rounded-lg bg-gray-50 p-4 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600">
+              <div className="mx-auto mb-2 flex h-[48px] max-h-[48px] w-[48px] max-w-[48px] items-center justify-center rounded-full bg-gray-200 p-2 dark:bg-gray-600">
+                <FaBottleDroplet size="1.5em" />
+              </div>
+              <div className="text-center font-medium text-gray-500 dark:text-gray-400">
+                Pastilla de Frenos
+              </div>
+            </div>
+            <div className="cursor-pointer rounded-lg bg-gray-50 p-4 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600">
+              <div className="mx-auto mb-2 flex h-[48px] max-h-[48px] w-[48px] max-w-[48px] items-center justify-center rounded-full bg-gray-200 p-2 dark:bg-gray-600">
+                <FaBottleDroplet size="1.5em" />
+              </div>
+              <div className="text-center font-medium text-gray-500 dark:text-gray-400">
+                Servicio
               </div>
             </div>
           </div>
+          
         </Drawer.Items>
       </Drawer>
     </>
