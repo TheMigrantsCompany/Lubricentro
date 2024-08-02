@@ -1,4 +1,4 @@
-const getProductByNameController = require('../../controllers/productService/getProductByNameController');
+const getProductByNameController = require('../../controllers/productService/getProductByNameOrReferenceController');
 
 const getProductByNameHandler = async (req, res) => {
   const { name } = req.params;
