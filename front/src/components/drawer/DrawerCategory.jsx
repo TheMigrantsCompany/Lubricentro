@@ -82,7 +82,7 @@ const DrawerCategory = () => {
                             className="cursor-pointer rounded-lg bg-gray-50 p-4 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600"
                         >
                             <div className="mx-auto mb-2 flex h-[48px] max-h-[48px] w-[48px] max-w-[48px] items-center justify-center rounded-full bg-gray-200 p-2 dark:bg-gray-600">
-                                {/* Icono para mostrar todos los productos */}
+                               
                                 <HiSquaresPlus size="1.5em" />
                             </div>
                             <div className="text-center font-medium text-gray-500 dark:text-gray-400">
@@ -96,7 +96,7 @@ const DrawerCategory = () => {
                                 className="cursor-pointer rounded-lg bg-gray-50 p-4 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600"
                             >
                                 <div className="mx-auto mb-2 flex h-[48px] max-h-[48px] w-[48px] max-w-[48px] items-center justify-center rounded-full bg-gray-200 p-2 dark:bg-gray-600">
-                                    {/* Renderiza el ícono basado en la categoría */}
+                                  
                                     {categoryName === "ACEITES" && <FaBottleDroplet size="1.5em" />}
                                     {categoryName === "PLUMILLAS" && <FaCarOn size="1.5em" />}
                                     {categoryName === "BOMBILLOS" && <FaCarOn color="gray" size="1.5em" />}
