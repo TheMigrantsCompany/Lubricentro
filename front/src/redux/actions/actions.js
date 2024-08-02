@@ -5,7 +5,11 @@ import {
     SEARCH_PRODUCTS,
     GET_CATEGORY_BY_ID,
     GET_PRODUCTS_BY_CATEGORY,
-    GET_ALL_CATEGORIES,  } from "./types";
+    GET_ALL_CATEGORIES,
+    GET_ALL_USERS,
+    GET_USERS_ERROR,
+    
+  } from "./types";
 
 // Acción para obtener todos los productos
 export const getAllProducts = () => async dispatch => {
@@ -100,6 +104,22 @@ export const getAllCategories = () => async dispatch => {
     } catch (error) {
         dispatch({
             type: GET_PRODUCTS_ERROR,
+            payload: error.message,
+        });
+    }
+};
+
+//Accion para obtener todos los usuarios
+export const getAllUsers = () => async dispatch => {
+    try {
+        const response = await axios.get('http://localhost:3001/users/');
+        dispatch({
+            type: GET_ALL_USERS,
+            payload: response.data,
+        });
+    } catch (error) {
+        dispatch({
+            type: GET_USERS_ERROR,
             payload: error.message,
         });
     }

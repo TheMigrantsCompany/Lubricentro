@@ -4,7 +4,9 @@ import {
    SEARCH_PRODUCTS,
    GET_CATEGORY_BY_ID, 
    GET_PRODUCTS_BY_CATEGORY,
-   GET_ALL_CATEGORIES, } from "../actions/types";
+   GET_ALL_CATEGORIES,
+   GET_ALL_USERS,
+   } from "../actions/types";
 
 const initialState = {
     loading: false,
@@ -12,7 +14,10 @@ const initialState = {
     error: null,
     category: null,
     categories: [],
+    users: [],
 };
+
+
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -45,6 +50,13 @@ const rootReducer = (state = initialState, action) => {
             loading: false,
             error: action.payload,
           };
+          case GET_ALL_USERS:
+            return {
+                ...state,
+                loading: false,
+                users: action.payload,
+                error: null,
+            };
         default:
           return state;
       }
