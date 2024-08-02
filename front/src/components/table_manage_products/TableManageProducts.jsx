@@ -18,7 +18,7 @@ const TableManageProducts = () => {
     }, [dispatch, category]);
 
     useEffect(() => {
-        setCurrentPage(1); // Reset paginación cuando cambian los productos
+        setCurrentPage(1); 
     }, [products]);
 
     // Lógica para paginación
