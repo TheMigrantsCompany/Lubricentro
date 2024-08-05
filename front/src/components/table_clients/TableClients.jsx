@@ -33,7 +33,7 @@ export function ClientesPlacasTable() {
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex flex-col items-center">
       <div className="w-full max-w-4xl mx-auto md:ml-16">
         <Card>
           <div className="overflow-x-auto">
@@ -55,6 +55,9 @@ export function ClientesPlacasTable() {
                   <th scope="col" className="px-6 py-3">
                     QR
                   </th>
+                  <th scope="col" className="px-6 py-3">
+                    Acciones
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -70,30 +73,30 @@ export function ClientesPlacasTable() {
                         onClick={() => handleVerQRCode(cliente)} 
                       />
                     </td>
+                    <td className="px-6 py-4 flex space-x-2">
+                      <Button
+                        onClick={() => handleModificar(cliente)}
+                        className="py-1 px-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      >
+                        Modificar
+                      </Button>
+                      <Button
+                        onClick={() => handleDetalle(cliente)}
+                        className="py-1 px-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                      >
+                        Detalle
+                      </Button>
+                      <Button
+                        onClick={() => handleEliminar(cliente.id_Car)}
+                        className="py-1 px-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                      >
+                        Eliminar
+                      </Button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
-          <div className="flex justify-center mt-4 space-x-2">
-            <Button
-              onClick={() => handleModificar(cars[0])}
-              className="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Modificar
-            </Button>
-            <Button
-              onClick={() => handleDetalle(cars[0])}
-              className="py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            >
-              Detalle
-            </Button>
-            <Button
-              onClick={() => handleEliminar(cars[0].id_Car)}
-              className="py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-            >
-              Eliminar
-            </Button>
           </div>
         </Card>
       </div>
@@ -112,3 +115,4 @@ export function ClientesPlacasTable() {
     </div>
   );
 }
+
