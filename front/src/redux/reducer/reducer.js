@@ -6,6 +6,7 @@ import {
    GET_PRODUCTS_BY_CATEGORY,
    GET_ALL_CATEGORIES,
    GET_ALL_USERS,
+   GET_ALL_SERVICES,
    } from "../actions/types";
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
     category: null,
     categories: [],
     users: [],
+    services: [],
 };
 
 
@@ -57,6 +59,11 @@ const rootReducer = (state = initialState, action) => {
                 users: action.payload,
                 error: null,
             };
+            case GET_ALL_SERVICES:
+              return {
+                ...state,
+                services: action.payload,
+              };
         default:
           return state;
       }

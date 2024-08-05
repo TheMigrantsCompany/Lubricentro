@@ -8,6 +8,7 @@ import {
     GET_ALL_CATEGORIES,
     GET_ALL_USERS,
     GET_USERS_ERROR,
+    GET_ALL_SERVICES
     
   } from "./types";
 
@@ -124,3 +125,13 @@ export const getAllUsers = () => async dispatch => {
         });
     }
 };
+
+// Acción para obtener servicios
+export const fetchServices = () => async (dispatch) => {
+    try {
+      const response = await axios.get('http://localhost:3001/services/');
+      dispatch({ type: GET_ALL_SERVICES, payload: response.data });
+    } catch (error) {
+      console.error('Error al obtener servicios:', error);
+    }
+  };

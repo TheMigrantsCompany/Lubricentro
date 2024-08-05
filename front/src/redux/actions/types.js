@@ -1,5 +1,3 @@
-import { FaDAndD } from "react-icons/fa6";
-
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const GET_PRODUCTS_ERROR = 'GET_PRODUCTS_ERROR';
 export const SEARCH_PRODUCTS = 'SEARCH_PRODUCTS';
@@ -8,3 +6,4 @@ export const GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_USERS_ERROR = 'GET_USERS_ERROR';
+export const GET_ALL_SERVICES = 'GET_ALL_SERVICES';
