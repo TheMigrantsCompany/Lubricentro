@@ -8,15 +8,16 @@ const normalizeString = (str) => {
     .replace(/[\u0300-\u036f]/g, ''); // Eliminar acentos
 };
 
-const getProductByNameController = async (name) => {
-  const normalizedSearchName = normalizeString(name);
+const getProductByNameOrReferenceController = async (searchTerm) => {
+  const normalizedSearchTerm = normalizeString(searchTerm);
 
   const products = await ProductService.findAll({
     where: {
-      Name: {
-        [Op.iLike]: `%${normalizedSearchName}%`, // Usar operador iLike para búsqueda insensible a mayúsculas/minúsculas
-      },
-    },
+      [Op.or]: [
+        { Name: { [Op.iLike]: `%${normalizedSearchTerm}%` } },
+        { Reference: { [Op.iLike]: `%${normalizedSearchTerm}%` } }
+      ]
+    }
   });
 
   if (products.length === 0) {
@@ -26,4 +27,4 @@ const getProductByNameController = async (name) => {
   return products;
 };
 
-module.exports = getProductByNameController;
+module.exports = getProductByNameOrReferenceController;

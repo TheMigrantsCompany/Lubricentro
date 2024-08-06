@@ -4,7 +4,7 @@ const createBulkProductsHandler = require('../handlers/productService/createBulk
 const createProductHandler = require('../handlers/productService/createProductHandler');
 const getAllProductsHandler = require('../handlers/productService/getAllProductsHandler');
 const getProductByIdHandler = require('../handlers/productService/getProductByIdHandler');
-const getProductByNameHandler = require('../handlers/productService/getProductByNameHandler');
+const getProductByNameOrReferenceHandler = require('../handlers/productService/getProductByNameOrReferenceHandler');
 const getProductsByCategoryHandler = require('../handlers/productService/getProductsByCategoryHandler');
 const updateProductHandler = require('../handlers/productService/updateProductHandler');
 const updateProductActiveHandler = require('../handlers/productService/updateProductActiveHandler');
@@ -32,7 +32,7 @@ productRouter.get('/', getAllProductsHandler);
 productRouter.get('/id/:id', getProductByIdHandler);
 
 // Endpoint para obtener un producto por su nombre
-productRouter.get('/name/:name', getProductByNameHandler);
+productRouter.get('/name/:name', getProductByNameOrReferenceHandler);
 
 // Endpoint para obtener productos por categoría
 productRouter.get('/category/:categoryId', getProductsByCategoryHandler);

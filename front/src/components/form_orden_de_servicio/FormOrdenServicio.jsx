@@ -17,10 +17,13 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
   const handleSearch = (query) => {
     // Aquí debes implementar la lógica de búsqueda, por ejemplo, filtrando productos y servicios
     // Simularemos la búsqueda con datos ficticios
+    console.log("Query for search:", query); // Depuración
     const results = [
       { id: 1, name: "Producto A", type: "product", price: 10 },
       { id: 2, name: "Servicio B", type: "service", price: 20 },
     ].filter(item => item.name.toLowerCase().includes(query.toLowerCase()) || item.id.toString().includes(query));
+    
+    console.log("Search results:", results); // Depuración
     setSearchResults(results);
   };
 
@@ -64,7 +67,7 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
           <div className="mb-4">
             <SearchBar onSearch={handleSearch} />
             {searchResults.length > 0 && (
-              <div className="bg-white border rounded-md p-2 mt-2">
+              <div className="bg-white border rounded-md mt-2 max-h-60 overflow-y-auto">
                 {searchResults.map(result => (
                   <div
                     key={result.id}
