@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCurrentid_User } from "../../utils/getCurrentUserId";
 import { 
     GET_ALL_PRODUCTS,
     
@@ -10,6 +11,8 @@ import {
     GET_ALL_CATEGORIES,
     GET_ALL_USERS,
     GET_USERS_ERROR,
+    SET_CURRENT_USER,
+
     
  
     GET_CARS,
@@ -42,12 +45,12 @@ export const postCar = (clientData) => async dispatch => {
     try {
         const response = await axios.post('http://localhost:3001/cars/', clientData);
         dispatch({
-            type: 'POST_CLIENT_SUCCESS',
+            type: POST_CLIENT_SUCCESS,
             payload: response.data,
         });
     } catch (error) {
         dispatch({
-            type: 'POST_CLIENT_FAILURE',
+            type: POST_CLIENT_FAILURE,
             payload: error.message,
         });
     }
@@ -55,22 +58,21 @@ export const postCar = (clientData) => async dispatch => {
 
 
 
-export const createServiceOrder = (id_User, orderData) => async dispatch => {
-    
+export const createServiceOrder = (orderData) => async dispatch => {
+    const id_User = getCurrentid_User();
     try {
-      const response = await axios.post(`http://localhost:3001/orders/service-order/${id_User}`, orderData);
-      dispatch({
-        type: 'CREATE_SERVICE_ORDER_SUCCESS',
-        payload: response.data,
-      });
+        const response = await axios.post(`http://localhost:3001/orders/service-order/${id_User}`, orderData);
+        dispatch({
+            type: CREATE_SERVICE_ORDER_SUCCESS,
+            payload: response.data,
+        });
     } catch (error) {
-      dispatch({
-        type: 'CREATE_SERVICE_ORDER_FAILURE',
-        payload: error.message,
-      });
+        dispatch({
+            type: CREATE_SERVICE_ORDER_ERROR,
+            payload: error.message,
+        });
     }
-  };
-
+};
 // Acción para buscar productos por nombre o referencia
 export const searchProducts = (Name) => async dispatch => {
   try {
@@ -136,21 +138,46 @@ export const getAllCategories = () => async dispatch => {
     }
 };
 
-//Accion para obtener todos los usuarios
 export const getAllUsers = () => async dispatch => {
     try {
         const response = await axios.get('http://localhost:3001/users/');
+        console.log("Usuarios obtenidos:", response.data); // Log de usuarios
         dispatch({
             type: GET_ALL_USERS,
             payload: response.data,
         });
     } catch (error) {
+        console.error("Error al obtener usuarios:", error.message); // Log de error
         dispatch({
             type: GET_USERS_ERROR,
             payload: error.message,
         });
     }
 };
+
+export const getUserById = () => async dispatch => {
+    const id_User = getCurrentid_User();
+    if (!id_User) {
+        console.error("No hay usuario autenticado.");
+        return;
+    }
+    try {
+        const response = await axios.get(`http://localhost:3001/users/${id_User}`);
+        console.log("Usuario obtenido por ID:", response.data); // Log del usuario
+        dispatch({
+            type: SET_CURRENT_USER,
+            payload: response.data,
+        });
+    } catch (error) {
+        console.error("Error al obtener usuario por ID:", error.message); // Log de error
+        dispatch({
+            type: GET_USERS_ERROR,
+            payload: error.message,
+        });
+    }
+};
+
+
 
 export const getCars = () => {
     return async (dispatch) => {

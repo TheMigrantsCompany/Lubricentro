@@ -34,6 +34,7 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
       handleAddService(result);
     }
     setSearchResults([]); // Limpiar resultados de búsqueda después de seleccionar
+    console.log("Producto/Servicio seleccionado:", result);
   };
 
   return (

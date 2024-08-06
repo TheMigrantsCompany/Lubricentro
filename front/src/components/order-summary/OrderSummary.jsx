@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CarSearch from "../searchbar/CarSearch";
+import { getAllUsers, getUserById , createServiceOrder } from "../../redux/actions/actions";
 
 const OrderSummary = ({
   date,
@@ -14,14 +15,35 @@ const OrderSummary = ({
   calculateTotal,
   onConfirmOrder,
   onQuantityChange,
-  readOnly, 
-  id_User, 
+  readOnly,
   id_Car,
 }) => {
   const [selectedCar, setSelectedCar] = useState(null);
-  const orderSummary = useSelector(state => state.orderSummary); // Asegúrate de que 'orderSummary' esté en el estado global
+  const dispatch = useDispatch();
+  const id_User = useSelector(state => state.user?.id_User);
+  const createServiceOrderError = useSelector(state => state.createServiceOrderError);
 
-  console.log("Resumen de la orden:", orderSummary); // Muestra toda la información en la consola
+  useEffect(() => {
+    console.log("Estado inicial:");
+    console.log("Productos seleccionados:", selectedProducts);
+    console.log("Servicios seleccionados:", selectedServices);
+    console.log("Fecha:", date);
+    console.log("Método de pago:", paymentMethod);
+    console.log("Total:", calculateTotal());
+    console.log("ID de usuario:", id_User);
+    console.log("ID de carro:", id_Car);
+  }, [selectedProducts, selectedServices, date, paymentMethod, id_User, id_Car]);
+
+  useEffect(() => {
+    dispatch(getAllUsers()); // Cargar todos los usuarios si el ID de usuario no está disponible
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (id_User) {
+      console.log("Llamando a getUserById con ID de usuario:", id_User);
+      dispatch(getUserById());
+    }
+  }, [id_User, dispatch]);
 
   const handleCarSelect = (car) => {
     setSelectedCar(car);
@@ -32,7 +54,32 @@ const OrderSummary = ({
       alert("Por favor, seleccione un automóvil.");
       return;
     }
-    onConfirmOrder(selectedCar.id_Car);
+
+    const orderData = {
+      id_Car: selectedCar.id_Car,
+      paymentMethod,
+      items: selectedProducts.map(product => ({
+        productId: product.id,
+        quantity: product.quantity,
+        price: product.price
+      })),
+      warnings
+    };
+
+    if (!id_User) {
+      alert("ID de usuario no definido.");
+      return;
+    }
+
+    dispatch(createServiceOrder(id_User, orderData))
+      .then(() => {
+        if (onConfirmOrder) {
+          onConfirmOrder();
+        }
+      })
+      .catch(error => {
+        console.error("Error al crear la orden:", error);
+      });
   };
 
   return (
@@ -102,7 +149,7 @@ const OrderSummary = ({
 
       <div className="mb-4 text-center">
         <h3 className="font-bold mb-2">Buscar Auto</h3>
-        <CarSearch onCarSelect={handleCarSelect} /> {/* Aquí está el componente de búsqueda de autos */}
+        <CarSearch onCarSelect={handleCarSelect} />
       </div>
 
       {selectedCar && (
@@ -112,11 +159,23 @@ const OrderSummary = ({
         </div>
       )}
 
+      {/* New User ID Container */}
+      <div className="mb-4 text-center">
+        <h3 className="font-bold mb-2">Usuario creador de orden de servicio</h3>
+        <p className="text-gray-700">{id_User || "ID de usuario no disponible."}</p>
+      </div>
+
       {!readOnly && (
         <div className="text-center">
           <FlowbiteButton onClick={handleConfirmOrder} className="w-full bg-red-600 hover:bg-red-700 text-white">
             Confirmar Orden
           </FlowbiteButton>
+        </div>
+      )}
+
+      {createServiceOrderError && (
+        <div className="text-center text-red-500 mt-4">
+          <p>Error al crear la orden: {createServiceOrderError}</p>
         </div>
       )}
     </Card>
