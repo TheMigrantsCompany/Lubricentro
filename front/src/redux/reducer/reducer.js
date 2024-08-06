@@ -17,6 +17,7 @@ import {
   GET_CARS_PLATE_ERROR,
   CAR_BY_CC_NIT,
   CAR_BY_CC_NIT_ERROR,
+   GET_ALL_SERVICES,
  } from "../actions/types";
 
 const initialState = {
@@ -75,6 +76,11 @@ const rootReducer = (state = initialState, action) => {
                 users: action.payload,
                 error: null,
             };
+            case GET_ALL_SERVICES:
+              return {
+                ...state,
+                services: action.payload,
+              };
             case SET_CURRENT_USER:
               return {
                   ...state,

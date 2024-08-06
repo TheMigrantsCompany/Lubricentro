@@ -1,22 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Label, Modal, TextInput, Checkbox } from "flowbite-react";
 
 const ModalModifyClient = ({ client, closeModal }) => {
   const [formData, setFormData] = useState({
-    nombre: client.nombre,
-    apellido: client.apellido,
-    cedula: client.cedula,
-    telefono: client.telefono,
-    email: client.email,
-    direccion: client.direccion,
-    marca: client.marca,
-    diesel: client.diesel,
-    gasolina: client.gasolina,
-    hibrido: client.hibrido,
-    kmActual: client.kmActual,
-    modelo: client.modelo,
-    matricula: client.matricula
+    nombre: '',
+    apellido: '',
+    cedula: '',
+    telefono: '',
+    email: '',
+    direccion: '',
+    marca: '',
+    diesel: false,
+    gasolina: false,
+    hibrido: false,
+    kmActual: '',
+    modelo: '',
+    matricula: ''
   });
+
+  useEffect(() => {
+    // Inicializa el formulario con los datos del cliente cuando el modal se abre
+    setFormData({
+      nombre: client.Name || '',
+      apellido: '', // Si no tienes apellido, puedes ajustar esto
+      cedula: client.CC_NIT || '',
+      telefono: client.Phone || '',
+      email: client.Mail || '',
+      direccion: client.Address || '',
+      marca: client.Brand || '',
+      diesel: client.FuelType === 'Diesel',
+      gasolina: client.FuelType === 'Gasolina',
+      hibrido: client.FuelType === 'Híbrido',
+      kmActual: client.KM || '',
+      modelo: client.Model || '',
+      matricula: client.LicensePlate || ''
+    });
+  }, [client]);
 
   function handleInputChange(e) {
     const { id, value, type, checked } = e.target;
@@ -69,7 +88,7 @@ const ModalModifyClient = ({ client, closeModal }) => {
             <TextInput id="marca" value={formData.marca} onChange={handleInputChange} required />
           </div>
           <div className="flex space-x-4">
-          <div className="flex items-center">
+            <div className="flex items-center">
               <Checkbox id="diesel" checked={formData.diesel} onChange={handleInputChange} />
               <label htmlFor="diesel" className="ml-2 text-black">Diesel</label>
             </div>
@@ -109,3 +128,4 @@ const ModalModifyClient = ({ client, closeModal }) => {
 };
 
 export default ModalModifyClient;
+
