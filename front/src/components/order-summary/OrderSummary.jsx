@@ -35,12 +35,11 @@ const OrderSummary = ({
   }, [selectedProducts, selectedServices, date, paymentMethod, id_User, id_Car]);
 
   useEffect(() => {
-    dispatch(getAllUsers()); // Cargar todos los usuarios si el ID de usuario no está disponible
+    dispatch(getAllUsers());
   }, [dispatch]);
 
   useEffect(() => {
     if (id_User) {
-      console.log("Llamando a getUserById con ID de usuario:", id_User);
       dispatch(getUserById());
     }
   }, [id_User, dispatch]);
@@ -58,11 +57,18 @@ const OrderSummary = ({
     const orderData = {
       id_Car: selectedCar.id_Car,
       paymentMethod,
-      items: selectedProducts.map(product => ({
-        productId: product.id,
-        quantity: product.quantity,
-        price: product.price
-      })),
+      items: [
+        ...selectedProducts.map(product => ({
+          productId: product.id,
+          quantity: product.quantity,
+          price: product.price
+        })),
+        ...selectedServices.map(service => ({
+          productId: service.id,
+          quantity: 1, // Asumiendo que cada servicio se agrega una vez
+          price: service.price
+        }))
+      ],
       warnings
     };
 
@@ -128,7 +134,7 @@ const OrderSummary = ({
           {selectedServices.length > 0 ? (
             selectedServices.map((service) => (
               <div key={service.id} className="flex justify-between items-center mb-2 border-b pb-2">
-                <p className="text-gray-700">{service.name} - ${service.price * service.quantity}</p>
+                <p className="text-gray-700">{service.name} - ${service.price}</p>
               </div>
             ))
           ) : (
@@ -159,7 +165,6 @@ const OrderSummary = ({
         </div>
       )}
 
-      {/* New User ID Container */}
       <div className="mb-4 text-center">
         <h3 className="font-bold mb-2">Usuario creador de orden de servicio</h3>
         <p className="text-gray-700">{id_User || "ID de usuario no disponible."}</p>
