@@ -36,7 +36,7 @@ const CarSearch = ({ onCarSelect }) => {
         onCarSelect(car);
     };
 
-    console.log("Lista de autos: ", cars);
+    //console.log("Lista de autos: ", cars);
 
     return (
         <div className="relative">

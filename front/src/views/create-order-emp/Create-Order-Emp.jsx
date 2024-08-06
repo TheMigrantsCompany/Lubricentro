@@ -67,7 +67,12 @@ const CreateOrderEmp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Formulario enviado: ", formData);
+    console.log("Formulario enviado: ", {
+      formData,
+      selectedProducts,
+      selectedServices,
+    });
+    //console.log("Formulario enviado: ", formData);
   };
 
   return (

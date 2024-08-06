@@ -7,6 +7,7 @@ export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_USERS_ERROR = 'GET_USERS_ERROR';
 export const GET_ALL_SERVICES = 'GET_ALL_SERVICES';
+export const SET_CURRENT_USER= 'SET_CURRENT_USER_ID';
 export const GET_CARS = 'GET_CARS';
 export const GET_CARS_ERROR = 'GET_CARS_ERROR';
 export const GET_CARS_PLATE = 'GET_CARS_PLATE';

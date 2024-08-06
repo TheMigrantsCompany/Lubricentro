@@ -8,6 +8,8 @@ import {
    GET_PRODUCTS_BY_CATEGORY,
    GET_ALL_CATEGORIES,
    GET_ALL_USERS,
+   GET_USERS_ERROR,
+   SET_CURRENT_USER,
   
   GET_CARS,
   GET_CARS_ERROR,
@@ -28,7 +30,10 @@ const initialState = {
     category: null,
     categories: [],
     users: [],
-    services: [],
+    currentid_User: null,
+    user: {
+      id_User: null, // Nuevo campo añadido
+  },
 };
 
 
@@ -76,8 +81,19 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 services: action.payload,
               };
-        case GET_CARS:
-          return {
+            case SET_CURRENT_USER:
+              return {
+                  ...state,
+                  id_User: action.payload.id, // Asegúrate de que `action.payload` tenga la estructura correcta
+                  currentid_User: action.payload.id,
+              };
+          case GET_USERS_ERROR:
+            return {
+                ...state,
+                error: action.payload, // Maneja errores
+            };
+          case GET_CARS:
+            return {
             ...state,
             loading: false,
             cars: action.payload,
