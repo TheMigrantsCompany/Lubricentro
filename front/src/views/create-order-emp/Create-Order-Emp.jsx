@@ -13,6 +13,7 @@ const CreateOrderEmp = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
   const [id_Car, setId_Car] = useState(null);
+  const [clientType, setClientType] = useState('cliente'); // 'cliente' o 'taller'
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -55,11 +56,11 @@ const CreateOrderEmp = () => {
 
   const calculateTotal = () => {
     const productsTotal = selectedProducts.reduce(
-      (total, product) => total + product.Price_Cl * product.Quantity,
+      (total, product) => total + (clientType === 'taller' ? product.Price_Tl : product.Price_Cl) * product.Quantity,
       0
     );
     const servicesTotal = selectedServices.reduce(
-      (total, service) => total + service.Price_Cl,
+      (total, service) => total + (clientType === 'taller' ? service.Price_Tl : service.Price_Cl),
       0
     );
     return productsTotal + servicesTotal;
@@ -78,12 +79,12 @@ const CreateOrderEmp = () => {
         ...selectedProducts.map(product => ({
           productId: product.id_Product,
           quantity: product.Quantity,
-          price: product.Price_Cl
+          price: clientType === 'taller' ? product.Price_Tl : product.Price_Cl
         })),
         ...selectedServices.map(service => ({
           productId: service.id_Product,
           quantity: 1,
-          price: service.Price_Cl
+          price: clientType === 'taller' ? service.Price_Tl : service.Price_Cl
         }))
       ],
       warnings: formData.warnings
@@ -122,6 +123,7 @@ const CreateOrderEmp = () => {
           calculateTotal={calculateTotal}
           handleSubmit={handleSubmit}
           id_Car={id_Car}
+          setClientType={setClientType} // Pasar función para cambiar tipo de cliente
         />
       </div>
     </div>
