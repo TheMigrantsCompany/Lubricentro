@@ -1,13 +1,6 @@
 "use client";
 import React from "react";
-//import { useState } from "react";
-//import DatePicker from "react-datepicker";
-//import "react-datepicker/dist/react-datepicker.css";
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
-//import AcordeonServicios from "../acordeon_servicios/AcordeonServicios";
-//import AcordeonProductos from "../acordeon_productos/AcordeonProductos";
-//import OrderSummary from "../order-summary/OrderSummary";
-//import SearchBar from "../searchbar/SearchBar";
 const FormOrdenServicio = ({ formData, handleInputChange, handleSubmit }) => {
   return (
     <form className="max-w-4xl mx-auto flex flex-col gap-4 bg-tremor-background-default p-5 rounded-lg text-tremor-content-strong">
