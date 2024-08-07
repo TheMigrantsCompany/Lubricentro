@@ -4,7 +4,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
-import AcordeonServicios from "../acordeon_servicios/AcordeonServicios";
+//import AcordeonServicios from "../acordeon_servicios/AcordeonServicios";
 import AcordeonProductos from "../acordeon_productos/AcordeonProductos";
 import SearchBar from "../searchbar/SearchBar";
 const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, handleAddService }) => {
@@ -15,8 +15,6 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
   };
 
   const handleSearch = (query) => {
-    // Aquí debes implementar la lógica de búsqueda, por ejemplo, filtrando productos y servicios
-    // Simularemos la búsqueda con datos ficticios
     console.log("Query for search:", query); // Depuración
     const results = [
       { id: 1, name: "Producto A", type: "product", price: 10 },
@@ -31,9 +29,10 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
     if (result.type === "product") {
       handleAddProduct(result, "add");
     } else {
+      // Si es un servicio, lo agregamos a selectedServices
       handleAddService(result);
     }
-    setSearchResults([]); // Limpiar resultados de búsqueda después de seleccionar
+    setSearchResults([]);
   };
 
   return (
@@ -81,10 +80,9 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
             )}
           </div>
         </div>
-        <div className="w-full md:w-1/2 px-2">
-          <AcordeonServicios onAddService={handleAddService} />
-          <AcordeonProductos onAddProduct={handleAddProduct} />
-        </div>
+      </div>
+      <div className="w-full px-2 mb-4">
+        <AcordeonProductos onAddProduct={handleAddProduct} onAddService={handleAddService} />
       </div>
       <div className="w-full px-2">
         <Label htmlFor="warnings" value="Sugerencias" />
