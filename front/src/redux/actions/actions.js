@@ -18,6 +18,9 @@ import {
     GET_CARS_PLATE_ERROR,
     CAR_BY_CC_NIT,
     CAR_BY_CC_NIT_ERROR,
+    UPDATE_CLIENT_SUCCESS,
+    UPDATE_CLIENT_FAILURE,
+    
  } from "./types";
 
 // Acción para obtener todos los productos
@@ -162,21 +165,19 @@ export const fetchServices = () => async (dispatch) => {
     }
   };
 
-export const getCars = () => {
-    return async (dispatch) => {
-      try {
+  export const getCars = () => async (dispatch) => {
+    try {
         const { data } = await axios.get('http://localhost:3001/cars/');
-        return dispatch({
-          type: GET_CARS,
-          payload: data,
+        dispatch({
+            type: GET_CARS,
+            payload: data,
         });
-  } catch (error) {
-      dispatch({
-          type: GET_CARS_ERROR,
-          payload: error.message,
-      });
-  }
-}
+    } catch (error) {
+        dispatch({
+            type: GET_CARS_ERROR,
+            payload: error.message,
+        });
+    }
 };
 
 // Acción para obtener autos por placa
@@ -215,4 +216,18 @@ export const getCarByCCNIT = (CC_NIT) => async (dispatch) => {
     }
 };
 
-
+export const updateClient = (id_Car, formData) => async (dispatch) => {
+    try {
+        const response = await axios.put(`http://localhost:3001/cars/${id_Car}`, formData);
+        dispatch({
+            type: UPDATE_CLIENT_SUCCESS,
+            payload: response.data
+        });
+    } catch (error) {
+        console.error('Error al actualizar cliente:', error);
+        dispatch({
+            type: UPDATE_CLIENT_FAILURE,
+            payload: error
+        });
+    }
+};

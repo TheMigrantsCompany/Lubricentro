@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Card, Button } from '@tremor/react';
 import ModalModifyClient from '../modal_modify_client/ModalModifyClient';
 import ModalServiceDetail from '../modal_service_detail/ModalServiceDetail';
-import { FaQrcode } from 'react-icons/fa'; // Importar el ícono QR de react-icons
-import { useDispatch, useSelector } from 'react-redux'; 
+import { FaQrcode } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCars } from '../../redux/actions/actions';
 
 export function ClientesPlacasTable() {
   const dispatch = useDispatch();
-  const cars = useSelector((state) => state.cars); // Obtén los datos del estado
+  const cars = useSelector((state) => state.cars);
   const [selectedClient, setSelectedClient] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
 
   useEffect(() => {
-    dispatch(getCars()); // Llama a la acción para obtener los clientes cuando se monta el componente
+    dispatch(getCars());
   }, [dispatch]);
 
   const handleModificar = (client) => {
@@ -115,4 +115,3 @@ export function ClientesPlacasTable() {
     </div>
   );
 }
-
