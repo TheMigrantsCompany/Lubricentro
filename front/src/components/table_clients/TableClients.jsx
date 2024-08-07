@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Button } from '@tremor/react';
 import ModalModifyClient from '../modal_modify_client/ModalModifyClient';
 import ModalServiceDetail from '../modal_service_detail/ModalServiceDetail';
 import { FaQrcode } from 'react-icons/fa'; // Importar el ícono QR de react-icons
+import { useDispatch, useSelector } from 'react-redux'; 
+import { getCars } from '../../redux/actions/actions';
 
 export function ClientesPlacasTable() {
-  const clientesPlacas = [
-    { id: 1, cliente: 'Juan Pérez', placa: 'ABC-123', status: 'activo', fecha: '2023-01-01', servicio: 'Mantenimiento', producto: 'Aceite', observacion: 'Ninguna', cedulaNit: '123456789' },
-    { id: 2, cliente: 'Ana Gómez', placa: 'DEF-456', status: 'inactivo', fecha: '2023-02-01', servicio: 'Reparación', producto: 'Filtro', observacion: 'Cambio necesario', cedulaNit: '987654321' },
-    { id: 3, cliente: 'Carlos López', placa: 'GHI-789', status: 'activo', fecha: '2023-03-01', servicio: 'Limpieza', producto: 'Agua', observacion: 'Ninguna', cedulaNit: '123123123' },
-  ];
-
+  const dispatch = useDispatch();
+  const cars = useSelector((state) => state.cars); // Obtén los datos del estado
   const [selectedClient, setSelectedClient] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
+
+  useEffect(() => {
+    dispatch(getCars()); // Llama a la acción para obtener los clientes cuando se monta el componente
+  }, [dispatch]);
 
   const handleModificar = (client) => {
     setSelectedClient(client);
@@ -27,11 +29,11 @@ export function ClientesPlacasTable() {
   };
 
   const handleVerQRCode = (client) => {
-    console.log(`Mostrar código QR para el cliente con Cedula/NIT: ${client.cedulaNit}`);
+    console.log(`Mostrar código QR para el cliente con Cedula/NIT: ${client.CC_NIT}`);
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex flex-col items-center">
       <div className="w-full max-w-4xl mx-auto md:ml-16">
         <Card>
           <div className="overflow-x-auto">
@@ -53,42 +55,48 @@ export function ClientesPlacasTable() {
                   <th scope="col" className="px-6 py-3">
                     QR
                   </th>
+                  <th scope="col" className="px-6 py-3">
+                    Acciones
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {clientesPlacas.map((cliente) => (
-                  <tr key={cliente.id} className="bg-gray-100 border-b">
-                    <td className="px-6 py-4">{cliente.cliente}</td>
-                    <td className="px-6 py-4">{cliente.placa}</td>
-                    <td className="px-6 py-4">{cliente.cedulaNit}</td>
-                    <td className="px-6 py-4">{cliente.status}</td>
+                {cars.map((cliente) => (
+                  <tr key={cliente.id_Car} className="bg-gray-100 border-b">
+                    <td className="px-6 py-4">{cliente.Name}</td>
+                    <td className="px-6 py-4">{cliente.LicensePlate}</td>
+                    <td className="px-6 py-4">{cliente.CC_NIT}</td>
+                    <td className="px-6 py-4">{cliente.Rol ? 'Activo' : 'Inactivo'}</td>
                     <td className="px-6 py-4">
-                      <FaQrcode className="text-xl text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => handleVerQRCode(cliente)} />
+                      <FaQrcode 
+                        className="text-xl text-gray-600 hover:text-gray-800 cursor-pointer" 
+                        onClick={() => handleVerQRCode(cliente)} 
+                      />
+                    </td>
+                    <td className="px-6 py-4 flex space-x-2">
+                      <Button
+                        onClick={() => handleModificar(cliente)}
+                        className="py-1 px-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      >
+                        Modificar
+                      </Button>
+                      <Button
+                        onClick={() => handleDetalle(cliente)}
+                        className="py-1 px-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                      >
+                        Detalle
+                      </Button>
+                      <Button
+                        onClick={() => handleEliminar(cliente.id_Car)}
+                        className="py-1 px-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                      >
+                        Eliminar
+                      </Button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
-          <div className="flex justify-center mt-4 space-x-2">
-            <Button
-              onClick={() => handleModificar(clientesPlacas[0])}
-              className="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Modificar
-            </Button>
-            <Button
-              onClick={() => handleDetalle(clientesPlacas[0])}
-              className="py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            >
-              Detalle
-            </Button>
-            <Button
-              onClick={() => handleEliminar(clientesPlacas[0].id)}
-              className="py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-            >
-              Eliminar
-            </Button>
           </div>
         </Card>
       </div>
@@ -107,5 +115,4 @@ export function ClientesPlacasTable() {
     </div>
   );
 }
-
 

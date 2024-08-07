@@ -4,7 +4,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
-import AcordeonServicios from "../acordeon_servicios/AcordeonServicios";
+//import AcordeonServicios from "../acordeon_servicios/AcordeonServicios";
 import AcordeonProductos from "../acordeon_productos/AcordeonProductos";
 import SearchBar from "../searchbar/SearchBar";
 const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, handleAddService }) => {
@@ -15,12 +15,13 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
   };
 
   const handleSearch = (query) => {
-    // Aquí debes implementar la lógica de búsqueda, por ejemplo, filtrando productos y servicios
-    // Simularemos la búsqueda con datos ficticios
+    console.log("Query for search:", query); // Depuración
     const results = [
       { id: 1, name: "Producto A", type: "product", price: 10 },
       { id: 2, name: "Servicio B", type: "service", price: 20 },
     ].filter(item => item.name.toLowerCase().includes(query.toLowerCase()) || item.id.toString().includes(query));
+    
+    console.log("Search results:", results); // Depuración
     setSearchResults(results);
   };
 
@@ -28,9 +29,10 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
     if (result.type === "product") {
       handleAddProduct(result, "add");
     } else {
+      // Si es un servicio, lo agregamos a selectedServices
       handleAddService(result);
     }
-    setSearchResults([]); // Limpiar resultados de búsqueda después de seleccionar
+    setSearchResults([]);
   };
 
   return (
@@ -64,7 +66,7 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
           <div className="mb-4">
             <SearchBar onSearch={handleSearch} />
             {searchResults.length > 0 && (
-              <div className="bg-white border rounded-md p-2 mt-2">
+              <div className="bg-white border rounded-md mt-2 max-h-60 overflow-y-auto">
                 {searchResults.map(result => (
                   <div
                     key={result.id}
@@ -78,10 +80,9 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleAddProduct, hand
             )}
           </div>
         </div>
-        <div className="w-full md:w-1/2 px-2">
-          <AcordeonServicios onAddService={handleAddService} />
-          <AcordeonProductos onAddProduct={handleAddProduct} />
-        </div>
+      </div>
+      <div className="w-full px-2 mb-4">
+        <AcordeonProductos onAddProduct={handleAddProduct} onAddService={handleAddService} />
       </div>
       <div className="w-full px-2">
         <Label htmlFor="warnings" value="Sugerencias" />
