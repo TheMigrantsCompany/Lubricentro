@@ -1,10 +1,10 @@
 import { Card, Button as FlowbiteButton } from "flowbite-react";
 import React from "react";
-import { useState } from "react";
+/*import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CarSearch from "../searchbar/CarSearch";
-import { getAllUsers, getUserById , createServiceOrder } from "../../redux/actions/actions";
+import { getAllUsers, getUserById , createServiceOrder } from "../../redux/actions/actions";*/
 
 const OrderSummary = ({
   paymentMethod,
@@ -62,14 +62,20 @@ const OrderSummary = ({
         <div>
           <h3 className="font-bold mb-2 text-center">Servicios Seleccionados</h3>
           {selectedServices.length > 0 ? (
-            selectedServices.map((service) => (
-              <div key={service.id} className="flex justify-between items-center mb-2 border-b pb-2">
-                <p className="text-gray-700">{service.name} - ${service.price}</p>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500 text-center">No hay servicios seleccionados.</p>
-          )}
+  selectedServices.map((service) => (
+    <div key={service.id_Product} className="flex justify-between items-center mb-2 border-b pb-2">
+      <p className="text-gray-700">{service.Name} - ${service.Price_Cl}</p>
+      <button
+        onClick={() => onRemoveItem(service, 'service')}
+        className="ml-2 px-2 py-1 border rounded-md bg-red-500 text-white"
+      >
+        Eliminar
+      </button>
+    </div>
+  ))
+) : (
+  <p className="text-gray-500 text-center">No hay servicios seleccionados.</p>
+)}
         </div>
       </div>
       <div className="mb-4 text-center">

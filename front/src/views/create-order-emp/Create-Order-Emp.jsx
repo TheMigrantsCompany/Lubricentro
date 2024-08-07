@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FormOrdenServicio from "../../components/form_orden_de_servicio/FormOrdenServicio";
 import OrderSummary from "../../components/order-summary/OrderSummary";
 import AcordeonProductos from "../../components/acordeon_productos/AcordeonProductos";
+import AcordeonServicios from "../../components/acordeon_servicios/AcordeonServicios";
 
 const CreateOrderEmp = () => {
   const [formData, setFormData] = useState({
@@ -32,14 +33,14 @@ const CreateOrderEmp = () => {
   };
 
   const handleAddService = (service) => {
-    setSelectedServices([...selectedServices, { ...service, quantity: 1 }]);
+    setSelectedServices([...selectedServices, service]);
   };
 
   const handleRemoveItem = (item, type) => {
     if (type === "product") {
-      setSelectedProducts(selectedProducts.filter((p) => p.id_Product !== item.id_Product));
-    } else {
-      setSelectedServices(selectedServices.filter((s) => s.id !== item.id));
+      setSelectedProducts(selectedProducts.filter(p => p.id_Product !== item.id_Product));
+    } else if (type === "service") {
+      setSelectedServices(selectedServices.filter(s => s.id_Product !== item.id_Product));
     }
   };
 
@@ -58,7 +59,7 @@ const CreateOrderEmp = () => {
       0
     );
     const servicesTotal = selectedServices.reduce(
-      (total, service) => total + service.price * service.quantity,
+      (total, service) => total + service.Price_Cl,
       0
     );
     return productsTotal + servicesTotal;
@@ -80,9 +81,9 @@ const CreateOrderEmp = () => {
           price: product.Price_Cl
         })),
         ...selectedServices.map(service => ({
-          productId: service.id,
+          productId: service.id_Product,
           quantity: 1,
-          price: service.price
+          price: service.Price_Cl
         }))
       ],
       warnings: formData.warnings
@@ -108,6 +109,7 @@ const CreateOrderEmp = () => {
           </div>
           <div className="w-1/2">
             <AcordeonProductos onAddProduct={handleAddProduct} />
+            <AcordeonServicios onAddService={handleAddService} /> {/* Agrega el componente aquí */}
           </div>
         </div>
         <OrderSummary
