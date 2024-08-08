@@ -21,6 +21,7 @@ import {
     GET_CARS_PLATE_ERROR,
     CAR_BY_CC_NIT,
     CAR_BY_CC_NIT_ERROR,
+    POST_CLIENT_FAILURE,
  } from "./types";
 
 // Acción para obtener todos los productos

@@ -12,7 +12,7 @@ const FormNuevoCliente = () => {
   const [formType, setFormType] = useState("cliente");
   const [formData, setFormData] = useState({
     Name: "",
-    Rol: false, // false for client, true for taller
+    Rol: false,
     LicensePlate: "",
     CC_NIT: "",
     Phone: "",
@@ -35,6 +35,23 @@ const FormNuevoCliente = () => {
     });
   };
 
+  const resetForm = () => {
+    setFormData({
+      Name: "",
+      LicensePlate: "",
+      CC_NIT: "",
+      Phone: "",
+      Mail: "",
+      Address: "",
+      Brand: "",
+      FuelType: "",
+      KM: "",
+      Model: "",
+      Active: true,
+    });
+    setFormType("cliente"); // Resetea el tipo de formulario a cliente por defecto
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -52,7 +69,7 @@ const FormNuevoCliente = () => {
     }
 
     try {
-      await dispatch(postCar(adjustedData));
+      dispatch(postCar(adjustedData));
 
       Swal.fire({
         title: formType === "cliente" ? "Cliente creado con éxito" : "Taller creado con éxito",
@@ -60,20 +77,7 @@ const FormNuevoCliente = () => {
         confirmButtonText: "OK",
       });
 
-      setFormData({
-        Name: "",
-        LicensePlate: "",
-        CC_NIT: "",
-        Phone: "",
-        Mail: "",
-        Address: "",
-        Brand: "",
-        FuelType: "",
-        KM: "",
-        Model: "",
-        Active: true,
-      });
-      setFormType("cliente");
+      resetForm(); // Resetea el formulario después de enviar
     } catch (error) {
       Swal.fire({
         title: "Error",
@@ -99,9 +103,9 @@ const FormNuevoCliente = () => {
       </div>
       <Card className="w-full max-w-4xl p-5">
         {formType === "cliente" ? (
-          <ClienteForm handleChange={handleChange} />
+          <ClienteForm handleChange={handleChange} formData={formData} />
         ) : (
-          <TallerForm handleChange={handleChange} />
+          <TallerForm handleChange={handleChange} formData={formData} />
         )}
         <div className="flex justify-center mt-2">
           <Button type="submit" onClick={handleSubmit} className="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white">
