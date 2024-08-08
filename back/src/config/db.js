@@ -31,7 +31,7 @@ const sequelize = new Sequelize(DB_URL, sequelizeOptions);
 const basename = path.basename(__filename); // Obtiene el nombre base del archivo actual
 const modelDefiners = []; // Array para almacenar las definiciones de los modelos
 
-const modelsPath = path.join(__dirname, "../../models"); // Ruta donde se encuentran los modelos
+const modelsPath = path.join(__dirname, "..", "Models"); // Ruta donde se encuentran los modelos
 
 console.log("Ruta del directorio models:", modelsPath);
 
