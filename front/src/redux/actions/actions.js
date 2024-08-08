@@ -2,9 +2,7 @@ import axios from "axios";
 import { getCurrentid_User } from "../../utils/getCurrentUserId";
 import { 
     GET_ALL_PRODUCTS,
-    
     GET_PRODUCTS_ERROR,
-    
     SEARCH_PRODUCTS,
     GET_CATEGORY_BY_ID,
     GET_PRODUCTS_BY_CATEGORY,
@@ -12,9 +10,6 @@ import {
     GET_ALL_USERS,
     GET_USERS_ERROR,
     SET_CURRENT_USER,
-
-    
- 
     GET_CARS,
     GET_CARS_ERROR,
     GET_CARS_PLATE,
@@ -24,7 +19,8 @@ import {
     UPDATE_CLIENT_SUCCESS,
     UPDATE_CLIENT_FAILURE,
     SET_SERVICE_ORDERS,
-    SET_SERVICE_DETAIL
+    SET_SERVICE_DETAIL,
+    TOGGLE_CAR_ACTIVE_STATE,
     
  } from "./types";
 
@@ -269,3 +265,16 @@ export const getServiceOrders = () => async (dispatch) => {
       console.error('Error al obtener los detalles del servicio:', error);
     }
   };
+
+  // Accion para activar o desactivar un usuario 
+  export const toggleCarActiveState = (id_Car) => async (dispatch) => {
+    try {
+        const response = await axios.patch(`http://localhost:3001/cars/${id_Car}/deactivate`);
+        dispatch({
+            type: TOGGLE_CAR_ACTIVE_STATE,
+            payload: response.data,
+        });
+    } catch (error) {
+        console.error('Error toggling car active state:', error);
+    }
+};
