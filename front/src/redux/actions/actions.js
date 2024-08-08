@@ -22,6 +22,7 @@ import {
     SET_SERVICE_DETAIL,
     TOGGLE_CAR_ACTIVE_STATE,
     
+    POST_CLIENT_FAILURE,
  } from "./types";
 
 // Acción para obtener todos los productos
