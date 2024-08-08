@@ -1,84 +1,103 @@
 import React, { useState } from "react";
 import FormOrdenServicio from "../../components/form_orden_de_servicio/FormOrdenServicio";
 import OrderSummary from "../../components/order-summary/OrderSummary";
+import AcordeonProductos from "../../components/acordeon_productos/AcordeonProductos";
+import AcordeonServicios from "../../components/acordeon_servicios/AcordeonServicios";
 
 const CreateOrderEmp = () => {
   const [formData, setFormData] = useState({
-    date: "",
     paymentMethod: "",
     warnings: "",
   });
 
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
+  const [id_Car, setId_Car] = useState(null);
+  const [clientType, setClientType] = useState('cliente'); // 'cliente' o 'taller'
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
-  const handleAddProduct = (product, action) => {
-    if (action === "remove") {
-      setSelectedProducts(selectedProducts.filter((p) => p.id !== product.id));
-    } else {
-      setSelectedProducts([...selectedProducts, { ...product, quantity: 1 }]);
-    }
+  const handleAddProduct = (product) => {
+    setSelectedProducts((prevProducts) => {
+      const existingProduct = prevProducts.find(p => p.id_Product === product.id_Product);
+      if (existingProduct) {
+        return prevProducts.map(p => 
+          p.id_Product === product.id_Product ? { ...p, Quantity: p.Quantity + 1 } : p
+        );
+      } else {
+        return [...prevProducts, { ...product, Quantity: 1 }];
+      }
+    });
   };
 
   const handleAddService = (service) => {
-    setSelectedServices([...selectedServices, { ...service, quantity: 1 }]);
+    setSelectedServices([...selectedServices, service]);
   };
 
   const handleRemoveItem = (item, type) => {
     if (type === "product") {
-      setSelectedProducts(selectedProducts.filter((p) => p.id !== item.id));
-    } else {
-      setSelectedServices(selectedServices.filter((s) => s.id !== item.id));
+      setSelectedProducts(selectedProducts.filter(p => p.id_Product !== item.id_Product));
+    } else if (type === "service") {
+      setSelectedServices(selectedServices.filter(s => s.id_Product !== item.id_Product));
     }
   };
 
-  const handleQuantityChange = (item, type, quantity) => {
-    if (type === "product") {
-      setSelectedProducts(
-        selectedProducts.map((p) =>
-          p.id === item.id ? { ...p, quantity } : p
-        )
-      );
-    } else {
-      setSelectedServices(
-        selectedServices.map((s) =>
-          s.id === item.id ? { ...s, quantity } : s
-        )
-      );
-    }
+  const handleQuantityChange = (productId, newQuantity) => {
+    if (newQuantity < 1) return;
+    setSelectedProducts((prevProducts) => 
+      prevProducts.map(p => 
+        p.id_Product === productId ? { ...p, Quantity: newQuantity } : p
+      )
+    );
   };
 
   const calculateTotal = () => {
     const productsTotal = selectedProducts.reduce(
-      (total, product) => total + product.price * product.quantity,
+      (total, product) => total + (clientType === 'taller' ? product.Price_Tl : product.Price_Cl) * product.Quantity,
       0
     );
     const servicesTotal = selectedServices.reduce(
-      (total, service) => total + service.price * service.quantity,
+      (total, service) => total + (clientType === 'taller' ? service.Price_Tl : service.Price_Cl),
       0
     );
     return productsTotal + servicesTotal;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Formulario enviado: ", {
-      formData,
-      selectedProducts,
-      selectedServices,
-    });
-    //console.log("Formulario enviado: ", formData);
+  const handleSubmit = () => {
+    if (!id_Car) {
+      alert("Por favor, seleccione un automóvil.");
+      return;
+    }
+
+    const orderData = {
+      id_Car,
+      paymentMethod: formData.paymentMethod,
+      items: [
+        ...selectedProducts.map(product => ({
+          productId: product.id_Product,
+          quantity: product.Quantity,
+          price: clientType === 'taller' ? product.Price_Tl : product.Price_Cl
+        })),
+        ...selectedServices.map(service => ({
+          productId: service.id_Product,
+          quantity: 1,
+          price: clientType === 'taller' ? service.Price_Tl : service.Price_Cl
+        }))
+      ],
+      warnings: formData.warnings
+    };
+
+    console.log("Formulario enviado: ", orderData);
+    // Aquí iría la lógica para enviar la orden al backend
   };
 
   return (
     <div className="flex justify-center items-start min-h-screen bg-gray-100 p-5">
-      <div className="w-full max-w-6x1">
-        <h1 className="text-slate-600 m-5 text-2xl md:text-3xl font-bold tracking-wider text-center ">
+      <div className="w-full max-w-6xl">
+        <h1 className="text-slate-600 m-5 text-2xl md:text-3xl font-bold tracking-wider text-center">
           Crear Orden de Servicio
         </h1>
         <div className="flex justify-center gap-10">
@@ -86,24 +105,26 @@ const CreateOrderEmp = () => {
             <FormOrdenServicio
               formData={formData}
               handleInputChange={handleInputChange}
-              handleAddProduct={handleAddProduct}
-              handleAddService={handleAddService}
               handleSubmit={handleSubmit}
             />
           </div>
-          <div className="w-7/7">
-            <OrderSummary
-              date={formData.date.toString()}
-              paymentMethod={formData.paymentMethod}
-              selectedProducts={selectedProducts}
-              selectedServices={selectedServices}
-              warnings={formData.warnings}
-              onRemoveItem={handleRemoveItem}
-              onQuantityChange={handleQuantityChange}
-              calculateTotal={calculateTotal}
-            />
+          <div className="w-1/2">
+            <AcordeonProductos onAddProduct={handleAddProduct} />
+            <AcordeonServicios onAddService={handleAddService} /> {/* Agrega el componente aquí */}
           </div>
         </div>
+        <OrderSummary
+          paymentMethod={formData.paymentMethod}
+          selectedProducts={selectedProducts}
+          selectedServices={selectedServices}
+          warnings={formData.warnings}
+          onRemoveItem={handleRemoveItem}
+          onQuantityChange={handleQuantityChange}
+          calculateTotal={calculateTotal}
+          handleSubmit={handleSubmit}
+          id_Car={id_Car}
+          setClientType={setClientType} // Pasar función para cambiar tipo de cliente
+        />
       </div>
     </div>
   );
