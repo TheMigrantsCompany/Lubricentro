@@ -31,15 +31,24 @@ const sequelize = new Sequelize(DB_URL, sequelizeOptions);
 const basename = path.basename(__filename); // Obtiene el nombre base del archivo actual
 const modelDefiners = []; // Array para almacenar las definiciones de los modelos
 
+const modelsPath = path.join(__dirname, "..", "models"); // Ruta donde se encuentran los modelos
+
+console.log("Ruta del directorio models:", modelsPath);
+
 // Lee todos los archivos de modelos en la carpeta ../models
-fs.readdirSync(path.join(__dirname, "..", "models"))
-  .filter(
-    (file) =>
-      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js" // Filtra archivos válidos de modelos
-  )
-  .forEach((file) => {
-    modelDefiners.push(require(path.join(__dirname, "..", "models", file))); // Requiere y almacena cada archivo de modelo
-  });
+if (fs.existsSync(modelsPath)) {
+  fs.readdirSync(modelsPath)
+    .filter(
+      (file) =>
+        file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+    )
+    .forEach((file) => {
+      console.log("Cargando modelo:", file);
+      modelDefiners.push(require(path.join(modelsPath, file)));
+    });
+} else {
+  throw new Error(`El directorio de modelos no existe: ${modelsPath}`);
+}
 
 // Define cada modelo en Sequelize
 modelDefiners.forEach((model) => model(sequelize));
