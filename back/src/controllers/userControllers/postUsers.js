@@ -11,13 +11,14 @@ const postUserController = async (req, res) => {
 			return res.status(200).json(existingUser);
 		}
 		let rolUser = false;
+		console.log("Correo evaluado:", Mail);
 		if (
 			Mail === "lubricantesyaditivos.calle6@gmail.com" ||
 			Mail === "migrants.comapany@gmail.com" ||
-			Mail === "Servitecaliquimoly@gmail.com" ||
-			Mail === "Williampcalle6@gmail.com" ||
-			Mail === "Danielbcalle6@gmail.com" ||
-			Mail === "Duartewilliam914@gmail.com"
+			Mail === "servitecaliquimoly@gmail.com" ||
+			Mail === "williampcalle6@gmail.com" ||
+			Mail === "danielbcalle6@gmail.com" ||
+			Mail === "duartewilliam914@gmail.com"
 		) {
 			rolUser = true;
 		}
