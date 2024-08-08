@@ -278,3 +278,23 @@ export const getServiceOrders = () => async (dispatch) => {
         console.error('Error toggling car active state:', error);
     }
 };
+
+//Accion para Eliminar un Car
+export const deleteCar = (CC_NIT, licensePlate) => async (dispatch) => {
+    try {
+      // Realiza la llamada a la API para eliminar el carro
+      await fetch(`http://localhost:3001/cars/cc-nit/${CC_NIT}`, {
+        method: 'DELETE',
+      });
+  
+      // Otra llamada para eliminar por LicensePlate si es necesario
+      await fetch(`http://localhost:3001/cars/license-plate/${licensePlate}`, {
+        method: 'DELETE',
+      });
+  
+      // Vuelve a obtener los carros actualizados
+      dispatch(getCars());
+    } catch (error) {
+      console.error('Error eliminando carro:', error);
+    }
+  };
