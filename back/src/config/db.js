@@ -3,6 +3,7 @@ const fs = require("fs"); // Importa el módulo del sistema de archivos para tra
 const path = require("path"); // Importa el módulo de rutas para trabajar con rutas de archivos
 const envFile = process.env.NODE_ENV === 'production' ? '.env' : '.env.local'; // Distingue entre coorrer por local o deploy
 require('dotenv').config({ path: path.resolve(process.cwd(), envFile) }); // Carga las variables de entorno desde un archivo .env
+
 const { DB_URL } = process.env; // Desestructura la variable de entorno necesaria para la conexión a la base de datos
 
 if (!DB_URL) {
