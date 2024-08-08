@@ -21,6 +21,7 @@ import {
     SET_SERVICE_ORDERS,
     SET_SERVICE_DETAIL,
     TOGGLE_CAR_ACTIVE_STATE,
+    USER_SUSPENDED,
     
  } from "./types";
 
@@ -296,5 +297,18 @@ export const deleteCar = (CC_NIT, licensePlate) => async (dispatch) => {
       dispatch(getCars());
     } catch (error) {
       console.error('Error eliminando carro:', error);
+    }
+  };
+
+  // Acción para suspender un usuario
+  export const suspendUser = (id) => async (dispatch) => {
+    try {
+      const response = await axios.patch(`http://localhost:3001/users/${id}/toggle`);
+      dispatch({
+        type: USER_SUSPENDED,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error('Error al suspender el usuario:', error);
     }
   };

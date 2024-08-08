@@ -20,6 +20,7 @@ import {
   SET_SERVICE_ORDERS,
   SET_SERVICE_DETAIL,
   TOGGLE_CAR_ACTIVE_STATE,
+  USER_SUSPENDED,
 
 } from "../actions/types";
 
@@ -172,6 +173,13 @@ const rootReducer = (state = initialState, action) => {
                   car.id_Car === action.payload.id_Car ? action.payload : car
                 ),
             };
+            case USER_SUSPENDED:
+              return {
+                ...state,
+                users: state.users.map(user =>
+                  user.id_User === action.payload.id_User ? { ...user, Active: action.payload.Active } : user
+                ),
+              };
        default:
          return state;
      }
