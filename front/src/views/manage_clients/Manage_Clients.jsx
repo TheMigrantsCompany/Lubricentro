@@ -2,7 +2,7 @@ import React from 'react';
 import { ClientesPlacasTable } from '../../components/table_clients/TableClients'; 
 import BestCliente from '../../components/cardstat/CardStat2';
 import { ClientesChart } from '../../components/charts/ClientChart';
-import SearchBar from '../../components/searchbar/SearchBar';
+
 
 const GestionClientes = () => {
     return (
@@ -11,7 +11,7 @@ const GestionClientes = () => {
           <BestCliente />
         </div>
         <div className="flex mb-4">
-          <SearchBar className="mr-auto" />
+        
         </div>
         <div className="flex flex-1">
           <div className="w-2/3">

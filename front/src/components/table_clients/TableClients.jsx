@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Button } from '@tremor/react';
+import { Card } from '@tremor/react';
 import ModalModifyClient from '../modal_modify_client/ModalModifyClient';
 import ModalServiceDetail from '../modal_service_detail/ModalServiceDetail';
 import { FaQrcode } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'; 
-import { getCars, getServiceOrders, fetchServiceDetails, deleteCar } from '../../redux/actions/actions';
+import { getCars, getServiceOrders, fetchServiceDetails, toggleCarActiveState, deleteCar } from '../../redux/actions/actions';
 
 export function ClientesPlacasTable() {
   const dispatch = useDispatch();
@@ -58,6 +58,13 @@ export function ClientesPlacasTable() {
     console.log(`Mostrar código QR para el cliente con Cedula/NIT: ${client.CC_NIT}`);
   };
 
+  const handleToggleActive = (id) => {
+    dispatch(toggleCarActiveState(id));
+  };
+
+  // Ordenar los carros: activos primero y luego inactivos
+  const sortedCars = [...cars].sort((a, b) => b.Active - a.Active);
+
   return (
     <div className="flex flex-col items-center">
       <div className="w-full max-w-4xl mx-auto md:ml-16">
@@ -75,15 +82,15 @@ export function ClientesPlacasTable() {
                 </tr>
               </thead>
               <tbody>
-                {cars.map((cliente) => (
+                {sortedCars.map((cliente) => (
                   <tr key={cliente.id_Car} className="bg-gray-100 border-b">
                     <td className="px-6 py-4">{cliente.Name}</td>
                     <td className="px-6 py-4">{cliente.LicensePlate}</td>
                     <td className="px-6 py-4">{cliente.CC_NIT}</td>
                     <td className="px-6 py-4">
                       <span 
-                        className={`cursor-pointer underline ${cliente.Active ? 'text-blue-600' : 'text-red-600'}`} 
-                        onClick={() => dispatch(toggleCarActive(cliente.id_Car))}
+                        className={`cursor-pointer hover:underline ${cliente.Active ? 'text-blue-600' : 'text-red-600'}`}
+                        onClick={() => handleToggleActive(cliente.id_Car)}
                       >
                         {cliente.Active ? 'Activo' : 'Inactivo'}
                       </span>
@@ -95,24 +102,24 @@ export function ClientesPlacasTable() {
                       />
                     </td>
                     <td className="px-6 py-4 flex space-x-2">
-                      <Button
+                      <button
                         onClick={() => handleModificar(cliente)}
                         className="py-1 px-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       >
                         Modificar
-                      </Button>
-                      <Button
+                      </button>
+                      <button
                         onClick={() => handleDetalle(cliente)}
                         className="py-1 px-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                       >
                         Detalle
-                      </Button>
-                      <Button
+                      </button>
+                      <button
                         onClick={() => handleEliminar(cliente.CC_NIT, cliente.LicensePlate)}
                         className="py-1 px-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                       >
                         Eliminar
-                      </Button>
+                      </button>
                     </td>
                   </tr>
                 ))}
