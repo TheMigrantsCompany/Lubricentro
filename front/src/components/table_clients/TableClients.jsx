@@ -4,7 +4,7 @@ import ModalModifyClient from '../modal_modify_client/ModalModifyClient';
 import ModalServiceDetail from '../modal_service_detail/ModalServiceDetail';
 import { FaQrcode } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'; 
-import { getCars, getServiceOrders, fetchServiceDetails } from '../../redux/actions/actions';
+import { getCars, getServiceOrders, fetchServiceDetails, deleteCar } from '../../redux/actions/actions';
 
 export function ClientesPlacasTable() {
   const dispatch = useDispatch();
@@ -37,7 +37,6 @@ export function ClientesPlacasTable() {
   const handleDetalle = (cliente) => {
     console.log('Cliente seleccionado:', cliente);
 
-    // Verificar si hay alguna orden de servicio que coincida con el id_Car del cliente
     const order = serviceOrders.find(order => order.id_Car === cliente.id_Car);
     
     console.log('Orden encontrada:', order);
@@ -49,8 +48,10 @@ export function ClientesPlacasTable() {
     }
   };
 
-  const handleEliminar = (id) => {
-    console.log(`Eliminar cliente con ID ${id}`);
+  const handleEliminar = (CC_NIT, licensePlate) => {
+    if (window.confirm('¿Estás seguro de que quieres eliminar este carro?')) {
+      dispatch(deleteCar(CC_NIT, licensePlate));
+    }
   };
 
   const handleVerQRCode = (client) => {
@@ -79,7 +80,14 @@ export function ClientesPlacasTable() {
                     <td className="px-6 py-4">{cliente.Name}</td>
                     <td className="px-6 py-4">{cliente.LicensePlate}</td>
                     <td className="px-6 py-4">{cliente.CC_NIT}</td>
-                    <td className="px-6 py-4">{cliente.Rol ? 'Activo' : 'Inactivo'}</td>
+                    <td className="px-6 py-4">
+                      <span 
+                        className={`cursor-pointer underline ${cliente.Active ? 'text-blue-600' : 'text-red-600'}`} 
+                        onClick={() => dispatch(toggleCarActive(cliente.id_Car))}
+                      >
+                        {cliente.Active ? 'Activo' : 'Inactivo'}
+                      </span>
+                    </td>
                     <td className="px-6 py-4">
                       <FaQrcode 
                         className="text-xl text-gray-600 hover:text-gray-800 cursor-pointer" 
@@ -100,7 +108,7 @@ export function ClientesPlacasTable() {
                         Detalle
                       </Button>
                       <Button
-                        onClick={() => handleEliminar(cliente.id_Car)}
+                        onClick={() => handleEliminar(cliente.CC_NIT, cliente.LicensePlate)}
                         className="py-1 px-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                       >
                         Eliminar
@@ -121,11 +129,10 @@ export function ClientesPlacasTable() {
       )}
       {selectedServiceId && (
         <ModalServiceDetail
-          serviceId={selectedServiceId} // Pasa el serviceId en lugar de service
+          serviceId={selectedServiceId}
           closeModal={() => setSelectedServiceId(null)}
         />
       )}
     </div>
   );
 }
-

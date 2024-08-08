@@ -1,27 +1,25 @@
 import { 
   GET_ALL_PRODUCTS,
-  
- GET_PRODUCTS_ERROR,
-  
- SEARCH_PRODUCTS,
+  GET_PRODUCTS_ERROR,
+  SEARCH_PRODUCTS,
   GET_CATEGORY_BY_ID, 
   GET_PRODUCTS_BY_CATEGORY,
   GET_ALL_CATEGORIES,
   GET_ALL_USERS,
-   GET_USERS_ERROR,
-   SET_CURRENT_USER,
- 
- GET_CARS,
- GET_CARS_ERROR,
- GET_CARS_PLATE,
- GET_CARS_PLATE_ERROR,
- CAR_BY_CC_NIT,
- CAR_BY_CC_NIT_ERROR,
+  GET_USERS_ERROR,
+  SET_CURRENT_USER,
+  GET_CARS,
+  GET_CARS_ERROR,
+  GET_CARS_PLATE,
+  GET_CARS_PLATE_ERROR,
+  CAR_BY_CC_NIT,
+  CAR_BY_CC_NIT_ERROR,
   GET_ALL_SERVICES,
   UPDATE_CLIENT_SUCCESS,
   UPDATE_CLIENT_FAILURE,
   SET_SERVICE_ORDERS,
-  SET_SERVICE_DETAIL
+  SET_SERVICE_DETAIL,
+  TOGGLE_CAR_ACTIVE_STATE,
 
 } from "../actions/types";
 
@@ -167,6 +165,13 @@ const rootReducer = (state = initialState, action) => {
           ...state, 
           serviceDetail: action.payload
          };
+         case TOGGLE_CAR_ACTIVE_STATE:
+            return {
+                ...state,
+                cars: state.cars.map(car =>
+                  car.id_Car === action.payload.id_Car ? action.payload : car
+                ),
+            };
        default:
          return state;
      }
