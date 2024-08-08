@@ -10,9 +10,10 @@ export function ClientesPlacasTable() {
   const dispatch = useDispatch();
   const cars = useSelector((state) => state.cars);
   const serviceOrders = useSelector((state) => state.serviceOrders);
-  const serviceDetail = useSelector((state) => state.serviceDetail);
   const [selectedClient, setSelectedClient] = useState(null);
   const [selectedServiceId, setSelectedServiceId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchType, setSearchType] = useState('plate'); // 'plate' or 'cc-nit'
 
   useEffect(() => {
     dispatch(getCars());
@@ -62,12 +63,41 @@ export function ClientesPlacasTable() {
     dispatch(toggleCarActiveState(id));
   };
 
+  // Filtrar los carros basado en la búsqueda
+  const filteredCars = cars.filter(car => {
+    const searchValue = searchType === 'plate' ? car.LicensePlate : car.CC_NIT;
+    return searchValue && searchValue.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
   // Ordenar los carros: activos primero y luego inactivos
-  const sortedCars = [...cars].sort((a, b) => b.Active - a.Active);
+  const sortedCars = [...filteredCars].sort((a, b) => b.Active - a.Active);
 
   return (
     <div className="flex flex-col items-center">
       <div className="w-full max-w-4xl mx-auto md:ml-16">
+        <div className="flex flex-col mb-4">
+          <div className="flex gap-2 mb-2">
+            <button
+              onClick={() => setSearchType('plate')}
+              className={`px-3 py-1 text-sm rounded-lg ${searchType === 'plate' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            >
+              Placa
+            </button>
+            <button
+              onClick={() => setSearchType('cc-nit')}
+              className={`px-3 py-1 text-sm rounded-lg ${searchType === 'cc-nit' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            >
+              CC-NIT
+            </button>
+          </div>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={`Buscar por ${searchType === 'plate' ? 'placa' : 'CC-NIT'}`}
+            className="border border-gray-300 rounded-lg p-2 w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-black"
+          />
+        </div>
         <Card>
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-gray-800">
