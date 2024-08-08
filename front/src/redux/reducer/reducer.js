@@ -20,11 +20,16 @@ import {
   GET_ALL_SERVICES,
   UPDATE_CLIENT_SUCCESS,
   UPDATE_CLIENT_FAILURE,
+  SET_SERVICE_ORDERS,
+  SET_SERVICE_DETAIL
+
 } from "../actions/types";
 
 const initialState = {
    loading: false,
    products: [],
+   serviceOrders: [],
+   serviceDetail: null,
    cars: [],
    selectedCar: {}, // Agrega un campo para el auto seleccionado
    copyCars: [],
@@ -34,8 +39,8 @@ const initialState = {
    users: [],
    currentid_User: null,
     user: {
-      id_User: null, // Nuevo campo añadido
-  },
+    id_User: null, // Nuevo campo añadido
+      },
 };
 
 
@@ -151,6 +156,17 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 error: action.payload,
             };
+            case SET_SERVICE_ORDERS:
+      return { 
+        ...state, 
+        serviceOrders: action.payload 
+      };
+    
+      case SET_SERVICE_DETAIL:
+        return { 
+          ...state, 
+          serviceDetail: action.payload
+         };
        default:
          return state;
      }

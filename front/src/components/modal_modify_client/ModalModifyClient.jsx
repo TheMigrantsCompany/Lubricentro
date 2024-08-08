@@ -25,7 +25,7 @@ const ModalModifyClient = ({ client, closeModal }) => {
         if (client) {
             setFormData({
                 nombre: client.Name || '',
-                apellido: '', // Ajusta si es necesario
+                apellido: '', 
                 cedula: client.CC_NIT || '',
                 telefono: client.Phone || '',
                 email: client.Mail || '',

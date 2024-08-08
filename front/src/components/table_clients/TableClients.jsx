@@ -3,25 +3,50 @@ import { Card, Button } from '@tremor/react';
 import ModalModifyClient from '../modal_modify_client/ModalModifyClient';
 import ModalServiceDetail from '../modal_service_detail/ModalServiceDetail';
 import { FaQrcode } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCars } from '../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux'; 
+import { getCars, getServiceOrders, fetchServiceDetails } from '../../redux/actions/actions';
 
 export function ClientesPlacasTable() {
   const dispatch = useDispatch();
   const cars = useSelector((state) => state.cars);
+  const serviceOrders = useSelector((state) => state.serviceOrders);
+  const serviceDetail = useSelector((state) => state.serviceDetail);
   const [selectedClient, setSelectedClient] = useState(null);
-  const [selectedService, setSelectedService] = useState(null);
+  const [selectedServiceId, setSelectedServiceId] = useState(null);
 
   useEffect(() => {
     dispatch(getCars());
+    dispatch(getServiceOrders());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedServiceId) {
+      dispatch(fetchServiceDetails(selectedServiceId));
+    }
+  }, [selectedServiceId, dispatch]);
+
+  useEffect(() => {
+    console.log('Cars:', cars);
+    console.log('Service Orders:', serviceOrders);
+  }, [cars, serviceOrders]);
 
   const handleModificar = (client) => {
     setSelectedClient(client);
   };
 
-  const handleDetalle = (service) => {
-    setSelectedService(service);
+  const handleDetalle = (cliente) => {
+    console.log('Cliente seleccionado:', cliente);
+
+    // Verificar si hay alguna orden de servicio que coincida con el id_Car del cliente
+    const order = serviceOrders.find(order => order.id_Car === cliente.id_Car);
+    
+    console.log('Orden encontrada:', order);
+
+    if (order) {
+      setSelectedServiceId(order.id_Service_Order);
+    } else {
+      console.error('ID de orden de servicio no encontrado para el cliente');
+    }
   };
 
   const handleEliminar = (id) => {
@@ -40,24 +65,12 @@ export function ClientesPlacasTable() {
             <table className="w-full text-sm text-left text-gray-800">
               <thead className="text-xs text-black uppercase bg-gray-300">
                 <tr>
-                  <th scope="col" className="px-6 py-3">
-                    Cliente
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Placa
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Cedula/NIT
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Status
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    QR
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Acciones
-                  </th>
+                  <th scope="col" className="px-6 py-3">Cliente</th>
+                  <th scope="col" className="px-6 py-3">Placa</th>
+                  <th scope="col" className="px-6 py-3">Cedula/NIT</th>
+                  <th scope="col" className="px-6 py-3">Status</th>
+                  <th scope="col" className="px-6 py-3">QR</th>
+                  <th scope="col" className="px-6 py-3">Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -106,12 +119,13 @@ export function ClientesPlacasTable() {
           closeModal={() => setSelectedClient(null)}
         />
       )}
-      {selectedService && (
+      {selectedServiceId && (
         <ModalServiceDetail
-          service={selectedService}
-          closeModal={() => setSelectedService(null)}
+          serviceId={selectedServiceId} // Pasa el serviceId en lugar de service
+          closeModal={() => setSelectedServiceId(null)}
         />
       )}
     </div>
   );
 }
+

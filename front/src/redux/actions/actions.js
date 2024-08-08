@@ -23,6 +23,8 @@ import {
     CAR_BY_CC_NIT_ERROR,
     UPDATE_CLIENT_SUCCESS,
     UPDATE_CLIENT_FAILURE,
+    SET_SERVICE_ORDERS,
+    SET_SERVICE_DETAIL
     
  } from "./types";
 
@@ -180,18 +182,6 @@ export const getUserById = () => async dispatch => {
     }
 };
 
-
-
-// Acción para obtener servicios
-export const fetchServices = () => async (dispatch) => {
-    try {
-      const response = await axios.get('http://localhost:3001/services/');
-      dispatch({ type: GET_ALL_SERVICES, payload: response.data });
-    } catch (error) {
-      console.error('Error al obtener servicios:', error);
-    }
-  };
-
   export const getCars = () => async (dispatch) => {
     try {
         const { data } = await axios.get('http://localhost:3001/cars/');
@@ -258,3 +248,24 @@ export const updateClient = (id_Car, formData) => async (dispatch) => {
         });
     }
 };
+
+// Accion para obtener todas las órdenes
+export const getServiceOrders = () => async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3001/orders');
+      const data = await response.json();
+      dispatch({ type: SET_SERVICE_ORDERS, payload: data });
+    } catch (error) {
+      console.error('Error al obtener las órdenes de servicio:', error);
+    }
+  };
+  // Acción para obtener detalles de una orden de servicio
+  export const fetchServiceDetails = (idServiceOrder) => async (dispatch) => {
+    try {
+      const response = await fetch(`http://localhost:3001/orders/${idServiceOrder}`);
+      const data = await response.json();
+      dispatch({ type: SET_SERVICE_DETAIL, payload: data });
+    } catch (error) {
+      console.error('Error al obtener los detalles del servicio:', error);
+    }
+  };
