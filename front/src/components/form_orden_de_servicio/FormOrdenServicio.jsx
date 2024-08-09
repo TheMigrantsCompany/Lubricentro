@@ -33,11 +33,7 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleSubmit }) => {
             className="w-full border rounded-md p-2 text-tremor-content-strong"
           />
         </div>
-        <div className="w-full text-center">
-          <Button onClick={handleSubmit} className="w-full bg-red-600 hover:bg-red-700 text-white">
-            Enviar
-          </Button>
-        </div>
+        
       </div>
     </form>
   );
