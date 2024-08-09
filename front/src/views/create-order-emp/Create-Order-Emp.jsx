@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import FormOrdenServicio from "../../components/form_orden_de_servicio/FormOrdenServicio";
 import OrderSummary from "../../components/order-summary/OrderSummary";
 import AcordeonProductos from "../../components/acordeon_productos/AcordeonProductos";
 import AcordeonServicios from "../../components/acordeon_servicios/AcordeonServicios";
+import { createServiceOrder } from '../../redux/actions/actions';
 import { useFirebase } from '../../firebase/config';
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const CreateOrderEmp = () => {
-
+  const dispatch = useDispatch();
   //Asociacion de usuario logueado en firebase (LUBRICADOR) con la orden de servicios
 
   // Configuración de Firebase
@@ -103,6 +105,8 @@ const handleQuantityChange = (productId, newQuantity) => {
   );
 };
 
+
+
 // Calcula el total basado en los productos y servicios seleccionados y el tipo de cliente
 const calculateTotal = () => {
   const productsTotal = selectedProducts.reduce(
@@ -116,15 +120,24 @@ const calculateTotal = () => {
   return productsTotal + servicesTotal;
 };
 
+
 // Maneja el envío del formulario
 const handleSubmit = () => {
+  console.log("handleSubmit llamado");
+  console.log("ID del automóvil seleccionado:", id_Car);
+
   if (!id_Car) {
-    alert("Por favor, seleccione un automóvil."); // Verifica si se ha seleccionado un automóvil
+    alert("Por favor, seleccione un automóvil.");
     return;
   }
-
+  if (!userId) {
+    alert("No se encontró el ID del usuario.");
+    return;
+  }
+  
+  // Crear el cuerpo de la solicitud
   const orderData = {
-    id_Car,
+    id_Car,    
     paymentMethod: formData.paymentMethod,
     items: [
       ...selectedProducts.map(product => ({
@@ -140,9 +153,16 @@ const handleSubmit = () => {
     ],
     warnings: formData.warnings
   };
+  console.log("Datos de la orden que se enviarán:", orderData);
+  
+  // Enviar la solicitud con el cuerpo adecuado
+  dispatch(createServiceOrder(userId, orderData));
 
-  console.log("Formulario enviado: ", orderData);
-  // Aquí iría la lógica para enviar la orden al backend
+};
+const handleCarSelect = (car) => {
+  setId_Car(car.id_Car); // Asegúrate de usar el ID del automóvil, no el objeto completo
+  console.log("Automóvil seleccionado:", car);
+  return car;
 };
 
 return (
@@ -153,7 +173,6 @@ return (
       </h1>
       <div className="flex justify-center gap-10">
         <div className="w-1/2">
-          {/* Componente para el formulario de orden de servicio */}
           <FormOrdenServicio
             formData={formData}
             handleInputChange={handleInputChange}
@@ -161,12 +180,10 @@ return (
           />
         </div>
         <div className="w-1/2">
-          {/* Componentes para seleccionar productos y servicios */}
           <AcordeonProductos onAddProduct={handleAddProduct} />
           <AcordeonServicios onAddService={handleAddService} />
         </div>
       </div>
-      {/* Componente para mostrar el resumen de la orden */}
       <OrderSummary
         paymentMethod={formData.paymentMethod}
         selectedProducts={selectedProducts}
@@ -177,8 +194,17 @@ return (
         calculateTotal={calculateTotal}
         handleSubmit={handleSubmit}
         id_Car={id_Car}
-        setClientType={setClientType} // Pasar función para cambiar tipo de cliente
+        setClientType={setClientType}
+        onCarSelect={handleCarSelect} // Pasa la función aquí
       />
+      <div className="flex justify-center mt-5">
+        <button
+          onClick={handleSubmit}
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600"
+        >
+          Crear Orden
+        </button>
+      </div>
     </div>
   </div>
 );
