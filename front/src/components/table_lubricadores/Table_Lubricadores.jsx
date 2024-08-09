@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers } from '../../redux/actions/actions';
+import { getAllUsers, suspendUser } from '../../redux/actions/actions';
 import { Card } from '@tremor/react';
 
 export function TableLubricadores() {
@@ -12,7 +12,7 @@ export function TableLubricadores() {
   }, [dispatch]);
 
   const handleSuspender = (id) => {
-    console.log(`Suspender lubricador con ID ${id}`);
+    dispatch(suspendUser(id));
   };
 
   return (
@@ -23,7 +23,7 @@ export function TableLubricadores() {
             <tr>
               <th scope="col" className="px-6 py-3">Nombre</th>
               <th scope="col" className="px-6 py-3">Correo</th>
-              <th scope="col" className="px-6 py-3">Acciones</th>
+              <th scope="col" className="px-6 py-3">Estado</th>
             </tr>
           </thead>
           <tbody>
@@ -37,12 +37,14 @@ export function TableLubricadores() {
                   <td className="px-6 py-4">{user.Name}</td>
                   <td className="px-6 py-4">{user.Mail}</td>
                   <td className="px-6 py-4">
-                    <button
+                    <span
                       onClick={() => handleSuspender(user.id_User)}
-                      className="py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                      className={`cursor-pointer px-2 py-1 rounded-md ${
+                        user.Active ? 'text-blue-600 bg-blue-100' : 'text-red-600 bg-red-100'
+                      }`}
                     >
-                      Suspender
-                    </button>
+                      {user.Active ? 'Activo' : 'Suspendido'}
+                    </span>
                   </td>
                 </tr>
               ))

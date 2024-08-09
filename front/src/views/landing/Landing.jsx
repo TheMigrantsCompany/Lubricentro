@@ -20,16 +20,29 @@ const Landing = () => {
     navigateBasedOnRole(email);
   };
 
-  const navigateBasedOnRole = (email) => {
-    if (email === 'empleado@example.com') {
-      navigate('/employee/services');
-    } else if (email === 'admin@example.com') {
-      navigate('/admin/manage_employees');
-    } else {
-      console.log('No matching role for user');
+  const navigateBasedOnRole = async (email) => {
+    try {
+      // Hacer una solicitud para obtener todos los usuarios
+      const response = await fetch('http://localhost:3001/users');
+      const users = await response.json();
+  
+      // Encontrar el usuario con el correo electrónico que coincida
+      const matchingUser = users.find(user => user.Mail === email);
+  
+      if (matchingUser) {
+        // Redirigir según el rol del usuario
+        if (matchingUser.Rol) {
+          navigate('/admin/manage_employees');
+        } else {
+          navigate('/employee/services');
+        }
+      } else {
+        console.log('No matching user found');
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error);
     }
   };
-
   const handleSignup = () => {
     Swal.fire({
       title: 'Registrar',

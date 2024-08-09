@@ -2,9 +2,7 @@ import axios from "axios";
 import { getCurrentid_User } from "../../utils/getCurrentUserId";
 import { 
     GET_ALL_PRODUCTS,
-    
     GET_PRODUCTS_ERROR,
-    
     SEARCH_PRODUCTS,
     GET_CATEGORY_BY_ID,
     GET_PRODUCTS_BY_CATEGORY,
@@ -12,9 +10,6 @@ import {
     GET_ALL_USERS,
     GET_USERS_ERROR,
     SET_CURRENT_USER,
-
-    
- 
     GET_CARS,
     GET_CARS_ERROR,
     GET_CARS_PLATE,
@@ -24,8 +19,11 @@ import {
     UPDATE_CLIENT_SUCCESS,
     UPDATE_CLIENT_FAILURE,
     SET_SERVICE_ORDERS,
-    SET_SERVICE_DETAIL
+    SET_SERVICE_DETAIL,
+    TOGGLE_CAR_ACTIVE_STATE,
+    USER_SUSPENDED,
     
+    POST_CLIENT_FAILURE,
  } from "./types";
 
 // Acción para obtener todos los productos
@@ -267,5 +265,51 @@ export const getServiceOrders = () => async (dispatch) => {
       dispatch({ type: SET_SERVICE_DETAIL, payload: data });
     } catch (error) {
       console.error('Error al obtener los detalles del servicio:', error);
+    }
+  };
+
+  // Accion para activar o desactivar un usuario 
+  export const toggleCarActiveState = (id_Car) => async (dispatch) => {
+    try {
+        const response = await axios.patch(`http://localhost:3001/cars/${id_Car}/deactivate`);
+        dispatch({
+            type: TOGGLE_CAR_ACTIVE_STATE,
+            payload: response.data,
+        });
+    } catch (error) {
+        console.error('Error toggling car active state:', error);
+    }
+};
+
+//Accion para Eliminar un Car
+export const deleteCar = (CC_NIT, licensePlate) => async (dispatch) => {
+    try {
+      // Realiza la llamada a la API para eliminar el carro
+      await fetch(`http://localhost:3001/cars/cc-nit/${CC_NIT}`, {
+        method: 'DELETE',
+      });
+  
+      // Otra llamada para eliminar por LicensePlate si es necesario
+      await fetch(`http://localhost:3001/cars/license-plate/${licensePlate}`, {
+        method: 'DELETE',
+      });
+  
+      // Vuelve a obtener los carros actualizados
+      dispatch(getCars());
+    } catch (error) {
+      console.error('Error eliminando carro:', error);
+    }
+  };
+
+  // Acción para suspender un usuario
+  export const suspendUser = (id) => async (dispatch) => {
+    try {
+      const response = await axios.patch(`http://localhost:3001/users/${id}/toggle`);
+      dispatch({
+        type: USER_SUSPENDED,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error('Error al suspender el usuario:', error);
     }
   };

@@ -16,16 +16,16 @@ const OrderSummary = ({
   onQuantityChange,
   calculateTotal,
   handleSubmit,
-  setClientType, // Agregar prop para cambiar tipo de cliente
+  setClientType, // Prop para cambiar tipo de cliente
 }) => {
   const [selectedCar, setSelectedCar] = useState(null); // Estado para el carro seleccionado
-  const [searchType, setSearchType] = useState("plate"); // Estado para el tipo de búsqueda
-  const [clientType, setClientTypeLocal] = useState("cliente"); // Estado local para tipo de cliente
+  const [searchType, setSearchType] = useState('plate'); // Estado para el tipo de búsqueda
+  const [clientType, setClientTypeLocal] = useState('cliente'); // Estado local para tipo de cliente
 
   // Función para manejar la selección del carro
   const handleCarSelect = (car) => {
     setSelectedCar(car);
-    setSearchType(car.LicensePlate ? "plate" : "cc-nit"); // Determinar el tipo de búsqueda basado en la propiedad disponible
+    setSearchType(car.LicensePlate ? 'plate' : 'cc-nit'); // Determinar el tipo de búsqueda basado en la propiedad disponible
   };
 
   const handleClientTypeChange = (e) => {
@@ -37,18 +37,15 @@ const OrderSummary = ({
   return (
     <Card className="w-full max-w-screen-lg mx-auto p-5 bg-white rounded-lg shadow-md text-black">
       <h2 className="text-lg font-bold mb-3 text-center">Resumen de Orden</h2>
-      {/* Agregar el componente CarSearch */}
+      <div className="mb-4 text-center">
+        <p><strong>Método de Pago:</strong> {paymentMethod}</p>
+      </div>
       <CarSearch onCarSelect={handleCarSelect} />
       {selectedCar && (
         <div className="mb-4 text-center">
           <h3 className="font-bold mb-2">Cliente Seleccionado</h3>
-          <p>
-            <strong>{searchType === "plate" ? "Placa" : "CC-NIT"}:</strong>{" "}
-            {searchType === "plate" ? selectedCar.LicensePlate : selectedCar.CC_NIT}
-          </p>
-          <p>
-            <strong>Nombre:</strong> {selectedCar.Name}
-          </p>
+          <p><strong>{searchType === 'plate' ? 'Placa' : 'CC-NIT'}:</strong> {searchType === 'plate' ? selectedCar.LicensePlate : selectedCar.CC_NIT}</p>
+          <p><strong>Nombre:</strong> {selectedCar.Name}</p>
         </div>
       )}
       {/* Selector de tipo de cliente */}
@@ -63,24 +60,18 @@ const OrderSummary = ({
           <option value="taller">Taller</option>
         </select>
       </div>
-      <div className="mb-4 text-center">
-        <p>
-          <strong>Método de Pago:</strong> {paymentMethod}
-        </p>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div
+        className={`grid ${
+          clientType === 'taller' ? 'grid-cols-1 justify-center' : 'grid-cols-1 md:grid-cols-2'
+        } gap-4 mb-4`}
+      >
         <div>
           <h3 className="font-bold mb-2 text-center">Productos Seleccionados</h3>
           {selectedProducts.length > 0 ? (
             selectedProducts.map((product) => (
-              <div
-                key={product.id_Product}
-                className="flex justify-between items-center mb-2 border-b pb-2"
-              >
+              <div key={product.id_Product} className="flex justify-between items-center mb-2 border-b pb-2">
                 <div className="flex flex-col md:flex-row justify-between w-full items-center">
-                  <p className="text-gray-700">
-                    {product.Name} - ${clientType === "taller" ? product.Price_Tl : product.Price_Cl} * {product.Quantity}
-                  </p>
+                  <p className="text-gray-700">{product.Name} - ${(clientType === 'taller' ? product.Price_Tl : product.Price_Cl) * product.Quantity}</p>
                   <div className="ml-2 flex items-center">
                     <button
                       onClick={() => onQuantityChange(product.id_Product, product.Quantity - 1)}
@@ -96,7 +87,7 @@ const OrderSummary = ({
                       +
                     </button>
                     <button
-                      onClick={() => onRemoveItem(product, "product")}
+                      onClick={() => onRemoveItem(product, 'product')}
                       className="ml-2 px-2 py-1 border rounded-md bg-red-500 text-white"
                     >
                       Eliminar
@@ -109,29 +100,26 @@ const OrderSummary = ({
             <p className="text-gray-500 text-center">No hay productos seleccionados.</p>
           )}
         </div>
-        <div>
-          <h3 className="font-bold mb-2 text-center">Servicios Seleccionados</h3>
-          {selectedServices.length > 0 ? (
-            selectedServices.map((service) => (
-              <div
-                key={service.id_Product}
-                className="flex justify-between items-center mb-2 border-b pb-2"
-              >
-                <p className="text-gray-700">
-                  {service.Name} - ${clientType === "taller" ? service.Price_Tl : service.Price_Cl}
-                </p>
-                <button
-                  onClick={() => onRemoveItem(service, "service")}
-                  className="ml-2 px-2 py-1 border rounded-md bg-red-500 text-white"
-                >
-                  Eliminar
-                </button>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500 text-center">No hay servicios seleccionados.</p>
-          )}
-        </div>
+        {clientType !== 'taller' && (
+          <div>
+            <h3 className="font-bold mb-2 text-center">Servicios Seleccionados</h3>
+            {selectedServices.length > 0 ? (
+              selectedServices.map((service) => (
+                <div key={service.id_Product} className="flex justify-between items-center mb-2 border-b pb-2">
+                  <p className="text-gray-700">{service.Name} - ${(clientType === 'taller' ? service.Price_Tl : service.Price_Cl)}</p>
+                  <button
+                    onClick={() => onRemoveItem(service, 'service')}
+                    className="ml-2 px-2 py-1 border rounded-md bg-red-500 text-white"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500 text-center">No hay servicios seleccionados.</p>
+            )}
+          </div>
+        )}
       </div>
       <div className="mb-4 text-center">
         <h3 className="font-bold mb-2">Sugerencias</h3>
@@ -142,10 +130,7 @@ const OrderSummary = ({
         <p className="text-gray-700">${calculateTotal()}</p>
       </div>
       <div className="text-center">
-        <FlowbiteButton
-          onClick={handleSubmit}
-          className="w-full bg-red-600 hover:bg-red-700 text-white"
-        >
+        <FlowbiteButton onClick={handleSubmit} className="w-full bg-red-600 hover:bg-red-700 text-white">
           Confirmar Orden
         </FlowbiteButton>
       </div>
