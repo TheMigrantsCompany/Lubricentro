@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../redux/actions/actions";
-import { Table, Button,Modal, TextInput, Label } from "flowbite-react";
+import { getAllProducts, updateProduct } from "../../redux/actions/actions";
+import { Table, Button, Modal, TextInput, Label } from "flowbite-react";
 import { FaChevronLeft, FaChevronRight, FaStepBackward, FaStepForward } from "react-icons/fa";
 
 const TableManageProducts = () => {
@@ -9,8 +9,8 @@ const TableManageProducts = () => {
     const products = useSelector((state) => state.products);
     const category = useSelector((state) => state.category);
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedProduct, setSelectedProduct] = useState(null); 
-    const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const productsPerPage = 15;
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const TableManageProducts = () => {
     }, [dispatch, category]);
 
     useEffect(() => {
-        setCurrentPage(1); 
+        setCurrentPage(1);
     }, [products]);
 
     const handleEditClick = (product) => {
@@ -29,17 +29,17 @@ const TableManageProducts = () => {
     };
 
     const handleModalClose = () => {
-        setIsModalOpen(false); 
-        setSelectedProduct(null); 
+        setIsModalOpen(false);
+        setSelectedProduct(null);
     };
 
-    // Lógica para guardar los cambios realizados en el modal
     const handleSaveChanges = () => {
-        console.log("Cambios guardados:", selectedProduct);
+        if (selectedProduct) {
+            dispatch(updateProduct(selectedProduct));
+        }
         handleModalClose();
     };
 
-    // Lógica para paginación
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
@@ -51,7 +51,6 @@ const TableManageProducts = () => {
         }
     };
 
-    // Lógica para limitar el número de botones de paginación mostrados
     const maxPageButtons = 5;
     const pageButtons = [];
 
@@ -74,7 +73,7 @@ const TableManageProducts = () => {
         <div>
             <Table>
                 <Table.Head>
-                    <Table.HeadCell>Nombre del Producto</Table.HeadCell>
+                    <Table.HeadCell>Nombre </Table.HeadCell>
                     <Table.HeadCell>Stock</Table.HeadCell>
                     <Table.HeadCell>Precio</Table.HeadCell>
                     <Table.HeadCell>Referencia</Table.HeadCell>
@@ -92,7 +91,7 @@ const TableManageProducts = () => {
                             <Table.Cell>${product.Price_Cl || '0'}</Table.Cell>
                             <Table.Cell>{product.Reference || 'N/A'}</Table.Cell>
                             <Table.Cell>
-                                <button onClick={() => handleEditClick(product)} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+                            <button onClick={() => handleEditClick(product)} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
                                     Edit
                                 </button>
                             </Table.Cell>
@@ -150,7 +149,7 @@ const TableManageProducts = () => {
                                 <TextInput
                                     id="productName"
                                     type="text"
-                                    value={selectedProduct.Name}
+                                    value={selectedProduct.Name || ''}
                                     onChange={(e) => setSelectedProduct({ ...selectedProduct, Name: e.target.value })}
                                 />
                             </div>
@@ -159,8 +158,8 @@ const TableManageProducts = () => {
                                 <TextInput
                                     id="productStock"
                                     type="number"
-                                    value={selectedProduct.Quantity}
-                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, Quantity: e.target.value })}
+                                    value={selectedProduct.Quantity || ''}
+                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, Quantity: parseInt(e.target.value, 10) || '' })}
                                 />
                             </div>
                             <div>
@@ -168,8 +167,8 @@ const TableManageProducts = () => {
                                 <TextInput
                                     id="productPrice"
                                     type="text"
-                                    value={selectedProduct.Price_Cl}
-                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, Price_Cl: e.target.value })}
+                                    value={selectedProduct.Price_Cl || ''}
+                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, Price_Cl: parseFloat(e.target.value) || '' })}
                                 />
                             </div>
                             <div>
@@ -177,7 +176,7 @@ const TableManageProducts = () => {
                                 <TextInput
                                     id="productReference"
                                     type="text"
-                                    value={selectedProduct.Reference}
+                                    value={selectedProduct.Reference || ''}
                                     onChange={(e) => setSelectedProduct({ ...selectedProduct, Reference: e.target.value })}
                                 />
                             </div>

@@ -21,6 +21,7 @@ import {
   SET_SERVICE_DETAIL,
   TOGGLE_CAR_ACTIVE_STATE,
   USER_SUSPENDED,
+  UPDATE_PRODUCT_SUCCESS,
 
 } from "../actions/types";
 
@@ -180,6 +181,13 @@ const rootReducer = (state = initialState, action) => {
                   user.id_User === action.payload.id_User ? { ...user, Active: action.payload.Active } : user
                 ),
               };
+              case UPDATE_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                products: state.products.map((product) =>
+                    product.id_Product === action.payload.id_Product ? action.payload : product
+                ),
+            };
        default:
          return state;
      }

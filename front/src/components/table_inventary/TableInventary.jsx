@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../redux/actions/actions";
+import { getAllProducts, updateProduct } from "../../redux/actions/actions";
 import { Table, Button, Modal, TextInput, Label } from "flowbite-react";
 import { FaChevronLeft, FaChevronRight, FaStepBackward, FaStepForward } from "react-icons/fa";
 
@@ -34,7 +34,9 @@ const TableInventary = () => {
     };
 
     const handleSaveChanges = () => {
-        console.log("Cambios guardados:", selectedProduct);
+        if (selectedProduct) {
+            dispatch(updateProduct(selectedProduct));
+        }
         handleModalClose();
     };
 
@@ -71,7 +73,7 @@ const TableInventary = () => {
         <div>
             <Table>
                 <Table.Head>
-                    <Table.HeadCell>Nombre del Producto</Table.HeadCell>
+                    <Table.HeadCell>Nombre </Table.HeadCell>
                     <Table.HeadCell>Stock</Table.HeadCell>
                     <Table.HeadCell>Precio</Table.HeadCell>
                     <Table.HeadCell>Referencia</Table.HeadCell>
@@ -139,11 +141,11 @@ const TableInventary = () => {
 
             {selectedProduct && (
                 <Modal show={isModalOpen} onClose={handleModalClose}>
-                    <Modal.Header>Editar</Modal.Header>
+                    <Modal.Header>Editar </Modal.Header>
                     <Modal.Body>
                         <div className="space-y-4">
                             <div>
-                                <Label htmlFor="productName">Nombre</Label>
+                                <Label htmlFor="productName">Nombre </Label>
                                 <TextInput
                                     id="productName"
                                     type="text"
@@ -157,7 +159,7 @@ const TableInventary = () => {
                                     id="productStock"
                                     type="number"
                                     value={selectedProduct.Quantity}
-                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, Quantity: e.target.value })}
+                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, Quantity: parseInt(e.target.value, 10) || '' })}
                                 />
                             </div>
                             <div>
@@ -166,7 +168,7 @@ const TableInventary = () => {
                                     id="productPrice"
                                     type="text"
                                     value={selectedProduct.Price_Cl}
-                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, Price_Cl: e.target.value })}
+                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, Price_Cl: parseFloat(e.target.value) || '' })}
                                 />
                             </div>
                             <div>
@@ -191,3 +193,4 @@ const TableInventary = () => {
 };
 
 export default TableInventary;
+
