@@ -23,9 +23,10 @@ import {
     TOGGLE_CAR_ACTIVE_STATE,
     USER_SUSPENDED,
     CREATE_SERVICE_ORDER_SUCCESS,
-    
     POST_CLIENT_FAILURE,
     CREATE_SERVICE_ORDER_ERROR,
+    UPDATE_PRODUCT_SUCCESS,
+    UPDATE_PRODUCT_FAILURE,
  } from "./types";
 
 // Acción para obtener todos los productos
@@ -314,3 +315,15 @@ export const deleteCar = (CC_NIT, licensePlate) => async (dispatch) => {
       console.error('Error al suspender el usuario:', error);
     }
   };
+
+  //Accion para actualizar Productos/Servicios
+
+  export const updateProduct = (productData) => async (dispatch) => {
+    try {
+        const response = await axios.put(`http://localhost:3001/products/${productData.id_Product}`, productData);
+        dispatch({ type: UPDATE_PRODUCT_SUCCESS, payload: response.data });
+    } catch (error) {
+        console.error("Error updating product:", error);
+        dispatch({ type: UPDATE_PRODUCT_FAILURE, payload: error });
+    }
+};

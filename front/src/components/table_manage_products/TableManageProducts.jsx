@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../redux/actions/actions";
-import { Table, Button } from "flowbite-react";
+import { getAllProducts, updateProduct } from "../../redux/actions/actions";
+import { Table, Button, Modal, TextInput, Label } from "flowbite-react";
 import { FaChevronLeft, FaChevronRight, FaStepBackward, FaStepForward } from "react-icons/fa";
 
 const TableManageProducts = () => {
@@ -9,6 +9,8 @@ const TableManageProducts = () => {
     const products = useSelector((state) => state.products);
     const category = useSelector((state) => state.category);
     const [currentPage, setCurrentPage] = useState(1);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const productsPerPage = 15;
 
     useEffect(() => {
@@ -18,10 +20,26 @@ const TableManageProducts = () => {
     }, [dispatch, category]);
 
     useEffect(() => {
-        setCurrentPage(1); 
+        setCurrentPage(1);
     }, [products]);
 
-    // Lógica para paginación
+    const handleEditClick = (product) => {
+        setSelectedProduct(product);
+        setIsModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsModalOpen(false);
+        setSelectedProduct(null);
+    };
+
+    const handleSaveChanges = () => {
+        if (selectedProduct) {
+            dispatch(updateProduct(selectedProduct));
+        }
+        handleModalClose();
+    };
+
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
@@ -33,7 +51,6 @@ const TableManageProducts = () => {
         }
     };
 
-    // Lógica para limitar el número de botones de paginación mostrados
     const maxPageButtons = 5;
     const pageButtons = [];
 
@@ -56,7 +73,7 @@ const TableManageProducts = () => {
         <div>
             <Table>
                 <Table.Head>
-                    <Table.HeadCell>Nombre del Producto</Table.HeadCell>
+                    <Table.HeadCell>Nombre </Table.HeadCell>
                     <Table.HeadCell>Stock</Table.HeadCell>
                     <Table.HeadCell>Precio</Table.HeadCell>
                     <Table.HeadCell>Referencia</Table.HeadCell>
@@ -74,9 +91,9 @@ const TableManageProducts = () => {
                             <Table.Cell>${product.Price_Cl || '0'}</Table.Cell>
                             <Table.Cell>{product.Reference || 'N/A'}</Table.Cell>
                             <Table.Cell>
-                                <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+                            <button onClick={() => handleEditClick(product)} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
                                     Edit
-                                </a>
+                                </button>
                             </Table.Cell>
                         </Table.Row>
                     ))}
@@ -121,6 +138,56 @@ const TableManageProducts = () => {
                     <FaStepForward />
                 </Button>
             </div>
+
+            {selectedProduct && (
+                <Modal show={isModalOpen} onClose={handleModalClose}>
+                    <Modal.Header>Editar </Modal.Header>
+                    <Modal.Body>
+                        <div className="space-y-4">
+                            <div>
+                                <Label htmlFor="productName">Nombre</Label>
+                                <TextInput
+                                    id="productName"
+                                    type="text"
+                                    value={selectedProduct.Name || ''}
+                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, Name: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="productStock">Stock</Label>
+                                <TextInput
+                                    id="productStock"
+                                    type="number"
+                                    value={selectedProduct.Quantity || ''}
+                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, Quantity: parseInt(e.target.value, 10) || '' })}
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="productPrice">Precio</Label>
+                                <TextInput
+                                    id="productPrice"
+                                    type="text"
+                                    value={selectedProduct.Price_Cl || ''}
+                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, Price_Cl: parseFloat(e.target.value) || '' })}
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="productReference">Referencia</Label>
+                                <TextInput
+                                    id="productReference"
+                                    type="text"
+                                    value={selectedProduct.Reference || ''}
+                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, Reference: e.target.value })}
+                                />
+                            </div>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={handleSaveChanges}>Guardar Cambios</Button>
+                        <Button color="gray" onClick={handleModalClose}>Cancelar</Button>
+                    </Modal.Footer>
+                </Modal>
+            )}
         </div>
     );
 };
