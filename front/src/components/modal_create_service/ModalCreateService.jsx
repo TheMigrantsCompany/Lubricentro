@@ -69,15 +69,15 @@ const ModalCreateService= () => {
         <Modal.Body>
           <div className="space-y-6">
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Añade tu nuevo producto
+              Añade tu nuevo Servicio
             </h3>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="nombre" value="Nombre de producto" />
+                <Label htmlFor="nombre" value="Nombre de servicio" />
               </div>
               <TextInput
                 id="nombre"
-                placeholder="Nombre de producto"
+                placeholder="Nombre de serivcio"
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
