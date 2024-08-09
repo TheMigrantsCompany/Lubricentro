@@ -63,7 +63,7 @@ const ModalCreateService= () => {
 
   return (
     <>
-      <Button onClick={() => setOpenModal(true)} className="m-7">+ Añadir producto</Button>
+      <Button onClick={() => setOpenModal(true)} className="m-7">+ Añadir Servicio</Button>
       <Modal show={openModal} size="md" onClose={onCloseModal} popup>
         <Modal.Header />
         <Modal.Body>
