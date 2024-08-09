@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCars, getCarsPlate, getCarByCCNIT } from '../../redux/actions/actions'; // Asegúrate de ajustar la ruta a tu archivo de acciones
 
-const CarSearch = ({ onCarSelect }) => {
+const CarSearch = ({ onCarSelect, reset }) => {
     const [query, setQuery] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [searchType, setSearchType] = useState('plate');
@@ -60,6 +60,21 @@ const CarSearch = ({ onCarSelect }) => {
         document.removeEventListener('mousedown', handleClickOutside);
       };
     }, []);
+
+    const CarSearch = ({ onCarSelect, reset }) => {
+      const [searchTerm, setSearchTerm] = useState('');
+      const [selectedCar, setSelectedCar] = useState(null);
+    
+      useEffect(() => {
+        if (reset) {
+          setQuery('');  // Resetea el término de búsqueda
+          setSelectedCar(null); // Limpia el carro seleccionado
+        }
+      }, [reset]);
+      
+    
+      // Resto de la lógica del componente...
+    };
   
     return (
         <div className="relative">

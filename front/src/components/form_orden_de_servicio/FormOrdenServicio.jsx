@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
-const FormOrdenServicio = ({ formData, handleInputChange, handleSubmit }) => {
+import { Label, Textarea, Select } from "flowbite-react";
+const FormOrdenServicio = ({ formData, handleInputChange, }) => {
   return (
     <form className="max-w-4xl mx-auto flex flex-col gap-4 bg-tremor-background-default p-5 rounded-lg text-tremor-content-strong">
-      <div className="flex flex-wrap justify-center">
-        <div className="w-full md:w-1/2 px-2 mb-4">
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="w-full md:w-1/2 px-2">
           <Label htmlFor="paymentMethod" value="Método de Pago" />
           <Select
             id="paymentMethod"
@@ -21,7 +21,7 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleSubmit }) => {
             <option value="transferencia">Transferencia</option>
           </Select>
         </div>
-        <div className="w-full px-2">
+        <div className="w-full md:w-1/2 px-2">
           <Label htmlFor="warnings" value="Sugerencias" />
           <Textarea
             id="warnings"
@@ -33,7 +33,6 @@ const FormOrdenServicio = ({ formData, handleInputChange, handleSubmit }) => {
             className="w-full border rounded-md p-2 text-tremor-content-strong"
           />
         </div>
-        
       </div>
     </form>
   );

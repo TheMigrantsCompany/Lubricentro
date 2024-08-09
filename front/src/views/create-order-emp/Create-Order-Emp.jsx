@@ -7,6 +7,7 @@ import AcordeonServicios from "../../components/acordeon_servicios/AcordeonServi
 import { createServiceOrder } from '../../redux/actions/actions';
 import { useFirebase } from '../../firebase/config';
 import { useAuthState } from "react-firebase-hooks/auth";
+import Swal from 'sweetalert2';
 
 const CreateOrderEmp = () => {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ const [selectedServices, setSelectedServices] = useState([]);
 const [id_Car, setId_Car] = useState(null); // Estado para almacenar el ID del automóvil seleccionado
 const [clientType, setClientType] = useState('cliente'); // Estado para manejar el tipo de cliente ('cliente' o 'taller')
 
+const [resetCar, setResetCar] = useState(false); // Estado para controlar el reinicio del automóvil
 // Maneja los cambios en los campos del formulario
 const handleInputChange = (e) => {
   const { id, value } = e.target;
@@ -127,17 +129,17 @@ const handleSubmit = () => {
   console.log("ID del automóvil seleccionado:", id_Car);
 
   if (!id_Car) {
-    alert("Por favor, seleccione un automóvil.");
+    Swal.fire("Error", "Por favor, seleccione un automóvil.", "error");
     return;
   }
   if (!userId) {
-    alert("No se encontró el ID del usuario.");
+    Swal.fire("Error", "No se encontró el ID del usuario.", "error");
     return;
   }
-  
+
   // Crear el cuerpo de la solicitud
   const orderData = {
-    id_Car,    
+    id_Car,
     paymentMethod: formData.paymentMethod,
     items: [
       ...selectedProducts.map(product => ({
@@ -154,10 +156,29 @@ const handleSubmit = () => {
     warnings: formData.warnings
   };
   console.log("Datos de la orden que se enviarán:", orderData);
-  
-  // Enviar la solicitud con el cuerpo adecuado
-  dispatch(createServiceOrder(userId, orderData));
 
+  // Enviar la solicitud con el cuerpo adecuado
+  dispatch(createServiceOrder(userId, orderData))
+    .then(() => {
+      // Mostrar alerta de éxito
+      Swal.fire("Éxito", "Orden de servicio creada con éxito", "success");
+
+      // Resetear el formulario
+      setFormData({
+        paymentMethod: "",
+        warnings: "",
+      });
+      setSelectedProducts([]);
+      setSelectedServices([]);
+      setId_Car(null); // Resetear el ID del automóvil
+      setClientType('cliente');
+      setResetCar(true); // Indicar que el carro debe ser reseteado
+    })
+    .catch((error) => {
+      // Mostrar alerta de error
+      Swal.fire("Error", "Hubo un problema al crear la orden de servicio", "error");
+      console.error('Error creating service order:', error);
+    });
 };
 const handleCarSelect = (car) => {
   setId_Car(car.id_Car); // Asegúrate de usar el ID del automóvil, no el objeto completo
@@ -180,8 +201,8 @@ return (
           />
         </div>
         <div className="w-1/2">
-          <AcordeonProductos onAddProduct={handleAddProduct} />
           <AcordeonServicios onAddService={handleAddService} />
+          <AcordeonProductos onAddProduct={handleAddProduct} />
         </div>
       </div>
       <OrderSummary
@@ -196,6 +217,7 @@ return (
         id_Car={id_Car}
         setClientType={setClientType}
         onCarSelect={handleCarSelect} // Pasa la función aquí
+        resetCar={resetCar}
       />
       <div className="flex justify-center mt-5">
         <button
