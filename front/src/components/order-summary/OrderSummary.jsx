@@ -16,7 +16,8 @@ const OrderSummary = ({
   onQuantityChange,
   calculateTotal,
   handleSubmit,
-  setClientType, // Prop para cambiar tipo de cliente
+  setClientType,
+  onCarSelect,  // Asegúrate de que esta prop se pase desde el componente padre
 }) => {
   const [selectedCar, setSelectedCar] = useState(null); // Estado para el carro seleccionado
   const [searchType, setSearchType] = useState('plate'); // Estado para el tipo de búsqueda
@@ -26,6 +27,10 @@ const OrderSummary = ({
   const handleCarSelect = (car) => {
     setSelectedCar(car);
     setSearchType(car.LicensePlate ? 'plate' : 'cc-nit'); // Determinar el tipo de búsqueda basado en la propiedad disponible
+    console.log("Car selected in OrderSummary:", car);
+    if (onCarSelect) {
+      onCarSelect(car); // Llama a la función pasada desde `CreateOrderEmp` si está definida
+    }
   };
 
   const handleClientTypeChange = (e) => {
@@ -40,7 +45,7 @@ const OrderSummary = ({
       <div className="mb-4 text-center">
         <p><strong>Método de Pago:</strong> {paymentMethod}</p>
       </div>
-      <CarSearch onCarSelect={handleCarSelect} />
+      <CarSearch onCarSelect={handleCarSelect} /> {/* Usa la función `handleCarSelect` para manejar la selección del auto */}
       {selectedCar && (
         <div className="mb-4 text-center">
           <h3 className="font-bold mb-2">Cliente Seleccionado</h3>
@@ -128,11 +133,6 @@ const OrderSummary = ({
       <div className="mb-4 text-center">
         <h3 className="font-bold mb-2">Total</h3>
         <p className="text-gray-700">${calculateTotal()}</p>
-      </div>
-      <div className="text-center">
-        <FlowbiteButton onClick={handleSubmit} className="w-full bg-red-600 hover:bg-red-700 text-white">
-          Confirmar Orden
-        </FlowbiteButton>
       </div>
     </Card>
   );

@@ -22,8 +22,10 @@ import {
     SET_SERVICE_DETAIL,
     TOGGLE_CAR_ACTIVE_STATE,
     USER_SUSPENDED,
+    CREATE_SERVICE_ORDER_SUCCESS,
     
     POST_CLIENT_FAILURE,
+    CREATE_SERVICE_ORDER_ERROR,
  } from "./types";
 
 // Acción para obtener todos los productos
@@ -61,10 +63,9 @@ export const postCar = (clientData) => async dispatch => {
 
 
 
-export const createServiceOrder = (orderData) => async dispatch => {
-    const id_User = getCurrentid_User();
+export const createServiceOrder = (userId, orderData) => async dispatch => {
     try {
-        const response = await axios.post(`http://localhost:3001/orders/service-order/${id_User}`, orderData);
+        const response = await axios.post(`http://localhost:3001/orders/service-order/${userId}`, orderData);
         dispatch({
             type: CREATE_SERVICE_ORDER_SUCCESS,
             payload: response.data,
